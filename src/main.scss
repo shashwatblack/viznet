@@ -5,6 +5,7 @@
 
 // Theme variables, must be included before the libraries to allow overriding defaults
 @import "styles/theme-variables";
+@import "styles/variables";
 
 // 3rd party libraries
 @import "~bootstrap/scss/bootstrap";
@@ -13,9 +14,11 @@
 @import "~@fortawesome/fontawesome-free-webfonts/scss/fa-regular.scss";
 @import "~@fortawesome/fontawesome-free-webfonts/scss/fa-solid.scss";
 @import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
-//@import "~https://fonts.googleapis.com/icon?family=Material+Icons";
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
 
 // Theme customization
 @import "styles/theme";
-@import "styles/variables";
+
+// Custom styles
 @import "styles/material-overrides";
+@import "styles/utils";

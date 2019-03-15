@@ -1,0 +1,313 @@
+.no-border {
+  border: none !important;
+}
+
+.no-margin {
+  margin: 0 !important;
+}
+
+.no-padding {
+  padding: 0 !important;
+}
+
+.no-pointer {
+  pointer-events: none !important;
+}
+
+.no-wrap {
+  white-space: nowrap !important;
+}
+
+.text-wrap {
+  white-space: normal !important;
+}
+
+.cursor-pointer {
+  cursor: pointer !important;
+}
+
+.cursor-banned {
+  cursor: not-allowed !important;
+}
+
+.bold {
+  font-weight: bold !important;
+}
+
+.italic {
+  font-style: italic !important;
+}
+
+.btn.unselected {
+  transition: all 150ms ease-in-out;
+  opacity: 0.6;
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.multiline-label {
+  white-space: normal;
+  padding: 3px 5px;
+  display: inline-block;
+  text-align: left;
+}
+
+.text-red {
+  color: red !important;
+}
+
+.text-dark-red {
+  color: #a94442 !important;
+}
+
+.text-default {
+  color: #333;
+}
+
+.text-pink {
+  color: pink;
+}
+
+.text-underline {
+  text-decoration: underline !important;
+}
+
+.text-left {
+  text-align: left !important;
+}
+
+.text-right {
+  text-align: right !important;
+}
+
+.text-center {
+  text-align: center !important;
+}
+
+.invert.text-danger {
+  color: pink;
+}
+
+.invert.text-success {
+  color: #8fdc90;
+}
+
+.invert.text-default {
+  color: white;
+}
+
+.bg-white {
+  background-color: #fff !important;
+}
+
+.bg-none {
+  background: none !important;
+}
+
+.bg-gray {
+  background: #f1f1f1 !important;
+}
+
+.bg-dark-grey {
+  background-color: #e6e6e6 !important;
+}
+
+.no-focus-styles {
+  &:focus {
+    outline: initial;
+    border: initial;
+    color: initial;
+    background: initial;
+  }
+}
+
+.invisible {
+  visibility: hidden;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-wrap {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.flex-center {
+  display: flex;
+  align-items: center;
+}
+
+.flex-right {
+  margin-left: auto;
+}
+
+.flex-left {
+  margin-right: auto;
+}
+
+.scroll-y {
+  overflow-y: scroll;
+}
+
+table.middle-aligned {
+  thead tr th,
+  thead tr td,
+  tbody tr td,
+  tfoot tr th,
+  tfoot tr td,
+  tr th,
+  tr td {
+    vertical-align: middle;
+  }
+}
+
+table.center-aligned {
+  thead tr th,
+  thead tr td,
+  tbody tr td,
+  tfoot tr th,
+  tfoot tr td,
+  tr th,
+  tr td {
+    text-align: center;
+  }
+}
+
+td,
+th,
+input {
+  &.currency {
+    text-align: right !important;
+  }
+}
+
+table.no-border {
+  thead tr th,
+  thead tr td,
+  tbody tr td,
+  tfoot tr th,
+  tfoot tr td,
+  tr th,
+  tr td {
+    border: none !important;
+  }
+}
+
+table.table-bordered {
+  thead tr th,
+  thead tr td,
+  tbody tr td,
+  tfoot tr th,
+  tfoot tr td,
+  tr th,
+  tr td {
+    border: 1px solid #dddddd !important;
+  }
+}
+
+table.table-spaced {
+  th,
+  td {
+    padding: 5px 7px !important;
+  }
+}
+
+table.table-fixed {
+  table-layout: fixed;
+}
+
+.text-blink {
+  animation: blinker 1s linear infinite;
+}
+
+@keyframes blinker {
+  49% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+  90% {
+    opacity: 0.4;
+  }
+}
+
+.text-large {
+  font-size: 120% !important;
+}
+
+.basic-typeahead + ul.dropdown-menu {
+  max-height: 350px;
+  overflow-y: auto;
+}
+
+.relative {
+  position: relative;
+}
+
+.input-md {
+  height: 24px;
+  padding: 3px 6px;
+  font-size: 1.2rem;
+  line-height: 1.5;
+  border-radius: 0;
+}
+
+td,
+th {
+  &.white-padded {
+    border-left: 5px solid white;
+    border-right: 5px solid white;
+  }
+  &.white-padded-left {
+    border-left: 5px solid white;
+  }
+  &.white-padded-right {
+    border-right: 5px solid white;
+  }
+}
+
+input[type="radio"].normalized {
+  vertical-align: -2px;
+  margin-right: 5px;
+}
+
+.soft-border {
+  border: 1px solid #ddd;
+}
+
+.soft-border-bottom {
+  border-bottom: 1px solid #eee;
+}
+
+.hard-border-bottom {
+  border-bottom: 1px solid #dcdcdc;
+}
+
+.off-screen {
+  position: fixed;
+  top: -1000px;
+  left: -1000px;
+}
+
+.abs-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.btn-blue-glow {
+  &:hover,
+  &:focus {
+    background-color: #c4ebff;
+  }
+}
