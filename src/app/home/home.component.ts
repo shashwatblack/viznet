@@ -3,8 +3,6 @@ import { finalize } from 'rxjs/operators';
 
 import { QuoteService } from './quote.service';
 
-import { NotificationService } from '@app/core';
-
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -14,7 +12,7 @@ export class HomeComponent implements OnInit {
   quote: string;
   isLoading: boolean;
 
-  constructor(private quoteService: QuoteService, private readonly notificationService: NotificationService) {}
+  constructor(private quoteService: QuoteService) {}
 
   ngOnInit() {
     this.isLoading = true;
@@ -28,9 +26,5 @@ export class HomeComponent implements OnInit {
       .subscribe((quote: string) => {
         this.quote = quote;
       });
-
-    setTimeout(() => {
-      this.notificationService.warn('Warning message');
-    }, 1000);
   }
 }

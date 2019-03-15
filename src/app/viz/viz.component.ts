@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NotificationService } from '@app/core';
 
 @Component({
   selector: 'app-viz',
@@ -6,7 +7,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./viz.component.scss']
 })
 export class VizComponent implements OnInit {
-  constructor() {}
+  constructor(private readonly notificationService: NotificationService) {}
 
   ngOnInit() {}
+
+  networkStateNext() {
+    this.notificationService.info('Yet to implement!!!');
+  }
 }
