@@ -16,7 +16,7 @@ import { LoginModule } from './login/login.module';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { VizComponent } from './viz/viz.component';
+import { VizModule } from '@app/viz/viz.module';
 
 @NgModule({
   imports: [
@@ -32,10 +32,11 @@ import { VizComponent } from './viz/viz.component';
     ShellModule,
     HomeModule,
     AboutModule,
+    VizModule,
     LoginModule,
     AppRoutingModule // must be imported as the last module as it contains the fallback route
   ],
-  declarations: [AppComponent, VizComponent],
+  declarations: [AppComponent],
   providers: [],
   bootstrap: [AppComponent]
 })
