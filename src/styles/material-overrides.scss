@@ -1,0 +1,21 @@
+@import "~@angular/material/theming";
+
+.error-notification-overlay {
+  color: $white;
+  background-color: map-get($theme-colors, danger);
+}
+
+.info-notification-overlay {
+  color: $white;
+  background-color: map-get($theme-colors, info);
+}
+
+.success-notification-overlay {
+  color: $white;
+  background-color: map-get($theme-colors, success);
+}
+
+.warning-notification-overlay {
+  color: $black;
+  background-color: map-get($theme-colors, warning);
+}

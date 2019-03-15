@@ -68,7 +68,7 @@ Also keep in mind this general rules:
 - Keep your style scoped
 
   - Clearly separate **global** (think _framework_) and **components** style
-  - Global style should only go in `src/theme/`, never in components
+  - Global style should only go in `src/styles/`, never in components
   - Avoid style interactions between components, if some style may need to be shared, refactor it as a framework
     component in put it in your global theme.
   - Avoid using wider selectors than needed: always use classes if you can!
