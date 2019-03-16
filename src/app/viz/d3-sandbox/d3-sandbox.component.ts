@@ -51,11 +51,11 @@ export class D3SandboxComponent implements OnInit {
       numCols = 28;
     for (let row = 0; row < numRows; row++) {
       for (let col = 0; col < numCols; col++) {
-        const cell = this.image[row][col];
+        const cell = 255 - this.image[row][col];
         this.nodes.push({
           x: col * 20,
           y: row * 20,
-          radius: 5,
+          radius: 8,
           value: cell,
           fill: `rgb(${cell},${cell},${cell})`
         });
