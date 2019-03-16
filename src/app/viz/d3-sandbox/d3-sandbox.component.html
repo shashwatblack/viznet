@@ -1,0 +1,7 @@
+<svg #svg [attr.width]="_options.width" [attr.height]="_options.height" xmlns:svg="">
+  <g [attr.transform]="'translate(10, 10)'">
+    <svg:g *ngFor="let node of this.nodes" [attr.transform]="'translate(' + node.x + ',' + node.y + ')'">
+      <svg:circle class="node" [attr.fill]="node.fill" cx="0" cy="0" [attr.r]="node.radius"></svg:circle>
+    </svg:g>
+  </g>
+</svg>
