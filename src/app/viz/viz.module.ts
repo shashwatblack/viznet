@@ -5,9 +5,11 @@ import { TranslateModule } from '@ngx-translate/core';
 import { VizRoutingModule } from './viz-routing.module';
 import { VizComponent } from './viz.component';
 import { D3SandboxComponent } from './d3-sandbox/d3-sandbox.component';
+import { InfoWindowComponent } from './info-window/info-window.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
-  imports: [CommonModule, TranslateModule, VizRoutingModule],
-  declarations: [VizComponent, D3SandboxComponent]
+  imports: [CommonModule, TranslateModule, VizRoutingModule, NgbModule],
+  declarations: [VizComponent, D3SandboxComponent, InfoWindowComponent]
 })
 export class VizModule {}

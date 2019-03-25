@@ -1,12 +1,28 @@
 <div class="wrapper">
   <div class="network-state-wrapper">
     <div class="network-state">
-      <app-d3-sandbox></app-d3-sandbox>
+      <app-d3-sandbox #d3_sandbox></app-d3-sandbox>
     </div>
     <div class="controls">
-      <button class="btn btn-outline-primary" (click)="networkStateNext()">
-        Next
-      </button>
+      <div>
+        <h3>
+          Step 3: Pooling Layer 1
+        </h3>
+        <p>
+          Max pooling is a sample-based discretization process. The objective is to down-sample an input representation
+          (image, hidden-layer output matrix, etc.), reducing its dimensionality and allowing for assumptions to be made
+          about features contained in the sub-regions binned.
+          <a href="https://computersciencewiki.org/index.php/Max-pooling_/_Pooling">Read More</a>
+        </p>
+      </div>
+      <div style="width: 100%;">
+        <button class="btn btn-success" (click)="networkStateNext()" style="width: 80px; margin-right: 10px;">
+          Run &nbsp;<i class="fa fa-play"></i>
+        </button>
+        <button class="btn btn-outline-primary" (click)="networkStateNext()" style="width: 80px; margin-right: 10px;">
+          Next &nbsp;<i class="fa fa-chevron-right"></i>
+        </button>
+      </div>
     </div>
   </div>
   <div class="network-overview-wrapper text-center">
