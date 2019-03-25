@@ -76,21 +76,21 @@ export class CnnModelComponent implements OnInit {
         type: 'dense',
         channels: 320,
         name: 'FC1',
-        shape: '320'
+        shape: '320 x 1'
       },
       {
         id: 'l7',
         type: 'dense',
         channels: 100,
         name: 'FC2',
-        shape: '100'
+        shape: '100 x 1'
       },
       {
         id: 'l8',
         type: 'dense',
         channels: 10,
         name: 'Output',
-        shape: '10'
+        shape: '10 x 1'
       }
     ];
   }
