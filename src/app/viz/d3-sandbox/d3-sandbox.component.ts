@@ -72,9 +72,8 @@ export class D3SandboxComponent implements OnInit {
   mouseoverNode(event: any, node: any) {
     console.log('node', node);
     this.hoveredNode = node;
-    this.nodePopover.nativeElement.style.left = event.clientX - 10 + 'px';
-    this.nodePopover.nativeElement.style.top = event.clientY - 10 + 'px';
-    // console.log(event.clientX, event.clientY);
+    this.nodePopover.nativeElement.style.left = event.clientX - event.offsetX + node.x + 'px';
+    this.nodePopover.nativeElement.style.top = event.clientY - event.offsetY + node.y + 'px';
   }
 
   mouseoutNode(event: any) {
@@ -117,7 +116,7 @@ export class D3SandboxComponent implements OnInit {
     for (const node of this.nodes) {
       const x_diff = node.x - +node.element.attr().cx;
       const y_diff = node.y - +node.element.attr().cy;
-      const transform = `t${x_diff},${y_diff}`;
+      // const transform = `t${x_diff},${y_diff}`;
       // node.element.animate({transform: transform}, 10000, mina.easeinout);
       node.element.attr({ style: `transform: translate(${x_diff}px, ${y_diff}px)` });
     }
@@ -129,6 +128,7 @@ export class D3SandboxComponent implements OnInit {
         fill: node.fill
       });
       node.element.addClass('ease-in-out');
+      node.element.mouseover((event: any) => this.mouseoverNode(event, node));
     }
 
     /*
