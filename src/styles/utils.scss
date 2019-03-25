@@ -311,3 +311,7 @@ input[type="radio"].normalized {
     background-color: #c4ebff;
   }
 }
+
+.ease-in-out {
+  transition: all 1000ms ease-in-out;
+}

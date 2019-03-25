@@ -1,0 +1,38 @@
+<!--
+<svg #svg [attr.width]="_options.width" [attr.height]="_options.height" xmlns="http://www.w3.org/2000/svg">
+  <g [attr.transform]="'translate(10, 10)'">
+    <g *ngFor="let node of this.nodes" [attr.transform]="'translate(' + node.x + ',' + node.y + ')'">
+
+      <circle class="node" [attr.fill]="node.fill" cx="0" cy="0" [attr.r]="node.radius"
+              (mouseover)="mouseoverNode($event, node)" (mouseout)="mouseoutNode($event)"></circle>
+    </g>
+  </g>
+</svg>
+-->
+
+<svg #svg id="viz-svg"></svg>
+
+<div #nodePopover [hidden]="!hoveredNode" class="popover">
+  <ng-template #nodeInfoWindow>
+    <app-info-window [node]="hoveredNode"></app-info-window>
+  </ng-template>
+  <div
+    *ngIf="hoveredNode"
+    [ngbPopover]="nodeInfoWindow"
+    triggers="mouseenter:mouseleave"
+    style="width: 20px; height: 20px; background: rgba(0, 0, 0, 0);"
+  ></div>
+</div>
+<!--
+<div>
+  <div *ngFor="let node of this.nodes">
+    <ng-template #nodeInfoWindow>
+      pixel: ({{node.p_x}}, {{node.p_y}})
+      <app-info-window [node]="node"></app-info-window>
+      value: {{node.value}}
+    </ng-template>
+    <button [ngbPopover]="nodeInfoWindow" triggers_="mouseenter:mouseleave">A</button>
+  </div>
+</div>
+ANGULAR ANIMATIONS
+-->
