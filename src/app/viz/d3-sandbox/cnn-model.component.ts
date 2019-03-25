@@ -22,13 +22,14 @@ export class CnnModelComponent implements OnInit {
     this.svg = Snap('#viz-svg');
 
     this.svg.attr({
-      width: this.options.width,
-      height: this.options.height
+      viewBox: `0 0 ${this.options.width} ${this.options.height}`
     });
 
-    this.g = this.svg.g().attr({
-      transform: `translate(${this.options.padding}, ${this.options.padding})`
-    });
+    this.g = this.svg.g();
+
+    // this.g.attr({
+    //   transform: `translate(${this.options.padding}, ${this.options.padding})`,
+    // });
 
     this.drawImage();
   }
@@ -96,13 +97,14 @@ export class CnnModelComponent implements OnInit {
 
   private drawImage() {
     let x = 0;
-    let layer_width = 100;
-    let max_box_height = 100;
     let box_margin = 5;
+    let layer_height = this.options.height - box_margin * 10;
+    let layer_width = this.options.width / (2 * this.layers.length - 1);
+    let max_box_height = 100;
     let box_width = layer_width - 2 * box_margin;
     for (const layer of this.layers) {
       if (layer.type == 'channel') {
-        let box_container_height = this.options.height / layer.channels;
+        let box_container_height = layer_height / layer.channels;
         let box_height = box_container_height - 2 * box_margin;
         box_height = Math.min(box_height, max_box_height);
 
@@ -119,6 +121,18 @@ export class CnnModelComponent implements OnInit {
           layer.elements.push(element);
         }
       }
+
+      let shape_htop = x + layer_width / 2;
+      let shape_vtop = layer_height + box_margin * 4;
+      layer.shape_element = this.g.text(shape_htop, shape_vtop, layer.shape).attr({
+        'text-anchor': 'middle'
+      });
+
+      let name_htop = x + layer_width / 2;
+      let name_vtop = layer_height + box_margin * 8;
+      layer.name_element = this.g.text(name_htop, name_vtop, layer.name).attr({
+        'text-anchor': 'middle'
+      });
 
       // todo: add arrow
       x += layer_width * 2;
