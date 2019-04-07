@@ -10,9 +10,10 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CnnModelComponent } from '@app/viz/d3-sandbox/cnn-model.component';
 import { ModuleImageComponent } from '@app/viz/d3-sandbox/module-image.component';
 import { FormsModule } from '@angular/forms';
+import { Ng5SliderModule } from 'ng5-slider';
 
 @NgModule({
-  imports: [CommonModule, TranslateModule, VizRoutingModule, NgbModule, FormsModule],
+  imports: [CommonModule, TranslateModule, VizRoutingModule, NgbModule, FormsModule, Ng5SliderModule],
   declarations: [VizComponent, D3SandboxComponent, InfoWindowComponent, CnnModelComponent, ModuleImageComponent]
 })
 export class VizModule {}

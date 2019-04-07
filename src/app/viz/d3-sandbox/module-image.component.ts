@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Options } from 'ng5-slider';
 
 declare var Snap: any;
 declare var mina: any;
@@ -25,6 +26,12 @@ export class ModuleImageComponent implements OnInit {
     numRows: 0,
     nodes: {}
   };
+  slider_value: number = 100;
+  slider_options: Options = {
+    floor: 0,
+    ceil: 255
+  };
+  selectedNode = null;
 
   constructor() {}
 
@@ -47,20 +54,51 @@ export class ModuleImageComponent implements OnInit {
     this.updateFigure();
   }
 
+  nodeClicked(node) {
+    if (this.selectedNode) {
+      this.selectedNode.circle.attr({
+        stroke: 'None'
+      });
+    }
+    this.selectedNode = node;
+    node.circle.attr({
+      stroke: '#0db9f0'
+    });
+    this.slider_value = node.value;
+  }
+
+  sliderUpdated() {
+    let value = (this.selectedNode.value = this.slider_value);
+    this.selectedNode.circle.attr({
+      fill: `rgb(${value}, ${value}, ${value})`
+    });
+    this.selectedNode.text.attr({
+      text: value
+    });
+  }
+
   getNewNode(r, c) {
     let x = 50 + c * 50;
     let y = 50 + r * 50;
     let radius = 20;
-    let v = 255;
+    let value = 255;
     let circle = this.g.circle(x, y, radius).attr({
-      fill: `rgb(${v}, ${v}, ${v})`
+      fill: `rgb(${value}, ${value}, ${value})`,
+      'stroke-width': '4px'
     });
-    let text = this.g.text(x, y, v).attr({
+    let text = this.g.text(x, y, value).attr({
       'text-anchor': 'middle',
       'alignment-baseline': 'middle',
       transform: 'translate(0, 2)'
     });
-    return { r, c, x, y, radius, circle, text };
+    circle.addClass('cursor-pointer');
+    text.addClass('no-pointer');
+    text.addClass('no-user-select');
+
+    let node = { r, c, x, y, radius, value, circle, text };
+    circle.click(() => this.nodeClicked(node));
+    text.click(() => this.nodeClicked(node));
+    return node;
   }
 
   updateFigure() {

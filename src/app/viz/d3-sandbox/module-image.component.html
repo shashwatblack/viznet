@@ -1,10 +1,28 @@
 <div>
+  <form class="form-inline">
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text">Width</span>
+      </div>
+      <input type="number" class="form-control" name="numCols" [(ngModel)]="this.form.numCols" />
+    </div>
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text">Height</span>
+      </div>
+      <input type="number" class="form-control" name="numRows" [(ngModel)]="this.form.numRows" />
+    </div>
+    <button type="submit" class="btn btn-primary" (click)="updateFigure()">Update</button>
+  </form>
   <div>
-    Width: <input type="number" class="input-sm" [(ngModel)]="this.form.numCols" /> Height:
-    <input type="number" class="input-sm" [(ngModel)]="this.form.numRows" />
-    <button class="btn btn-primary" (click)="updateFigure()">Update</button>
-  </div>
-  <div>
+    <div class="slider-wrapper">
+      <ng5-slider
+        [ngClass]="{ inactive: !this.selectedNode }"
+        [(value)]="slider_value"
+        [options]="slider_options"
+        (valueChange)="sliderUpdated()"
+      ></ng5-slider>
+    </div>
     <svg #svg id="module-image-svg"></svg>
   </div>
 </div>
