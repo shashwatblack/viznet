@@ -13,7 +13,7 @@ export class ModuleImageComponent implements OnInit {
   private svg: any;
   private g: any;
   private options = {
-    width: 1200,
+    width: 900,
     height: 600,
     padding: 10
   };
@@ -56,15 +56,14 @@ export class ModuleImageComponent implements OnInit {
 
   nodeClicked(node) {
     if (this.selectedNode) {
-      this.selectedNode.circle.attr({
-        stroke: 'None'
-      });
+      this.selectedNode.circle.removeClass('selected');
     }
-    this.selectedNode = node;
+    node.circle.addClass('selected');
     node.circle.attr({
       stroke: '#0db9f0'
     });
     this.slider_value = node.value;
+    this.selectedNode = node;
   }
 
   sliderUpdated() {
@@ -83,8 +82,7 @@ export class ModuleImageComponent implements OnInit {
     let radius = 20;
     let value = 255;
     let circle = this.g.circle(x, y, radius).attr({
-      fill: `rgb(${value}, ${value}, ${value})`,
-      'stroke-width': '4px'
+      fill: `rgb(${value}, ${value}, ${value})`
     });
     let text = this.g.text(x, y, value).attr({
       'text-anchor': 'middle',
@@ -92,6 +90,7 @@ export class ModuleImageComponent implements OnInit {
       transform: 'translate(0, 2)'
     });
     circle.addClass('cursor-pointer');
+    circle.addClass('svg-node');
     text.addClass('no-pointer');
     text.addClass('no-user-select');
 

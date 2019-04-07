@@ -1,0 +1,8 @@
+.svg-node {
+  stroke: #0db9f0;
+  stroke-width: 0;
+
+  &.selected {
+    stroke-width: 4px;
+  }
+}
