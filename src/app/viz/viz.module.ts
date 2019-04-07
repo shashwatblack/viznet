@@ -8,9 +8,11 @@ import { D3SandboxComponent } from './d3-sandbox/d3-sandbox.component';
 import { InfoWindowComponent } from './info-window/info-window.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CnnModelComponent } from '@app/viz/d3-sandbox/cnn-model.component';
+import { ModuleImageComponent } from '@app/viz/d3-sandbox/module-image.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
-  imports: [CommonModule, TranslateModule, VizRoutingModule, NgbModule],
-  declarations: [VizComponent, D3SandboxComponent, InfoWindowComponent, CnnModelComponent]
+  imports: [CommonModule, TranslateModule, VizRoutingModule, NgbModule, FormsModule],
+  declarations: [VizComponent, D3SandboxComponent, InfoWindowComponent, CnnModelComponent, ModuleImageComponent]
 })
 export class VizModule {}
