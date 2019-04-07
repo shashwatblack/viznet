@@ -41,9 +41,9 @@ export class D3SandboxComponent implements OnInit {
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
   ];
   private nodes: any[];
-  protected hoveredNode: any;
   private svg: any;
   private wrapper_g: any;
+  public hoveredNode: any;
 
   constructor() {}
 
