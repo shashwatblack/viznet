@@ -38,7 +38,6 @@ export class ModuleImageComponent implements OnInit {
     this.g = this.svg.g();
 
     this.initializeFigure();
-    // this.drawImage();
   }
 
   initializeFigure() {
@@ -53,10 +52,15 @@ export class ModuleImageComponent implements OnInit {
     let y = 50 + r * 50;
     let radius = 20;
     let v = 255;
-    let element = this.g.circle(x, y, radius).attr({
+    let circle = this.g.circle(x, y, radius).attr({
       fill: `rgb(${v}, ${v}, ${v})`
     });
-    return { r, c, x, y, radius, element };
+    let text = this.g.text(x, y, v).attr({
+      'text-anchor': 'middle',
+      'alignment-baseline': 'middle',
+      transform: 'translate(0, 2)'
+    });
+    return { r, c, x, y, radius, circle, text };
   }
 
   updateFigure() {
@@ -81,7 +85,8 @@ export class ModuleImageComponent implements OnInit {
     for (let key in this.figure.nodes) {
       let node = this.figure.nodes[key];
       if (node.r >= this.form.numRows || node.c >= this.form.numCols) {
-        node.element.remove();
+        node.circle.remove();
+        node.text.remove();
         delete this.figure.nodes[key];
       }
     }
@@ -89,22 +94,4 @@ export class ModuleImageComponent implements OnInit {
     this.figure.numRows = this.form.numRows;
     this.figure.numCols = this.form.numCols;
   }
-  /*
-  private drawImage() {
-    for (let element of this.figure.elements) {
-      element.remove();
-    }
-    this.figure.elements.length = 0;
-    for (let r = 0; r < this.figure.values.length; r++) {
-      for (let c = 0; c < this.figure.values[0].length; c++) {
-        let v = this.figure.values[r][c];
-        let x = 50 + c * 50;
-        let y = 50 + r * 50;
-        let element = this.g.circle(x, y, this.options.nodeRadius).attr({
-          fill: `rgb(${v}, ${v}, ${v})`
-        });
-        this.figure.elements.push(element);
-      }
-    }
-  }*/
 }
