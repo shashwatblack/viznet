@@ -162,19 +162,19 @@ export class ModuleConvComponent implements OnInit {
     let group = this.g_hoverLines;
 
     let inputAttr = {
-      stroke: 'rgba(244, 64, 52, 0.6)',
+      stroke: 'rgba(244, 64, 52, 0.3)',
       'stroke-width': '3px',
       fill: 'None'
     };
 
     let filterAttr = {
-      stroke: 'rgba(0, 195, 255, 0.6)',
+      stroke: 'rgba(0, 195, 255, 0.3)',
       'stroke-width': '3px',
       fill: 'None'
     };
 
     let resultAttr = {
-      stroke: 'rgba(0, 205, 73, 0.62)',
+      stroke: 'rgba(0, 205, 73, 0.3)',
       'stroke-width': '3px',
       fill: 'None'
     };
