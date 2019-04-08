@@ -14,6 +14,7 @@ export class ModuleConvComponent implements OnInit {
   private g_image: any;
   private g_filter: any;
   private g_result: any;
+  private g_hoverLines: any;
   public form = {
     numColsImage: 0,
     numRowsImage: 0,
@@ -100,7 +101,7 @@ export class ModuleConvComponent implements OnInit {
     });
   }
 
-  getNewNode(group, r, c) {
+  addNewNode(group, r, c) {
     let x = 50 + c * 50;
     let y = 50 + r * 50;
     let radius = 20;
@@ -119,10 +120,84 @@ export class ModuleConvComponent implements OnInit {
     text.addClass('no-pointer');
     text.addClass('no-user-select');
 
+    group.polyline([10, 10, 1000, 1000]);
+
     let node = { r, c, x, y, radius, value, circle, text };
     circle.click(() => this.nodeClicked(node));
     text.click(() => this.nodeClicked(node));
     return node;
+  }
+
+  addHoverEvent(node) {
+    let gutter = 2;
+    node.circle.mouseover(() => {
+      this.addHoverLines(
+        {
+          x: 30 - gutter,
+          y: 30 - gutter,
+          w: 190 + 2 * gutter,
+          h: 190 + 2 * gutter
+        },
+        {
+          x: 630 - gutter,
+          y: 30 - gutter,
+          w: 90 + 2 * gutter,
+          h: 90 + 2 * gutter
+        },
+        {
+          x: 1200 + node.x - node.radius - gutter,
+          y: node.y - node.radius - gutter,
+          w: 2 * node.radius + 2 * gutter,
+          h: 2 * node.radius + 2 * gutter
+        }
+      );
+    });
+  }
+
+  addHoverLines(imageBox, filterBox, resultBox) {
+    if (this.g_hoverLines) {
+      this.g_hoverLines.remove();
+    }
+    this.g_hoverLines = this.svg.g();
+    let group = this.g_hoverLines;
+
+    let inputAttr = {
+      stroke: 'rgba(244, 64, 52, 0.6)',
+      'stroke-width': '3px',
+      fill: 'None'
+    };
+
+    let filterAttr = {
+      stroke: 'rgba(0, 195, 255, 0.6)',
+      'stroke-width': '3px',
+      fill: 'None'
+    };
+
+    let resultAttr = {
+      stroke: 'rgba(0, 205, 73, 0.62)',
+      'stroke-width': '3px',
+      fill: 'None'
+    };
+
+    group.rect(imageBox.x, imageBox.y, imageBox.w, imageBox.h).attr(inputAttr);
+    group.rect(filterBox.x, filterBox.y, filterBox.w, filterBox.h).attr(filterAttr);
+    group.rect(resultBox.x, resultBox.y, resultBox.w, resultBox.h).attr(resultAttr);
+
+    group.line(imageBox.x, imageBox.y, resultBox.x, resultBox.y).attr(inputAttr);
+    group.line(imageBox.x + imageBox.w, imageBox.y, resultBox.x + resultBox.w, resultBox.y).attr(inputAttr);
+    group.line(imageBox.x, imageBox.y + imageBox.h, resultBox.x, resultBox.y + resultBox.h).attr(inputAttr);
+    group
+      .line(imageBox.x + imageBox.w, imageBox.y + imageBox.h, resultBox.x + resultBox.w, resultBox.y + resultBox.h)
+      .attr(inputAttr);
+
+    group.line(filterBox.x, filterBox.y, resultBox.x, resultBox.y).attr(filterAttr);
+    group.line(filterBox.x + filterBox.w, filterBox.y, resultBox.x + resultBox.w, resultBox.y).attr(filterAttr);
+    group.line(filterBox.x, filterBox.y + filterBox.h, resultBox.x, resultBox.y + resultBox.h).attr(filterAttr);
+    group
+      .line(filterBox.x + filterBox.w, filterBox.y + filterBox.h, resultBox.x + resultBox.w, resultBox.y + resultBox.h)
+      .attr(filterAttr);
+
+    return this.g_hoverLines;
   }
 
   updateImage() {
@@ -130,7 +205,7 @@ export class ModuleConvComponent implements OnInit {
     if (this.form.numColsImage > this.figure.numColsImage) {
       for (let r = 0; r < this.figure.numRowsImage; r++) {
         for (let c = this.figure.numColsImage; c < this.form.numColsImage; c++) {
-          this.figure.nodesImage[`${r},${c}`] = this.getNewNode(this.g_image, r, c);
+          this.figure.nodesImage[`${r},${c}`] = this.addNewNode(this.g_image, r, c);
         }
       }
     }
@@ -138,7 +213,7 @@ export class ModuleConvComponent implements OnInit {
     if (this.form.numRowsImage > this.figure.numRowsImage) {
       for (let r = this.figure.numRowsImage; r < this.form.numRowsImage; r++) {
         for (let c = 0; c < this.form.numColsImage; c++) {
-          this.figure.nodesImage[`${r},${c}`] = this.getNewNode(this.g_image, r, c);
+          this.figure.nodesImage[`${r},${c}`] = this.addNewNode(this.g_image, r, c);
         }
       }
     }
@@ -162,7 +237,7 @@ export class ModuleConvComponent implements OnInit {
     if (this.form.numColsFilter > this.figure.numColsFilter) {
       for (let r = 0; r < this.figure.numRowsFilter; r++) {
         for (let c = this.figure.numColsFilter; c < this.form.numColsFilter; c++) {
-          this.figure.nodesFilter[`${r},${c}`] = this.getNewNode(this.g_filter, r, c);
+          this.figure.nodesFilter[`${r},${c}`] = this.addNewNode(this.g_filter, r, c);
         }
       }
     }
@@ -170,7 +245,7 @@ export class ModuleConvComponent implements OnInit {
     if (this.form.numRowsFilter > this.figure.numRowsFilter) {
       for (let r = this.figure.numRowsFilter; r < this.form.numRowsFilter; r++) {
         for (let c = 0; c < this.form.numColsFilter; c++) {
-          this.figure.nodesFilter[`${r},${c}`] = this.getNewNode(this.g_filter, r, c);
+          this.figure.nodesFilter[`${r},${c}`] = this.addNewNode(this.g_filter, r, c);
         }
       }
     }
@@ -194,7 +269,9 @@ export class ModuleConvComponent implements OnInit {
     if (this.form.numColsResult > this.figure.numColsResult) {
       for (let r = 0; r < this.figure.numRowsResult; r++) {
         for (let c = this.figure.numColsResult; c < this.form.numColsResult; c++) {
-          this.figure.nodesResult[`${r},${c}`] = this.getNewNode(this.g_result, r, c);
+          let node = this.addNewNode(this.g_result, r, c);
+          this.addHoverEvent(node);
+          this.figure.nodesResult[`${r},${c}`] = node;
         }
       }
     }
@@ -202,7 +279,9 @@ export class ModuleConvComponent implements OnInit {
     if (this.form.numRowsResult > this.figure.numRowsResult) {
       for (let r = this.figure.numRowsResult; r < this.form.numRowsResult; r++) {
         for (let c = 0; c < this.form.numColsResult; c++) {
-          this.figure.nodesResult[`${r},${c}`] = this.getNewNode(this.g_result, r, c);
+          let node = this.addNewNode(this.g_result, r, c);
+          this.addHoverEvent(node);
+          this.figure.nodesResult[`${r},${c}`] = node;
         }
       }
     }
