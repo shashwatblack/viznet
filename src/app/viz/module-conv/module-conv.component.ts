@@ -65,6 +65,21 @@ export class ModuleConvComponent implements OnInit {
     this.initializeFigure();
   }
 
+  wrapperClicked() {
+    // remove selected node
+    if (this.selectedNode) {
+      this.selectedNode.circle.removeClass('selected');
+    }
+    // remove hover boxes
+    if (this.g_hoverLines) {
+      this.g_hoverLines.remove();
+    }
+  }
+
+  delay(callback) {
+    return () => setTimeout(callback, 0);
+  }
+
   initializeFigure() {
     this.form.numColsImage = 8;
     this.form.numRowsImage = 8;
@@ -123,8 +138,8 @@ export class ModuleConvComponent implements OnInit {
     group.polyline([10, 10, 1000, 1000]);
 
     let node = { r, c, x, y, radius, value, circle, text };
-    circle.click(() => this.nodeClicked(node));
-    text.click(() => this.nodeClicked(node));
+    circle.click(this.delay(() => this.nodeClicked(node)));
+    text.click(this.delay(() => this.nodeClicked(node)));
     return node;
   }
 
@@ -270,6 +285,8 @@ export class ModuleConvComponent implements OnInit {
       for (let r = 0; r < this.figure.numRowsResult; r++) {
         for (let c = this.figure.numColsResult; c < this.form.numColsResult; c++) {
           let node = this.addNewNode(this.g_result, r, c);
+          node.circle.unclick();
+          node.text.unclick();
           this.addHoverEvent(node);
           this.figure.nodesResult[`${r},${c}`] = node;
         }
@@ -280,6 +297,8 @@ export class ModuleConvComponent implements OnInit {
       for (let r = this.figure.numRowsResult; r < this.form.numRowsResult; r++) {
         for (let c = 0; c < this.form.numColsResult; c++) {
           let node = this.addNewNode(this.g_result, r, c);
+          node.circle.unclick();
+          node.text.unclick();
           this.addHoverEvent(node);
           this.figure.nodesResult[`${r},${c}`] = node;
         }
