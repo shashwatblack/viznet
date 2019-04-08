@@ -2,8 +2,16 @@
 
 .navbar {
   margin-bottom: $spacer;
+  background-color: #006699 !important;
 }
-
 .nav-link.dropdown-toggle {
   cursor: pointer;
+}
+
+.navbar-brand {
+  img {
+    filter: brightness(10) saturate(0);
+    height: 45px;
+    margin: -10px 0;
+  }
 }
