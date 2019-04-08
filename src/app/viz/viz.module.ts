@@ -11,9 +11,17 @@ import { CnnModelComponent } from '@app/viz/cnn-model/cnn-model.component';
 import { ModuleImageComponent } from '@app/viz/module-image/module-image.component';
 import { FormsModule } from '@angular/forms';
 import { Ng5SliderModule } from 'ng5-slider';
+import { ModuleConvComponent } from '@app/viz/module-conv/module-conv.component';
 
 @NgModule({
   imports: [CommonModule, TranslateModule, VizRoutingModule, NgbModule, FormsModule, Ng5SliderModule],
-  declarations: [VizComponent, D3SandboxComponent, InfoWindowComponent, CnnModelComponent, ModuleImageComponent]
+  declarations: [
+    VizComponent,
+    D3SandboxComponent,
+    InfoWindowComponent,
+    CnnModelComponent,
+    ModuleImageComponent,
+    ModuleConvComponent
+  ]
 })
 export class VizModule {}
