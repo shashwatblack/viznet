@@ -91,6 +91,7 @@ export class ModuleConvComponent implements OnInit {
     });
     circle.addClass('cursor-pointer');
     circle.addClass('svg-node');
+    text.addClass('svg-node-text');
     text.addClass('no-pointer');
     text.addClass('no-user-select');
 
