@@ -11,20 +11,27 @@ declare var mina: any;
 })
 export class ModuleConvComponent implements OnInit {
   private svg: any;
-  private g: any;
-  private options = {
-    width: 900,
-    height: 600,
-    padding: 10
-  };
+  private g_image: any;
+  private g_filter: any;
+  private g_result: any;
   public form = {
-    numCols: 0,
-    numRows: 0
+    numColsImage: 0,
+    numRowsImage: 0,
+    numColsFilter: 0,
+    numRowsFilter: 0,
+    numColsResult: 0,
+    numRowsResult: 0
   };
   public figure = {
-    numCols: 0,
-    numRows: 0,
-    nodes: {}
+    numColsImage: 0,
+    numRowsImage: 0,
+    nodesImage: {},
+    numColsFilter: 0,
+    numRowsFilter: 0,
+    nodesFilter: {},
+    numColsResult: 0,
+    numRowsResult: 0,
+    nodesResult: {}
   };
   slider_value: number = 100;
   slider_options: Options = {
@@ -39,19 +46,36 @@ export class ModuleConvComponent implements OnInit {
     this.svg = Snap('#module-conv-svg');
 
     this.svg.attr({
-      viewBox: `0 0 ${this.options.width} ${this.options.height}`
+      width: 1800,
+      height: 600,
+      viewBox: '0 0 1800 600'
     });
 
-    this.g = this.svg.g();
+    this.g_image = this.svg.g().attr({
+      transform: 'translate(0, 0)'
+    });
+    this.g_filter = this.svg.g().attr({
+      transform: 'translate(600, 0)'
+    });
+    this.g_result = this.svg.g().attr({
+      transform: 'translate(1200, 0)'
+    });
 
     this.initializeFigure();
   }
 
   initializeFigure() {
-    this.form.numCols = 8;
-    this.form.numRows = 8;
+    this.form.numColsImage = 8;
+    this.form.numRowsImage = 8;
+    this.updateImage();
 
-    this.updateFigure();
+    this.form.numColsFilter = 2;
+    this.form.numRowsFilter = 2;
+    this.updateFilter();
+
+    this.form.numColsResult = this.form.numColsImage - this.form.numColsFilter + 1;
+    this.form.numRowsResult = this.form.numRowsImage - this.form.numRowsFilter + 1;
+    this.updateResult();
   }
 
   nodeClicked(node) {
@@ -76,15 +100,15 @@ export class ModuleConvComponent implements OnInit {
     });
   }
 
-  getNewNode(r, c) {
+  getNewNode(group, r, c) {
     let x = 50 + c * 50;
     let y = 50 + r * 50;
     let radius = 20;
     let value = 255;
-    let circle = this.g.circle(x, y, radius).attr({
+    let circle = group.circle(x, y, radius).attr({
       fill: `rgb(${value}, ${value}, ${value})`
     });
-    let text = this.g.text(x, y, value).attr({
+    let text = group.text(x, y, value).attr({
       'text-anchor': 'middle',
       'alignment-baseline': 'middle',
       transform: 'translate(0, 2)'
@@ -101,35 +125,99 @@ export class ModuleConvComponent implements OnInit {
     return node;
   }
 
-  updateFigure() {
+  updateImage() {
     // if new is wider - add columns
-    if (this.form.numCols > this.figure.numCols) {
-      for (let r = 0; r < this.figure.numRows; r++) {
-        for (let c = this.figure.numCols; c < this.form.numCols; c++) {
-          this.figure.nodes[`${r},${c}`] = this.getNewNode(r, c);
+    if (this.form.numColsImage > this.figure.numColsImage) {
+      for (let r = 0; r < this.figure.numRowsImage; r++) {
+        for (let c = this.figure.numColsImage; c < this.form.numColsImage; c++) {
+          this.figure.nodesImage[`${r},${c}`] = this.getNewNode(this.g_image, r, c);
         }
       }
     }
     // if new is taller - add rows
-    if (this.form.numRows > this.figure.numRows) {
-      for (let r = this.figure.numRows; r < this.form.numRows; r++) {
-        for (let c = 0; c < this.form.numCols; c++) {
-          this.figure.nodes[`${r},${c}`] = this.getNewNode(r, c);
+    if (this.form.numRowsImage > this.figure.numRowsImage) {
+      for (let r = this.figure.numRowsImage; r < this.form.numRowsImage; r++) {
+        for (let c = 0; c < this.form.numColsImage; c++) {
+          this.figure.nodesImage[`${r},${c}`] = this.getNewNode(this.g_image, r, c);
         }
       }
     }
 
     // remove all outside
-    for (let key in this.figure.nodes) {
-      let node = this.figure.nodes[key];
-      if (node.r >= this.form.numRows || node.c >= this.form.numCols) {
+    for (let key in this.figure.nodesImage) {
+      let node = this.figure.nodesImage[key];
+      if (node.r >= this.form.numRowsImage || node.c >= this.form.numColsImage) {
         node.circle.remove();
         node.text.remove();
-        delete this.figure.nodes[key];
+        delete this.figure.nodesImage[key];
       }
     }
 
-    this.figure.numRows = this.form.numRows;
-    this.figure.numCols = this.form.numCols;
+    this.figure.numRowsImage = this.form.numRowsImage;
+    this.figure.numColsImage = this.form.numColsImage;
+  }
+
+  updateFilter() {
+    // if new is wider - add columns
+    if (this.form.numColsFilter > this.figure.numColsFilter) {
+      for (let r = 0; r < this.figure.numRowsFilter; r++) {
+        for (let c = this.figure.numColsFilter; c < this.form.numColsFilter; c++) {
+          this.figure.nodesFilter[`${r},${c}`] = this.getNewNode(this.g_filter, r, c);
+        }
+      }
+    }
+    // if new is taller - add rows
+    if (this.form.numRowsFilter > this.figure.numRowsFilter) {
+      for (let r = this.figure.numRowsFilter; r < this.form.numRowsFilter; r++) {
+        for (let c = 0; c < this.form.numColsFilter; c++) {
+          this.figure.nodesFilter[`${r},${c}`] = this.getNewNode(this.g_filter, r, c);
+        }
+      }
+    }
+
+    // remove all outside
+    for (let key in this.figure.nodesFilter) {
+      let node = this.figure.nodesFilter[key];
+      if (node.r >= this.form.numRowsFilter || node.c >= this.form.numColsFilter) {
+        node.circle.remove();
+        node.text.remove();
+        delete this.figure.nodesFilter[key];
+      }
+    }
+
+    this.figure.numRowsFilter = this.form.numRowsFilter;
+    this.figure.numColsFilter = this.form.numColsFilter;
+  }
+
+  updateResult() {
+    // if new is wider - add columns
+    if (this.form.numColsResult > this.figure.numColsResult) {
+      for (let r = 0; r < this.figure.numRowsResult; r++) {
+        for (let c = this.figure.numColsResult; c < this.form.numColsResult; c++) {
+          this.figure.nodesResult[`${r},${c}`] = this.getNewNode(this.g_result, r, c);
+        }
+      }
+    }
+    // if new is taller - add rows
+    if (this.form.numRowsResult > this.figure.numRowsResult) {
+      for (let r = this.figure.numRowsResult; r < this.form.numRowsResult; r++) {
+        for (let c = 0; c < this.form.numColsResult; c++) {
+          this.figure.nodesResult[`${r},${c}`] = this.getNewNode(this.g_result, r, c);
+        }
+      }
+    }
+
+    // remove all outside
+    for (let key in this.figure.nodesResult) {
+      let node = this.figure.nodesResult[key];
+      if (node.r >= this.form.numRowsResult || node.c >= this.form.numColsResult) {
+        node.circle.remove();
+        node.text.remove();
+        delete this.figure.nodesResult[key];
+      }
+    }
+
+    this.figure.numRowsResult = this.form.numRowsResult;
+    this.figure.numColsResult = this.form.numColsResult;
   }
 }
