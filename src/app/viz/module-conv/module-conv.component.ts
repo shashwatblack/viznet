@@ -70,6 +70,7 @@ export class ModuleConvComponent implements OnInit {
     if (this.selectedNode) {
       this.selectedNode.circle.removeClass('selected');
     }
+    this.selectedNode = null;
     // remove hover boxes
     if (this.g_hoverLines) {
       this.g_hoverLines.remove();
