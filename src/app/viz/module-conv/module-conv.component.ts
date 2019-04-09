@@ -110,7 +110,7 @@ export class ModuleConvComponent implements OnInit {
   sliderUpdated() {
     let value = (this.selectedNode.value = this.slider_value);
     this.selectedNode.circle.attr({
-      fill: `rgb(${value}, ${value}, ${value})`
+      fill: `rgb(${255 - value}, ${255 - value}, ${255 - value})`
     });
     this.selectedNode.text.attr({
       text: value
@@ -121,9 +121,9 @@ export class ModuleConvComponent implements OnInit {
     let x = 50 + c * 50;
     let y = 50 + r * 50;
     let radius = 20;
-    let value = 255;
+    let value = 0;
     let circle = group.circle(x, y, radius).attr({
-      fill: `rgb(${value}, ${value}, ${value})`
+      fill: `rgb(${255 - value}, ${255 - value}, ${255 - value})`
     });
     let text = group.text(x, y, value).attr({
       'text-anchor': 'middle',
