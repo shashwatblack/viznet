@@ -1,4 +1,4 @@
-<div class="module-wrapper">
+<div class="module-wrapper" (click)="wrapperClicked()">
   <div class="flex-column">
     <div>
       <form class="form-inline">
@@ -18,14 +18,6 @@
       </form>
       <button class="btn btn-default" (click)="showIntro()">Show Intro</button>
     </div>
-    <div class="slider-wrapper">
-      <ng5-slider
-        [ngClass]="{ inactive: !this.selectedNode }"
-        [(value)]="slider_value"
-        [options]="slider_options"
-        (valueChange)="sliderUpdated()"
-      ></ng5-slider>
-    </div>
     <div class="svg-wrapper">
       <svg #svg id="module-image-svg"></svg>
     </div>
@@ -44,3 +36,19 @@
     </button>
   </div>
 </ngx-smart-modal>
+<div id="colorPickerPopup" #colorPickerPopup class="colorPickerPopup">
+  <div class="content flex">
+    <div>
+      <div class="slider-wrapper">
+        <ng5-slider [(value)]="slider_value" [options]="slider_options" (valueChange)="sliderUpdated()"></ng5-slider>
+      </div>
+    </div>
+    <div class="flex-column">
+      <input type="number" class="form-control text-right" [(ngModel)]="slider_value" (change)="sliderUpdated()" />
+      <div
+        class="colorPreview"
+        [ngStyle]="{ background: 'rgb(' + slider_value + ',' + slider_value + ',' + slider_value + ')' }"
+      ></div>
+    </div>
+  </div>
+</div>

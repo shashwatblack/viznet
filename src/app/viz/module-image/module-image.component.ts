@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Options } from 'ng5-slider';
 import { NgxSmartModalService } from 'ngx-smart-modal';
 
@@ -11,6 +11,7 @@ declare var mina: any;
   styleUrls: ['./module-image.component.scss']
 })
 export class ModuleImageComponent implements OnInit, AfterViewInit {
+  @ViewChild('colorPickerPopup') colorPickerPopup: ElementRef;
   private svg: any;
   private g: any;
   private options = {
@@ -30,7 +31,8 @@ export class ModuleImageComponent implements OnInit, AfterViewInit {
   slider_value: number = 100;
   slider_options: Options = {
     floor: 0,
-    ceil: 255
+    ceil: 255,
+    vertical: true
   };
   selectedNode = null;
 
@@ -55,6 +57,19 @@ export class ModuleImageComponent implements OnInit, AfterViewInit {
     }, 0);
   }
 
+  wrapperClicked() {
+    // remove selected node
+    if (this.selectedNode) {
+      this.selectedNode.circle.removeClass('selected');
+    }
+    this.selectedNode = null;
+    this.hidePopup();
+  }
+
+  delay(callback) {
+    return () => setTimeout(callback, 0);
+  }
+
   initializeFigure() {
     this.form.numCols = 8;
     this.form.numRows = 8;
@@ -72,6 +87,8 @@ export class ModuleImageComponent implements OnInit, AfterViewInit {
     });
     this.slider_value = node.value;
     this.selectedNode = node;
+
+    this.showPopup(node);
   }
 
   sliderUpdated() {
@@ -104,8 +121,8 @@ export class ModuleImageComponent implements OnInit, AfterViewInit {
     text.addClass('no-user-select');
 
     let node = { r, c, x, y, radius, value, circle, text };
-    circle.click(() => this.nodeClicked(node));
-    text.click(() => this.nodeClicked(node));
+    circle.click(this.delay(() => this.nodeClicked(node)));
+    text.click(this.delay(() => this.nodeClicked(node)));
     return node;
   }
 
@@ -141,7 +158,7 @@ export class ModuleImageComponent implements OnInit, AfterViewInit {
     this.figure.numCols = this.form.numCols;
   }
 
-  private intro = {
+  intro = {
     current_index: 0,
     current_state: {},
     states: [
@@ -176,5 +193,19 @@ export class ModuleImageComponent implements OnInit, AfterViewInit {
     } else {
       this.ngxSmartModalService.getModal('introModal').close();
     }
+  }
+
+  showPopup(node) {
+    let myicon = node.circle.node;
+    let colorPickerPopup = this.colorPickerPopup.nativeElement;
+    let iconPos = myicon.getBoundingClientRect();
+    colorPickerPopup.style.left = iconPos.right + 20 + 'px';
+    colorPickerPopup.style.top = window.scrollY + iconPos.top - 60 + 'px';
+    colorPickerPopup.style.display = 'block';
+  }
+
+  hidePopup() {
+    let colorPickerPopup = this.colorPickerPopup.nativeElement;
+    colorPickerPopup.style.display = 'none';
   }
 }
