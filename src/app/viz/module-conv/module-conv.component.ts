@@ -118,7 +118,7 @@ export class ModuleConvComponent implements OnInit {
   sliderUpdated() {
     let value = (this.selectedNode.value = this.slider_value);
     this.selectedNode.circle.attr({
-      fill: `rgb(${255 - value}, ${255 - value}, ${255 - value})`
+      fill: `rgb(${value}, ${value}, ${value})`
     });
     this.selectedNode.text.attr({
       text: value
@@ -131,7 +131,7 @@ export class ModuleConvComponent implements OnInit {
     let radius = 20;
     let value = 0;
     let circle = group.circle(x, y, radius).attr({
-      fill: `rgb(${255 - value}, ${255 - value}, ${255 - value})`
+      fill: `rgb(${value}, ${value}, ${value})`
     });
     let text = group.text(x, y, value).attr({
       'text-anchor': 'middle',
@@ -368,16 +368,16 @@ export class ModuleConvComponent implements OnInit {
             let jj = j + (kCenterX - nn);
 
             if (ii >= 0 && ii < this.figure.numRowsImage && jj > 0 && jj < this.figure.numColsImage) {
-              // console.log(ii, jj,i,j,mm,nn);
-
+              //console.log(i,j,ii,jj,nn,mm)
               let node_result = this.figure.nodesResult[`${i},${j}`];
               let node_image = this.figure.nodesImage[`${ii},${jj}`];
               let node_filter = this.figure.nodesFilter[`${mm},${nn}`];
-
-              let value = node_result.value + node_image.value * node_filter.value;
+              // console.log(node_result, node_image, node_filter)
+              let value = node_image.value * node_filter.value;
+              console.log(value);
               node_result.value = value;
               node_result.circle.attr({
-                fill: `rgb(${255 - value}, ${255 - value}, ${255 - value})`
+                fill: `rgb(${value}, ${value}, ${value})`
               });
               node_result.text.attr({
                 text: value
@@ -388,5 +388,9 @@ export class ModuleConvComponent implements OnInit {
         }
       }
     }
+  }
+
+  convolve() {
+    this.updateResultColor();
   }
 }

@@ -15,6 +15,7 @@
           <input type="number" class="form-control" name="numRows" [(ngModel)]="this.form.numRowsImage" />
         </div>
         <button type="submit" class="btn btn-outline-primary" (click)="updateImage()">Update</button>
+        <button (click)="convolve()">Convolve Now!</button>
       </form>
     </div>
     <div class="slider-wrapper">
