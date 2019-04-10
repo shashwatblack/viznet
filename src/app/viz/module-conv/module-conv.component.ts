@@ -10,18 +10,16 @@ declare var mina: any;
   styleUrls: ['./module-conv.component.scss']
 })
 export class ModuleConvComponent implements OnInit {
-  private svg: any;
-  private g_image: any;
-  private g_filter: any;
-  private g_result: any;
-  private g_hoverLines: any;
   public form = {
     numColsImage: 0,
     numRowsImage: 0,
     numColsFilter: 0,
     numRowsFilter: 0,
     numColsResult: 0,
-    numRowsResult: 0
+    numRowsResult: 0,
+    numPadding: 0,
+    numDilation: 1,
+    numStride: 1
   };
   public figure = {
     numColsImage: 0,
@@ -32,14 +30,24 @@ export class ModuleConvComponent implements OnInit {
     nodesFilter: {},
     numColsResult: 0,
     numRowsResult: 0,
-    nodesResult: {}
+    nodesResult: {},
+    numPadding: 0,
+    numDilation: 1,
+    numStride: 1
   };
+
   slider_value: number = 100;
   slider_options: Options = {
     floor: 0,
     ceil: 255
   };
   selectedNode = null;
+
+  private svg: any;
+  private g_image: any;
+  private g_filter: any;
+  private g_result: any;
+  private g_hoverLines: any;
 
   constructor() {}
 
@@ -86,12 +94,12 @@ export class ModuleConvComponent implements OnInit {
     this.form.numRowsImage = 8;
     this.updateImage();
 
-    this.form.numColsFilter = 2;
-    this.form.numRowsFilter = 2;
+    this.form.numColsFilter = 3;
+    this.form.numRowsFilter = 3;
     this.updateFilter();
 
-    this.form.numColsResult = this.form.numColsImage - this.form.numColsFilter + 1;
-    this.form.numRowsResult = this.form.numRowsImage - this.form.numRowsFilter + 1;
+    // this.form.numColsResult = (this.form.numColsImage + 2 * this.form.numPadding - this.form.numDilation * (this.form.numColsFilter - 1) -1)/this.form.numStride + 1;
+    // this.form.numRowsResult = (this.form.numRowsImage + 2 * this.form.numPadding - this.form.numDilation * (this.form.numRowsFilter - 1) -1)/this.form.numStride + 1;
     this.updateResult();
   }
 
@@ -132,6 +140,13 @@ export class ModuleConvComponent implements OnInit {
     });
     circle.addClass('cursor-pointer');
     circle.addClass('svg-node');
+    if (group == this.g_image) {
+      circle.addClass('image');
+    } else if (group == this.g_filter) {
+      circle.addClass('filter');
+    } else {
+      circle.addClass('result');
+    }
     text.addClass('svg-node-text');
     text.addClass('no-pointer');
     text.addClass('no-user-select');
@@ -144,8 +159,13 @@ export class ModuleConvComponent implements OnInit {
     return node;
   }
 
+  // basic implemtation of hoverevent
   addHoverEvent(node) {
     let gutter = 2;
+    // figure out position of the hovered node
+    // x = 1200 y = 0 (pos of first node)
+    let pos_x = node.x;
+    let pos_y = node.y;
     node.circle.mouseover(() => {
       this.addHoverLines(
         {
@@ -169,6 +189,8 @@ export class ModuleConvComponent implements OnInit {
       );
     });
   }
+
+  addHoverEventLogic(node) {}
 
   addHoverLines(imageBox, filterBox, resultBox) {
     if (this.g_hoverLines) {
@@ -243,9 +265,10 @@ export class ModuleConvComponent implements OnInit {
         delete this.figure.nodesImage[key];
       }
     }
-
-    this.figure.numRowsImage = this.form.numRowsImage;
     this.figure.numColsImage = this.form.numColsImage;
+    this.figure.numRowsImage = this.form.numRowsImage;
+
+    this.updateResult();
   }
 
   updateFilter() {
@@ -281,6 +304,18 @@ export class ModuleConvComponent implements OnInit {
   }
 
   updateResult() {
+    this.form.numColsResult =
+      (this.form.numColsImage + 2 * this.form.numPadding - this.form.numDilation * (this.form.numColsFilter - 1) - 1) /
+        this.form.numStride +
+      1;
+    this.form.numRowsResult =
+      (this.form.numRowsImage + 2 * this.form.numPadding - this.form.numDilation * (this.form.numRowsFilter - 1) - 1) /
+        this.form.numStride +
+      1;
+    if (this.form.numColsResult < 0 || this.form.numRowsResult < 0) {
+      this.form.numColsResult = 0;
+      this.form.numRowsResult = 0;
+    }
     // if new is wider - add columns
     if (this.form.numColsResult > this.figure.numColsResult) {
       for (let r = 0; r < this.figure.numRowsResult; r++) {
@@ -318,5 +353,40 @@ export class ModuleConvComponent implements OnInit {
 
     this.figure.numRowsResult = this.form.numRowsResult;
     this.figure.numColsResult = this.form.numColsResult;
+  }
+
+  updateResultColor() {
+    let kCenterX = Math.round(this.figure.numRowsFilter / 2);
+    let kCenterY = Math.round(this.figure.numColsFilter / 2);
+    for (let i = 0; i < this.figure.numRowsResult; i++) {
+      for (let j = 0; j < this.figure.numColsResult; j++) {
+        for (let m = 0; m < this.figure.numRowsFilter; m++) {
+          let mm = this.figure.numRowsFilter - 1 - m;
+          for (let n = 0; n < this.figure.numColsFilter; n++) {
+            let nn = this.figure.numColsFilter - 1 - n;
+            let ii = i + (kCenterY - mm);
+            let jj = j + (kCenterX - nn);
+
+            if (ii >= 0 && ii < this.figure.numRowsImage && jj > 0 && jj < this.figure.numColsImage) {
+              // console.log(ii, jj,i,j,mm,nn);
+
+              let node_result = this.figure.nodesResult[`${i},${j}`];
+              let node_image = this.figure.nodesImage[`${ii},${jj}`];
+              let node_filter = this.figure.nodesFilter[`${mm},${nn}`];
+
+              let value = node_result.value + node_image.value * node_filter.value;
+              node_result.value = value;
+              node_result.circle.attr({
+                fill: `rgb(${255 - value}, ${255 - value}, ${255 - value})`
+              });
+              node_result.text.attr({
+                text: value
+              });
+              this.figure.nodesResult[`${i}, ${j}`] = node_result;
+            }
+          }
+        }
+      }
+    }
   }
 }
