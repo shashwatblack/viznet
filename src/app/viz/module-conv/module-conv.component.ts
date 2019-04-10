@@ -123,6 +123,7 @@ export class ModuleConvComponent implements OnInit {
     this.selectedNode.text.attr({
       text: value
     });
+    this.updateResultColor();
   }
 
   addNewNode(group, r, c) {
@@ -360,20 +361,24 @@ export class ModuleConvComponent implements OnInit {
     let kCenterY = Math.round(this.figure.numColsFilter / 2);
     for (let i = 0; i < this.figure.numRowsResult; i++) {
       let value = 0;
+
       for (let j = 0; j < this.figure.numColsResult; j++) {
         for (let m = 0; m < this.figure.numRowsFilter; m++) {
-          let mm = this.figure.numRowsFilter - 1 - m;
+          let mm = this.figure.numRowsFilter - 1 - m; // invert filter
+
           for (let n = 0; n < this.figure.numColsFilter; n++) {
-            let nn = this.figure.numColsFilter - 1 - n;
+            let nn = this.figure.numColsFilter - 1 - n; // invert filter
             let ii = i + (kCenterY - mm);
             let jj = j + (kCenterX - nn);
+
             if (ii >= 0 && ii < this.figure.numRowsImage && jj >= 0 && jj < this.figure.numColsImage) {
               let node_image = this.figure.nodesImage[`${ii},${jj}`];
               let node_filter = this.figure.nodesFilter[`${mm},${nn}`];
               // console.log(node_result, node_image, node_filter)
               value = value + node_image.value * node_filter.value;
-              console.log(`IN: i:${i},j:${j},ii:${ii},jj:${jj},n:${n},nn:${nn},m:${m},mm:${mm}`);
-              console.log(value, node_image.value, node_filter.value);
+
+              // console.log(`IN: i:${i},j:${j},ii:${ii},jj:${jj},n:${n},nn:${nn},m:${m},mm:${mm}`);
+              // console.log(value, node_image.value, node_filter.value);
 
               let node_result = this.figure.nodesResult[`${i},${j}`];
               node_result.value = value;
