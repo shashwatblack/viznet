@@ -118,7 +118,7 @@ export class ModuleConvComponent implements OnInit {
   sliderUpdated() {
     let value = (this.selectedNode.value = this.slider_value);
     this.selectedNode.circle.attr({
-      fill: `rgb(${value}, ${value}, ${value})`
+      fill: `rgb(${256 - value},${256 - value}, ${256 - value})`
     });
     this.selectedNode.text.attr({
       text: value
@@ -132,7 +132,7 @@ export class ModuleConvComponent implements OnInit {
     let radius = 20;
     let value = 0;
     let circle = group.circle(x, y, radius).attr({
-      fill: `rgb(${value}, ${value}, ${value})`
+      fill: `rgb(${256 - value},${256 - value}, ${256 - value})`
     });
     let text = group.text(x, y, value).attr({
       'text-anchor': 'middle',
@@ -163,23 +163,26 @@ export class ModuleConvComponent implements OnInit {
   // basic implemtation of hoverevent
   addHoverEvent(node) {
     let gutter = 2;
-    // figure out position of the hovered node
-    // x = 1200 y = 0 (pos of first node)
-    let pos_x = node.x;
-    let pos_y = node.y;
+    let ii = node.r; //+ kCenterY;
+    let jj = node.c; //+ kCenterX;
+
+    let node_image = this.figure.nodesImage[`${ii},${jj}`];
+
     node.circle.mouseover(() => {
+      //console.log(node.r, node.c, ii, jj, kCenterX, kCenterY, this.figure.numRowsFilter, this.figure.numColsFilter);
       this.addHoverLines(
         {
-          x: 30 - gutter,
-          y: 30 - gutter,
-          w: 190 + 2 * gutter,
-          h: 190 + 2 * gutter
+          // 30 -> 80 ->130
+          x: node_image.x - node_image.radius - gutter,
+          y: node_image.y - node_image.radius - gutter,
+          w: node.radius * 7 + 2 * gutter,
+          h: node.radius * 7 + 2 * gutter
         },
         {
           x: 630 - gutter,
           y: 30 - gutter,
-          w: 90 + 2 * gutter,
-          h: 90 + 2 * gutter
+          w: node.radius * 7 + 2 * gutter,
+          h: node.radius * 7 + 2 * gutter
         },
         {
           x: 1200 + node.x - node.radius - gutter,
@@ -359,10 +362,11 @@ export class ModuleConvComponent implements OnInit {
   updateResultColor() {
     let kCenterX = Math.round(this.figure.numRowsFilter / 2);
     let kCenterY = Math.round(this.figure.numColsFilter / 2);
+    // console.log(kCenterY, kCenterX);
     for (let i = 0; i < this.figure.numRowsResult; i++) {
-      let value = 0;
-
       for (let j = 0; j < this.figure.numColsResult; j++) {
+        let node_result = this.figure.nodesResult[`${i},${j}`];
+        node_result.value = 0; // reset
         for (let m = 0; m < this.figure.numRowsFilter; m++) {
           let mm = this.figure.numRowsFilter - 1 - m; // invert filter
 
@@ -375,20 +379,25 @@ export class ModuleConvComponent implements OnInit {
               let node_image = this.figure.nodesImage[`${ii},${jj}`];
               let node_filter = this.figure.nodesFilter[`${mm},${nn}`];
               // console.log(node_result, node_image, node_filter)
-              value = value + node_image.value * node_filter.value;
-
-              // console.log(`IN: i:${i},j:${j},ii:${ii},jj:${jj},n:${n},nn:${nn},m:${m},mm:${mm}`);
-              // console.log(value, node_image.value, node_filter.value);
-
-              let node_result = this.figure.nodesResult[`${i},${j}`];
-              node_result.value = value;
+              node_result.value += node_image.value * node_filter.value;
+              //node_result.value += value;
+              // safety net , preventing negative value
+              if (node_result.value > 256) {
+                node_result.value = 256;
+                //value = 256;
+              }
+              //
+              let value = node_result.value;
               node_result.circle.attr({
-                fill: `(rgb(${value}, ${value}, ${value})`
+                fill: `rgb(${256 - value},${256 - value}, ${256 - value})`
               });
               node_result.text.attr({
                 text: value
               });
               this.figure.nodesResult[`${i}, ${j}`] = node_result;
+
+              // console.log(`IN: i:${i},j:${j},ii:${ii},jj:${jj},n:${n},nn:${nn},m:${m},mm:${mm}`);
+              // console.log(value, node_image.value, node_filter.value);
             }
           }
         }
@@ -396,7 +405,7 @@ export class ModuleConvComponent implements OnInit {
     }
   }
 
-  convolve() {
-    this.updateResultColor();
-  }
+  // convolve() {
+  //   this.updateResultColor();
+  // }
 }
