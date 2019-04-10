@@ -6,15 +6,16 @@
           <div class="input-group-prepend">
             <span class="input-group-text">Width</span>
           </div>
-          <input type="number" class="form-control" name="numColsImage" [(ngModel)]="this.form.numColsImage" />
+          <input type="number" class="form-control" name="numCols" [(ngModel)]="this.form.numColsImage" />
         </div>
         <div class="input-group mb-3">
           <div class="input-group-prepend">
             <span class="input-group-text">Height</span>
           </div>
-          <input type="number" class="form-control" name="numRowsImage" [(ngModel)]="this.form.numRowsImage" />
+          <input type="number" class="form-control" name="numRows" [(ngModel)]="this.form.numRowsImage" />
         </div>
         <button type="submit" class="btn btn-outline-primary" (click)="updateImage()">Update</button>
+        <button (click)="convolve()">Convolve Now!</button>
       </form>
     </div>
     <div class="slider-wrapper">
