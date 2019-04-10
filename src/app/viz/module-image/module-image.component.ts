@@ -23,14 +23,14 @@ export class ModuleImageComponent implements OnInit, AfterViewInit {
     numRows: 0,
     nodes: {}
   };
-  manualRefresh: EventEmitter<void> = new EventEmitter<void>();
-  slider_value: number = 100;
-  slider_options: Options = {
+  public manualRefresh: EventEmitter<void> = new EventEmitter<void>();
+  public slider_value: number = 100;
+  public slider_options: Options = {
     floor: 0,
     ceil: 255,
     vertical: true
   };
-  selectedNode = null;
+  public selectedNode = null;
 
   constructor(public ngxSmartModalService: NgxSmartModalService) {}
 
@@ -159,7 +159,7 @@ export class ModuleImageComponent implements OnInit, AfterViewInit {
     this.figure.numCols = this.form.numCols;
   }
 
-  intro = {
+  public intro = {
     current_index: 0,
     current_state: {},
     states: [
@@ -210,7 +210,7 @@ export class ModuleImageComponent implements OnInit, AfterViewInit {
     colorPickerPopup.style.display = 'none';
   }
 
-  presets = [
+  public presets = [
     {
       id: '0',
       name: '0',
