@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, OnInit, ViewChild } from '@angular/core';
 import { Options } from 'ng5-slider';
 import { NgxSmartModalService } from 'ngx-smart-modal';
 
@@ -28,6 +28,7 @@ export class ModuleImageComponent implements OnInit, AfterViewInit {
     numRows: 0,
     nodes: {}
   };
+  manualRefresh: EventEmitter<void> = new EventEmitter<void>();
   slider_value: number = 100;
   slider_options: Options = {
     floor: 0,
@@ -85,6 +86,7 @@ export class ModuleImageComponent implements OnInit, AfterViewInit {
     node.circle.attr({
       stroke: '#0db9f0'
     });
+    this.manualRefresh.emit();
     this.slider_value = node.value;
     this.selectedNode = node;
 

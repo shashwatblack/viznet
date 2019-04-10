@@ -40,7 +40,12 @@
   <div class="content flex">
     <div>
       <div class="slider-wrapper">
-        <ng5-slider [(value)]="slider_value" [options]="slider_options" (valueChange)="sliderUpdated()"></ng5-slider>
+        <ng5-slider
+          [(value)]="slider_value"
+          [options]="slider_options"
+          (valueChange)="sliderUpdated()"
+          [manualRefresh]="manualRefresh"
+        ></ng5-slider>
       </div>
     </div>
     <div class="flex-column">
