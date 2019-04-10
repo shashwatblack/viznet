@@ -1,6 +1,6 @@
 <div class="module-wrapper" (click)="wrapperClicked()">
-  <div class="flex-column">
-    <div>
+  <div class="flex-column w-100">
+    <div class="w-100">
       <form class="form-inline">
         <div class="input-group mb-3">
           <div class="input-group-prepend">
@@ -16,10 +16,19 @@
         </div>
         <button type="submit" class="btn btn-outline-primary" (click)="updateFigure()">Update</button>
       </form>
-      <button class="btn btn-default" (click)="showIntro()">Show Intro</button>
+      <button class="btn btn-outline-dark" (click)="showIntro()" style="position: absolute; right: 10px; top: 70px;">
+        Show Intro
+      </button>
     </div>
-    <div class="svg-wrapper">
-      <svg #svg id="module-image-svg"></svg>
+    <div class="flex w-100">
+      <div class="presets-wrapper flex-column">
+        <button class="btn btn-outline-info" *ngFor="let preset of presets" (click)="loadPreset(preset)">
+          Load Preset {{ preset.name }}
+        </button>
+      </div>
+      <div class="svg-wrapper">
+        <svg #svg id="module-image-svg"></svg>
+      </div>
     </div>
   </div>
 </div>

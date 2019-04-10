@@ -12,4 +12,13 @@ form {
 
 .svg-wrapper {
   max-height: calc(100% - 110px);
+  flex: 1 1;
+}
+
+.presets-wrapper {
+  flex: 0 0 150px;
+  padding-top: 20px;
+  button {
+    margin-bottom: 10px;
+  }
 }
