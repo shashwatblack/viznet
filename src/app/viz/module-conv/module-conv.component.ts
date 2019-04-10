@@ -364,9 +364,9 @@ export class ModuleConvComponent implements OnInit {
     let kCenterY = Math.round(this.figure.numColsFilter / 2);
     // console.log(kCenterY, kCenterX);
     for (let i = 0; i < this.figure.numRowsResult; i++) {
-      let value = 0;
-
       for (let j = 0; j < this.figure.numColsResult; j++) {
+        let node_result = this.figure.nodesResult[`${i},${j}`];
+        node_result.value = 0; // reset
         for (let m = 0; m < this.figure.numRowsFilter; m++) {
           let mm = this.figure.numRowsFilter - 1 - m; // invert filter
 
@@ -379,21 +379,15 @@ export class ModuleConvComponent implements OnInit {
               let node_image = this.figure.nodesImage[`${ii},${jj}`];
               let node_filter = this.figure.nodesFilter[`${mm},${nn}`];
               // console.log(node_result, node_image, node_filter)
-              value = value + node_image.value * node_filter.value;
-
-              // console.log(`IN: i:${i},j:${j},ii:${ii},jj:${jj},n:${n},nn:${nn},m:${m},mm:${mm}`);
-              // console.log(value, node_image.value, node_filter.value);
-
-              let node_result = this.figure.nodesResult[`${i},${j}`];
-              node_result.value = value;
-
+              node_result.value += node_image.value * node_filter.value;
+              //node_result.value += value;
               // safety net , preventing negative value
               if (node_result.value > 256) {
                 node_result.value = 256;
-                value = 256;
+                //value = 256;
               }
               //
-
+              let value = node_result.value;
               node_result.circle.attr({
                 fill: `rgb(${256 - value},${256 - value}, ${256 - value})`
               });
@@ -401,6 +395,9 @@ export class ModuleConvComponent implements OnInit {
                 text: value
               });
               this.figure.nodesResult[`${i}, ${j}`] = node_result;
+
+              // console.log(`IN: i:${i},j:${j},ii:${ii},jj:${jj},n:${n},nn:${nn},m:${m},mm:${mm}`);
+              // console.log(value, node_image.value, node_filter.value);
             }
           }
         }
