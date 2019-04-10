@@ -21,3 +21,11 @@
   height: calc(100vh - 56px);
   background: #eeeeee;
 }
+
+.nsm-dialog {
+  max-width: 800px;
+  margin-top: 50px;
+  .nsm-content {
+    padding: 0;
+  }
+}

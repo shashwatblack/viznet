@@ -12,9 +12,18 @@ import { ModuleImageComponent } from '@app/viz/module-image/module-image.compone
 import { FormsModule } from '@angular/forms';
 import { Ng5SliderModule } from 'ng5-slider';
 import { ModuleConvComponent } from '@app/viz/module-conv/module-conv.component';
+import { NgxSmartModalModule } from 'ngx-smart-modal';
 
 @NgModule({
-  imports: [CommonModule, TranslateModule, VizRoutingModule, NgbModule, FormsModule, Ng5SliderModule],
+  imports: [
+    CommonModule,
+    TranslateModule,
+    VizRoutingModule,
+    NgbModule,
+    FormsModule,
+    Ng5SliderModule,
+    NgxSmartModalModule.forRoot()
+  ],
   declarations: [
     VizComponent,
     D3SandboxComponent,

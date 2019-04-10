@@ -17,6 +17,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { VizModule } from '@app/viz/viz.module';
+import { NgxSmartModalModule } from 'ngx-smart-modal';
 
 @NgModule({
   imports: [
@@ -26,6 +27,7 @@ import { VizModule } from '@app/viz/viz.module';
     FormsModule,
     HttpClientModule,
     TranslateModule.forRoot(),
+    NgxSmartModalModule.forRoot(),
     NgbModule,
     CoreModule,
     SharedModule,
