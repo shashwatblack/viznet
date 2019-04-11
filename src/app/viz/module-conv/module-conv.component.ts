@@ -145,7 +145,7 @@ export class ModuleConvComponent implements OnInit, AfterViewInit {
     let radius = 20;
     let value = 0;
     let circle = group.circle(x, y, radius).attr({
-      fill: `rgb(${256 - value},${256 - value}, ${256 - value})`
+      fill: `rgb(${255 - value},${255 - value}, ${255 - value})`
     });
     let text = group.text(x, y, value).attr({
       'text-anchor': 'middle',
@@ -164,8 +164,9 @@ export class ModuleConvComponent implements OnInit, AfterViewInit {
     text.addClass('svg-node-text');
     text.addClass('no-pointer');
     text.addClass('no-user-select');
-
-    group.polyline([10, 10, 1000, 1000]);
+    text.attr({
+      text: value
+    });
 
     let node = { r, c, x, y, radius, value, circle, text };
     circle.click(this.utils.delay(() => this.nodeClicked(node)));
