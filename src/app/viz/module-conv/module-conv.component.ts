@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, OnInit, ViewChild } from '@angular/core';
 import { Options } from 'ng5-slider';
 import { NgxSmartModalService } from 'ngx-smart-modal';
+import { UtilsService } from '@app/core';
 
 declare var Snap: any;
 declare var mina: any;
@@ -53,7 +54,7 @@ export class ModuleConvComponent implements OnInit, AfterViewInit {
   private g_result: any;
   private g_hoverLines: any;
 
-  constructor(public ngxSmartModalService: NgxSmartModalService) {}
+  constructor(public ngxSmartModalService: NgxSmartModalService, private readonly utils: UtilsService) {}
 
   ngOnInit() {
     this.svg = Snap('#module-conv-svg');
@@ -98,10 +99,6 @@ export class ModuleConvComponent implements OnInit, AfterViewInit {
     this.hidePopup();
   }
 
-  delay(callback) {
-    return () => setTimeout(callback, 0);
-  }
-
   initializeFigure() {
     this.form.numColsImage = 8;
     this.form.numRowsImage = 8;
@@ -138,7 +135,8 @@ export class ModuleConvComponent implements OnInit, AfterViewInit {
     this.selectedNode.text.attr({
       text: value
     });
-    this.updateResultColor();
+
+    this.utils.debounce(() => this.updateResultColor(), 500)();
   }
 
   addNewNode(group, r, c) {
@@ -170,8 +168,8 @@ export class ModuleConvComponent implements OnInit, AfterViewInit {
     group.polyline([10, 10, 1000, 1000]);
 
     let node = { r, c, x, y, radius, value, circle, text };
-    circle.click(this.delay(() => this.nodeClicked(node)));
-    text.click(this.delay(() => this.nodeClicked(node)));
+    circle.click(this.utils.delay(() => this.nodeClicked(node)));
+    text.click(this.utils.delay(() => this.nodeClicked(node)));
     return node;
   }
 

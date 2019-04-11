@@ -13,6 +13,7 @@ import { ApiPrefixInterceptor } from './http/api-prefix.interceptor';
 import { ErrorHandlerInterceptor } from './http/error-handler.interceptor';
 import { CacheInterceptor } from './http/cache.interceptor';
 import { NotificationService } from './notifications/notification.service';
+import { UtilsService } from './utils/utils.service';
 
 @NgModule({
   imports: [CommonModule, HttpClientModule, TranslateModule, RouterModule],
@@ -25,6 +26,7 @@ import { NotificationService } from './notifications/notification.service';
     ErrorHandlerInterceptor,
     CacheInterceptor,
     NotificationService,
+    UtilsService,
     {
       provide: HttpClient,
       useClass: HttpService
