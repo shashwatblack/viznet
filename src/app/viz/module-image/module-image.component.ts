@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, OnInit, ViewChild } from '@angular/core';
 import { Options } from 'ng5-slider';
 import { NgxSmartModalService } from 'ngx-smart-modal';
+import { UtilsService } from '@app/core';
 
 declare var Snap: any;
 declare var mina: any;
@@ -32,7 +33,7 @@ export class ModuleImageComponent implements OnInit, AfterViewInit {
   };
   public selectedNode = null;
 
-  constructor(public ngxSmartModalService: NgxSmartModalService) {}
+  constructor(public ngxSmartModalService: NgxSmartModalService, private readonly utils: UtilsService) {}
 
   ngOnInit() {
     this.svg = Snap('#module-image-svg');
@@ -60,10 +61,6 @@ export class ModuleImageComponent implements OnInit, AfterViewInit {
     }
     this.selectedNode = null;
     this.hidePopup();
-  }
-
-  delay(callback) {
-    return () => setTimeout(callback, 0);
   }
 
   initializeFigure() {
@@ -122,8 +119,8 @@ export class ModuleImageComponent implements OnInit, AfterViewInit {
     text.addClass('no-user-select');
 
     let node = { r, c, x, y, radius, value, circle, text };
-    circle.click(this.delay(() => this.nodeClicked(node)));
-    text.click(this.delay(() => this.nodeClicked(node)));
+    circle.click(this.utils.delay(() => this.nodeClicked(node)));
+    text.click(this.utils.delay(() => this.nodeClicked(node)));
     return node;
   }
 
@@ -161,7 +158,11 @@ export class ModuleImageComponent implements OnInit, AfterViewInit {
 
   public intro = {
     current_index: 0,
-    current_state: {},
+    current_state: {
+      title: null,
+      message: null,
+      btnText: null
+    },
     states: [
       {
         title: 'Hello.',

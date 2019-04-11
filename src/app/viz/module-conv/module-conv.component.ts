@@ -420,7 +420,11 @@ export class ModuleConvComponent implements OnInit, AfterViewInit {
 
   public intro = {
     current_index: 0,
-    current_state: {},
+    current_state: {
+      title: null,
+      message: null,
+      btnText: null
+    },
     states: [
       {
         title: 'Hello.',
