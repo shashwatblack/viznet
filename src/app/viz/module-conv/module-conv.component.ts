@@ -456,9 +456,9 @@ export class ModuleConvComponent implements OnInit, AfterViewInit {
         We can do some cool maths on the image using this kernel. This gives us a new image.
         <div class="text-center"><img src="https://mlnotebook.github.io/img/CNN/convSobel.gif" height="500"></div>
         <div class="row conv-animation-label">
-          <div class="col-4 text-center">Result</div>
-          <div class="col-4 text-center">Kernel</div>
           <div class="col-4 text-center">Image</div>
+          <div class="col-4 text-center">Kernel</div>
+          <div class="col-4 text-center">Result</div>
         </div>
         `,
         btnText: 'Next'
