@@ -2,7 +2,7 @@
   <div class="network-state-wrapper">
     <div class="network-state">
       <!--<app-d3-sandbox #d3_sandbox></app-d3-sandbox>-->
-      <app-cnn-model #cnn_model class="cnn-model-wrapper"></app-cnn-model>
+      <app-cnn-model #cnn_model class="cnn-model-wrapper" [state]="modelStates.current_state"></app-cnn-model>
     </div>
     <!--
     <div class="controls">
@@ -37,7 +37,7 @@
           </button>
         </td>
         <td class="description">
-          {{ modelStates.current_state.description }}
+          <div [innerHTML]="modelStates.current_state.description"></div>
         </td>
         <td [ngClass]="{ inactive: modelStates.current_index >= modelStates.states.length - 1 }">
           <button class="btn btn-link" (click)="stateNext()">

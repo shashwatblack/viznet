@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 
 declare var Snap: any;
 declare var mina: any;
@@ -8,11 +8,13 @@ declare var mina: any;
   templateUrl: './cnn-model.component.html',
   styleUrls: ['./cnn-model.component.scss']
 })
-export class CnnModelComponent implements OnInit {
+export class CnnModelComponent implements OnInit, OnChanges {
+  @Input() state: Array<any>;
   private layers: any;
   private svg: any;
   private g: any;
   private options = { width: 1200, height: 600, padding: 10 };
+  public focusedLayers: any = [];
 
   constructor() {}
 
@@ -32,6 +34,11 @@ export class CnnModelComponent implements OnInit {
     // });
 
     this.drawImage();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    this.focusedLayers = changes.state.currentValue.focus;
+    setTimeout(() => this.focusLayers(), 500);
   }
 
   private constructLayers() {
@@ -96,6 +103,7 @@ export class CnnModelComponent implements OnInit {
     let max_box_height = 100;
     let box_container_width = layer_width - 2 * box_margin;
     for (const layer of this.layers) {
+      layer.g = this.g.g().addClass('layer-box animated');
       if (layer.type == 'channel') {
         let box_container_height = layer_height / layer.channels;
         let box_height = box_container_height - 2 * box_margin;
@@ -108,11 +116,7 @@ export class CnnModelComponent implements OnInit {
           let box_hcenter = x + box_container_width / 2;
           let box_vtop = box_vcenter - box_height / 2;
           let box_htop = box_margin + box_hcenter - box_width / 2;
-          let element = this.g.rect(box_htop, box_vtop, box_width, box_height).attr({
-            fill: '#aaaaaa'
-          });
-          element.addClass('ease-in-out');
-
+          let element = layer.g.rect(box_htop, box_vtop, box_width, box_height);
           layer.elements.push(element);
         }
       } else if (layer.type == 'dense') {
@@ -126,11 +130,7 @@ export class CnnModelComponent implements OnInit {
           let box_hcenter = x + box_container_width / 2;
           let box_vtop = box_vcenter - box_height / 2;
           let box_htop = box_margin + box_hcenter - box_width / 2;
-          let element = this.g.rect(box_htop, box_vtop, box_width, box_height).attr({
-            fill: '#aaaaaa'
-          });
-          element.addClass('ease-in-out');
-
+          let element = layer.g.rect(box_htop, box_vtop, box_width, box_height);
           layer.elements.push(element);
         }
       } else if (layer.type == 'output') {
@@ -145,11 +145,7 @@ export class CnnModelComponent implements OnInit {
           let box_hcenter = x + box_container_width / 2;
           let box_vtop = box_vcenter - box_height / 2;
           let box_htop = box_margin + box_hcenter - box_width / 2;
-          let element = this.g.rect(box_htop, box_vtop, box_width, box_height).attr({
-            fill: '#aaaaaa'
-          });
-          element.addClass('ease-in-out');
-
+          let element = layer.g.rect(box_htop, box_vtop, box_width, box_height);
           layer.elements.push(element);
         }
       }
@@ -163,12 +159,37 @@ export class CnnModelComponent implements OnInit {
 
       let name_htop = x + layer_width / 2;
       let name_vtop = layer_height + box_margin * 8;
-      layer.name_element = this.g.text(name_htop, name_vtop, layer.name).attr({
+      layer.name_element = layer.g.text(name_htop, name_vtop, layer.name).attr({
         'text-anchor': 'middle'
       });
 
       // todo: add arrow
       x += layer_width * 2;
+    }
+
+    this.svg.addClass('animated bounceIn');
+    this.focusLayers();
+  }
+
+  private focusLayers() {
+    let focusedLayers = [];
+    if (this.state && 'focus' in this.state) {
+      focusedLayers = this.state['focus'];
+    }
+
+    this.svg.removeClass('no-display');
+    if (this.state['hideNetwork']) {
+      this.svg.addClass('no-display');
+    }
+    for (const layer of this.layers) {
+      layer.g.removeClass('focused');
+      layer.g.removeClass('pulse');
+      if (focusedLayers.includes(layer.id)) {
+        layer.g.addClass('focused');
+        if (this.state['animate']) {
+          layer.g.addClass('pulse');
+        }
+      }
     }
   }
 }

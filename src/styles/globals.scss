@@ -81,3 +81,19 @@
 .conv-animation-label {
   margin-top: -60px;
 }
+
+.layer-box {
+  rect,
+  text {
+    opacity: 0.4;
+    fill: #aaaaaa;
+    transition: all 500ms ease-in-out;
+  }
+  &.focused {
+    rect,
+    text {
+      opacity: 1;
+      fill: #ddaaaa;
+    }
+  }
+}
