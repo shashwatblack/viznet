@@ -42,7 +42,7 @@
       <div class="slider-wrapper">
         <ng5-slider
           [(value)]="slider_value"
-          [options]="slider_options"
+          [options]="selectedNode && selectedNode.nodeType == 'filter' ? slider_options_filter : slider_options_image"
           (valueChange)="sliderUpdated()"
           [manualRefresh]="manualRefresh"
         ></ng5-slider>
