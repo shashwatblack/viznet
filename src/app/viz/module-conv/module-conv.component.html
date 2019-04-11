@@ -31,3 +31,16 @@
     </div>
   </div>
 </div>
+<ngx-smart-modal #introModal identifier="introModal" [closable]="false" [escapable]="false" [dismissable]="false">
+  <div class="modal-header bold">
+    {{ intro.current_state.title }}
+  </div>
+  <div class="modal-body">
+    <div [innerHTML]="intro.current_state.message"></div>
+  </div>
+  <div class="modal-footer">
+    <button class="pull-right btn btn-primary" (click)="introNext()">
+      {{ intro.current_state.btnText || 'Next' }}
+    </button>
+  </div>
+</ngx-smart-modal>

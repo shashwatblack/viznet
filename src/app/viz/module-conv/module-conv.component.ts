@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { Options } from 'ng5-slider';
+import { NgxSmartModalService } from 'ngx-smart-modal';
 
 declare var Snap: any;
 declare var mina: any;
@@ -9,7 +10,7 @@ declare var mina: any;
   templateUrl: './module-conv.component.html',
   styleUrls: ['./module-conv.component.scss']
 })
-export class ModuleConvComponent implements OnInit {
+export class ModuleConvComponent implements OnInit, AfterViewInit {
   public form = {
     numColsImage: 0,
     numRowsImage: 0,
@@ -49,7 +50,7 @@ export class ModuleConvComponent implements OnInit {
   private g_result: any;
   private g_hoverLines: any;
 
-  constructor() {}
+  constructor(public ngxSmartModalService: NgxSmartModalService) {}
 
   ngOnInit() {
     this.svg = Snap('#module-conv-svg');
@@ -71,6 +72,14 @@ export class ModuleConvComponent implements OnInit {
     });
 
     this.initializeFigure();
+  }
+
+  ngAfterViewInit() {
+    // push task at the end of queue using timeout
+    setTimeout(() => {
+      // @Scott, uncomment this to show intro on load
+      // this.showIntro();
+    }, 0);
   }
 
   wrapperClicked() {
@@ -402,6 +411,43 @@ export class ModuleConvComponent implements OnInit {
           }
         }
       }
+    }
+  }
+
+  public intro = {
+    current_index: 0,
+    current_state: {},
+    states: [
+      {
+        title: 'Hello.',
+        message: 'Welcome to convolution.',
+        btnText: 'Next'
+      },
+      {
+        title: 'So what is convolution, you say?',
+        message: 'Well <b>Aaron or Scott or Gerald can explain much better than me.</b>',
+        btnText: 'Next'
+      },
+      {
+        title: "So that's it!",
+        message: 'Someone will fill in these text here.',
+        btnText: "I'm ready for interactive app!"
+      }
+    ]
+  };
+
+  showIntro() {
+    this.intro.current_index = 0;
+    this.intro.current_state = this.intro.states[0];
+    this.ngxSmartModalService.getModal('introModal').open();
+  }
+
+  introNext() {
+    this.intro.current_index += 1;
+    if (this.intro.current_index < this.intro.states.length) {
+      this.intro.current_state = this.intro.states[this.intro.current_index];
+    } else {
+      this.ngxSmartModalService.getModal('introModal').close();
     }
   }
 
