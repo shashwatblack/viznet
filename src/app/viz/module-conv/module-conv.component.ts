@@ -41,9 +41,14 @@ export class ModuleConvComponent implements OnInit, AfterViewInit {
 
   public manualRefresh: EventEmitter<void> = new EventEmitter<void>();
   public slider_value: number = 100;
-  public slider_options: Options = {
+  public slider_options_image: Options = {
     floor: 0,
     ceil: 255,
+    vertical: true
+  };
+  public slider_options_filter: Options = {
+    floor: -10,
+    ceil: 10,
     vertical: true
   };
   public selectedNode = null;
@@ -140,12 +145,13 @@ export class ModuleConvComponent implements OnInit, AfterViewInit {
   }
 
   addNewNode(group, r, c) {
+    let nodeType = null;
     let x = 50 + c * 50;
     let y = 50 + r * 50;
     let radius = 20;
     let value = 0;
     let circle = group.circle(x, y, radius).attr({
-      fill: `rgb(${256 - value},${256 - value}, ${256 - value})`
+      fill: `rgb(${255 - value},${255 - value}, ${255 - value})`
     });
     let text = group.text(x, y, value).attr({
       'text-anchor': 'middle',
@@ -156,18 +162,22 @@ export class ModuleConvComponent implements OnInit, AfterViewInit {
     circle.addClass('svg-node');
     if (group == this.g_image) {
       circle.addClass('image');
+      nodeType = 'image';
     } else if (group == this.g_filter) {
       circle.addClass('filter');
+      nodeType = 'filter';
     } else {
       circle.addClass('result');
+      nodeType = 'result';
     }
     text.addClass('svg-node-text');
     text.addClass('no-pointer');
     text.addClass('no-user-select');
+    text.attr({
+      text: value
+    });
 
-    group.polyline([10, 10, 1000, 1000]);
-
-    let node = { r, c, x, y, radius, value, circle, text };
+    let node = { r, c, x, y, radius, value, circle, text, nodeType };
     circle.click(this.utils.delay(() => this.nodeClicked(node)));
     text.click(this.utils.delay(() => this.nodeClicked(node)));
     return node;
