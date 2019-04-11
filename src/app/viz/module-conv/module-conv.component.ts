@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, OnInit, ViewChild } from '@angular/core';
 import { Options } from 'ng5-slider';
 import { NgxSmartModalService } from 'ngx-smart-modal';
 
@@ -11,6 +11,7 @@ declare var mina: any;
   styleUrls: ['./module-conv.component.scss']
 })
 export class ModuleConvComponent implements OnInit, AfterViewInit {
+  @ViewChild('colorPickerPopup') colorPickerPopup: ElementRef;
   public form = {
     numColsImage: 0,
     numRowsImage: 0,
@@ -37,12 +38,14 @@ export class ModuleConvComponent implements OnInit, AfterViewInit {
     numStride: 1
   };
 
-  slider_value: number = 100;
-  slider_options: Options = {
+  public manualRefresh: EventEmitter<void> = new EventEmitter<void>();
+  public slider_value: number = 100;
+  public slider_options: Options = {
     floor: 0,
-    ceil: 255
+    ceil: 255,
+    vertical: true
   };
-  selectedNode = null;
+  public selectedNode = null;
 
   private svg: any;
   private g_image: any;
@@ -92,6 +95,7 @@ export class ModuleConvComponent implements OnInit, AfterViewInit {
     if (this.g_hoverLines) {
       this.g_hoverLines.remove();
     }
+    this.hidePopup();
   }
 
   delay(callback) {
@@ -122,12 +126,14 @@ export class ModuleConvComponent implements OnInit, AfterViewInit {
     });
     this.slider_value = node.value;
     this.selectedNode = node;
+
+    this.showPopup(node);
   }
 
   sliderUpdated() {
     let value = (this.selectedNode.value = this.slider_value);
     this.selectedNode.circle.attr({
-      fill: `rgb(${256 - value},${256 - value}, ${256 - value})`
+      fill: `rgb(${255 - value},${255 - value}, ${255 - value})`
     });
     this.selectedNode.text.attr({
       text: value
@@ -435,6 +441,20 @@ export class ModuleConvComponent implements OnInit, AfterViewInit {
       }
     ]
   };
+
+  showPopup(node) {
+    let myicon = node.circle.node;
+    let colorPickerPopup = this.colorPickerPopup.nativeElement;
+    let iconPos = myicon.getBoundingClientRect();
+    colorPickerPopup.style.left = iconPos.right + 20 + 'px';
+    colorPickerPopup.style.top = window.scrollY + iconPos.top - 60 + 'px';
+    colorPickerPopup.style.display = 'block';
+  }
+
+  hidePopup() {
+    let colorPickerPopup = this.colorPickerPopup.nativeElement;
+    colorPickerPopup.style.display = 'none';
+  }
 
   showIntro() {
     this.intro.current_index = 0;

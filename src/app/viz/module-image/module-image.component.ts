@@ -102,7 +102,7 @@ export class ModuleImageComponent implements OnInit, AfterViewInit {
     this.updateNodeValue(this.selectedNode, this.slider_value);
   }
 
-  getNewNode(r, c) {
+  addNewNode(r, c) {
     let x = 50 + c * 50;
     let y = 50 + r * 50;
     let radius = 20;
@@ -132,7 +132,7 @@ export class ModuleImageComponent implements OnInit, AfterViewInit {
     if (this.form.numCols > this.figure.numCols) {
       for (let r = 0; r < this.figure.numRows; r++) {
         for (let c = this.figure.numCols; c < this.form.numCols; c++) {
-          this.figure.nodes[`${r},${c}`] = this.getNewNode(r, c);
+          this.figure.nodes[`${r},${c}`] = this.addNewNode(r, c);
         }
       }
     }
@@ -140,7 +140,7 @@ export class ModuleImageComponent implements OnInit, AfterViewInit {
     if (this.form.numRows > this.figure.numRows) {
       for (let r = this.figure.numRows; r < this.form.numRows; r++) {
         for (let c = 0; c < this.form.numCols; c++) {
-          this.figure.nodes[`${r},${c}`] = this.getNewNode(r, c);
+          this.figure.nodes[`${r},${c}`] = this.addNewNode(r, c);
         }
       }
     }
