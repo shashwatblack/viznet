@@ -1,4 +1,33 @@
-<div class="module-wrapper" (click)="wrapperClicked()">
+<div class="module-wrapper flex-column" (click)="wrapperClicked()">
+  <div>
+    <!-- general description -->
+    <p>
+      Welcome to the convolution part of the tutorial. Here we will roughly explain the motivation and intuition of
+      convolutions without dwelling too much in the mathematical details. At the end of this section, you will find a
+      fun, interactive convolution with presets to play around and apply your knowledge.
+    </p>
+    <p>
+      So what is a convolution? A convolution describes a process when two causal systems, i.e., systems where the
+      output depends on the past and current inputs and not future inputs, interacted with one another
+    </p>
+    <img src="assets/wiki_CNN.gif" title="simple signal convolution. From Wikipedia" />
+    <p>
+      As you can see from the figure above. When two box functions interacted with one another, they resulted in a
+      triangular function that described the area shared by both systems over time.
+    </p>
+    <p>
+      From the previous section, you now know that an image is simply a matrix of pixels that represent light intensity.
+      The motivation of image convolution is that by applying the right second function or matrix, we can derive another
+      image that contains some meaningful relationship for a computer. A kernel is a matrix with learnable weights or
+      parameters. When you convolve an image with a meaningful kernel, the resulting feature map can represent
+      meaningful relationship within the image. You convolve an image by sliding the kernel over all sections of an
+      image as shown below.
+    </p>
+    <img src="assets/RiverTrail_CNN.png" title="2D image convolution. From River Trail tutorial" />
+    <p>An example of a common convolution is an edge detector</p>
+    <img src="assets/gimp_org_img.jpg" title="from gimp tutorial" />
+    <img src="assets/Gimp-Edge.png" title="from gimp tutorial" />
+  </div>
   <div class="flex-column">
     <div>
       <form class="form-inline">
