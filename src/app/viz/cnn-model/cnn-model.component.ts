@@ -40,54 +40,47 @@ export class CnnModelComponent implements OnInit {
         id: 'l1',
         type: 'channel',
         channels: 1,
-        name: 'Input',
+        name: 'Input Image',
         shape: '1 x 28 x 28'
       },
       {
         id: 'l2',
         type: 'channel',
-        channels: 10,
-        name: 'Conv1',
+        channels: 5,
+        name: 'Convolution 1',
         shape: '10 x 24 x 24'
       },
       {
         id: 'l3',
         type: 'channel',
-        channels: 10,
-        name: 'Pool1',
+        channels: 5,
+        name: 'Pooling 1',
         shape: '10 x 12 x 12'
       },
       {
         id: 'l4',
         type: 'channel',
-        channels: 20,
-        name: 'Conv2',
+        channels: 10,
+        name: 'Convolution 2',
         shape: '20 x 8 x 8'
       },
       {
         id: 'l5',
         type: 'channel',
-        channels: 20,
-        name: 'Pool2',
+        channels: 10,
+        name: 'Pooling 2',
         shape: '20 x 4 x 4'
       },
       {
         id: 'l6',
         type: 'dense',
-        channels: 320,
-        name: 'FC1',
+        channels: 30,
+        name: 'Dense',
         shape: '320 x 1'
       },
       {
         id: 'l7',
-        type: 'dense',
-        channels: 100,
-        name: 'FC2',
-        shape: '100 x 1'
-      },
-      {
-        id: 'l8',
-        type: 'dense',
+        type: 'output',
         channels: 10,
         name: 'Output',
         shape: '10 x 1'
@@ -108,6 +101,7 @@ export class CnnModelComponent implements OnInit {
         let box_height = box_container_height - 2 * box_margin;
         box_height = Math.min(box_height, max_box_height);
         let box_width = Math.min(box_container_width, box_height);
+        box_height = box_width; // square it all. square it all.
         layer.elements = [];
         for (let c = 0; c < layer.channels; c++) {
           let box_vcenter = ((2 * c + 1) * box_container_height) / 2;
@@ -139,13 +133,33 @@ export class CnnModelComponent implements OnInit {
 
           layer.elements.push(element);
         }
+      } else if (layer.type == 'output') {
+        let vertical_margin = layer_height / 4;
+        let box_container_height = (layer_height - 2 * vertical_margin) / layer.channels;
+        let box_height = Math.max(1, box_container_height - 2);
+        box_height = Math.min(box_height, max_box_height);
+        let box_width = Math.min(box_container_width, box_height);
+        layer.elements = [];
+        for (let c = 0; c < layer.channels; c++) {
+          let box_vcenter = vertical_margin + ((2 * c + 1) * box_container_height) / 2;
+          let box_hcenter = x + box_container_width / 2;
+          let box_vtop = box_vcenter - box_height / 2;
+          let box_htop = box_margin + box_hcenter - box_width / 2;
+          let element = this.g.rect(box_htop, box_vtop, box_width, box_height).attr({
+            fill: '#aaaaaa'
+          });
+          element.addClass('ease-in-out');
+
+          layer.elements.push(element);
+        }
       }
 
-      let shape_htop = x + layer_width / 2;
-      let shape_vtop = layer_height + box_margin * 4;
-      layer.shape_element = this.g.text(shape_htop, shape_vtop, layer.shape).attr({
-        'text-anchor': 'middle'
-      });
+      // ignoring shapes because users didn't find this important
+      // let shape_htop = x + layer_width / 2;
+      // let shape_vtop = layer_height + box_margin * 4;
+      // layer.shape_element = this.g.text(shape_htop, shape_vtop, layer.shape).attr({
+      //   'text-anchor': 'middle'
+      // });
 
       let name_htop = x + layer_width / 2;
       let name_vtop = layer_height + box_margin * 8;

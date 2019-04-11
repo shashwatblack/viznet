@@ -27,11 +27,25 @@
   }
 }
 
-.network-overview-wrapper {
+.network-description-wrapper {
   flex: 0 0 200px;
   padding: 15px;
-  img {
-    max-height: 200px;
+  table.network-description {
+    height: 100%;
+    width: 100%;
+    tr {
+      td {
+        padding: 10px;
+      }
+      td:first-child,
+      td:last-child {
+        width: 40px;
+      }
+      td.description {
+        padding: 20px;
+        font-size: 20px;
+      }
+    }
   }
 }
 
@@ -40,4 +54,5 @@
   height: 100%;
   padding: 20px;
   display: flex;
+  justify-content: center;
 }
