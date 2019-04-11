@@ -31,16 +31,16 @@
   <div class="network-description-wrapper">
     <table class="network-description table-bordered">
       <tr>
-        <td>
-          <button class="btn btn-link">
+        <td [ngClass]="{ inactive: modelStates.current_index <= 0 }">
+          <button class="btn btn-link" (click)="statePrevious()">
             <i class="fa fa-chevron-left fa-3x"></i>
           </button>
         </td>
         <td class="description">
-          Only all the description of the thing goes here my lord.
+          {{ modelStates.current_state.description }}
         </td>
-        <td>
-          <button class="btn btn-link">
+        <td [ngClass]="{ inactive: modelStates.current_index >= modelStates.states.length - 1 }">
+          <button class="btn btn-link" (click)="stateNext()">
             <i class="fa fa-chevron-right fa-3x"></i>
           </button>
         </td>
