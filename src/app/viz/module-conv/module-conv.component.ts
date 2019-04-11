@@ -87,7 +87,7 @@ export class ModuleConvComponent implements OnInit, AfterViewInit {
     // push task at the end of queue using timeout
     setTimeout(() => {
       // @Scott, uncomment this to show intro on load
-      // this.showIntro();
+      this.showIntro();
     }, 0);
   }
 
@@ -437,19 +437,47 @@ export class ModuleConvComponent implements OnInit, AfterViewInit {
     },
     states: [
       {
-        title: 'Hello.',
-        message: 'Welcome to convolution.',
+        title: 'Hey there! So you want to learn about convolution?',
+        message: 'Well, you should! Convolution is an important concept in Neural Networks.',
         btnText: 'Next'
       },
       {
-        title: 'So what is convolution, you say?',
-        message: 'Well <b>Aaron or Scott or Gerald can explain much better than me.</b>',
+        title: "Let's start with kernel.",
+        message: `
+        From the last tutorial, you remember that an image is nothing but a grid of pixels. <br>
+        Imagine another <b><i>smaller</i></b> grid of pixels. We'll call this a <b><i>kernel</i></b>.<br>
+        <div class="text-center"><img src="assets/kernel.png"></div>
+        `,
         btnText: 'Next'
       },
       {
-        title: "So that's it!",
-        message: 'Someone will fill in these text here.',
-        btnText: "I'm ready for interactive app!"
+        title: 'Using a kernel?',
+        message: `
+        We can do some cool maths on the image using this kernel. This gives us a new image.
+        <div class="text-center"><img src="https://mlnotebook.github.io/img/CNN/convSobel.gif" height="500"></div>
+        <div class="row conv-animation-label">
+          <div class="col-4 text-center">Result</div>
+          <div class="col-4 text-center">Kernel</div>
+          <div class="col-4 text-center">Image</div>
+        </div>
+        `,
+        btnText: 'Next'
+      },
+      {
+        title: "What's it for?",
+        message: `
+        Convolution is a useful tool in computer vision. It can do awesome things like detect edges in images.
+        <div class="text-center"><img src="assets/edge-detection.jpg" width="500"></div>
+        `,
+        btnText: 'Next'
+      },
+      {
+        title: "That's it!",
+        message: `
+        Really simple, isn't it? <br> 
+        We have a cool tool for you to play with. Let's go!!
+        `,
+        btnText: 'Next'
       }
     ]
   };
