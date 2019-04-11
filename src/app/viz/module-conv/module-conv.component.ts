@@ -477,7 +477,7 @@ export class ModuleConvComponent implements OnInit, AfterViewInit {
         Really simple, isn't it? <br> 
         We have a cool tool for you to play with. Let's go!!
         `,
-        btnText: 'Next'
+        btnText: 'Okay'
       }
     ]
   };
