@@ -170,8 +170,27 @@ export class CnnModelComponent implements OnInit, OnChanges {
         'text-anchor': 'middle'
       });
 
-      // todo: add arrow
       x += layer_width * 2;
+    }
+
+    // now draw weights between layers
+    for (let i = 0; i < this.layers.length - 1; i++) {
+      let thisLayer = this.layers[i];
+      let nextLayer = this.layers[i + 1];
+      thisLayer.g_outWeights = this.g.g().addClass('weights-box');
+      thisLayer.outWeights = [];
+
+      for (let thisElement of thisLayer.elements) {
+        for (let nextElement of nextLayer.elements) {
+          let x1 = thisElement.node.x.baseVal.value + thisElement.node.width.baseVal.value;
+          let y1 = thisElement.node.y.baseVal.value + thisElement.node.height.baseVal.value / 2;
+          let x2 = nextElement.node.x.baseVal.value;
+          let y2 = nextElement.node.y.baseVal.value + nextElement.node.height.baseVal.value / 2;
+          let edge = thisLayer.g_outWeights.line(x1, y1, x2, y2);
+          thisLayer.outWeights.push(edge);
+          console.log(edge);
+        }
+      }
     }
 
     this.svg.addClass('animated bounceIn');
