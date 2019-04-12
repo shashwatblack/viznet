@@ -83,17 +83,22 @@
 }
 
 .layer-box {
+  image {
+    image-rendering: pixelated;
+  }
   rect,
-  text {
+  text,
+  image {
     opacity: 0.4;
     fill: #aaaaaa;
     transition: all 500ms ease-in-out;
   }
   &.focused {
     rect,
-    text {
+    text,
+    image {
       opacity: 1;
-      fill: #ddaaaa;
+      fill: #000000;
     }
   }
 }

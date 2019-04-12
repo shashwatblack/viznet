@@ -62,7 +62,8 @@ export class CnnModelComponent implements OnInit, OnChanges {
         type: 'channel',
         channels: 5,
         name: 'Pooling 1',
-        shape: '10 x 12 x 12'
+        shape: '10 x 12 x 12',
+        imageScale: 0.6
       },
       {
         id: 'l4',
@@ -76,7 +77,8 @@ export class CnnModelComponent implements OnInit, OnChanges {
         type: 'channel',
         channels: 10,
         name: 'Pooling 2',
-        shape: '20 x 4 x 4'
+        shape: '20 x 4 x 4',
+        imageScale: 0.5
       },
       {
         id: 'l6',
@@ -109,6 +111,9 @@ export class CnnModelComponent implements OnInit, OnChanges {
         let box_height = box_container_height - 2 * box_margin;
         box_height = Math.min(box_height, max_box_height);
         let box_width = Math.min(box_container_width, box_height);
+        if (layer.imageScale) {
+          box_width *= layer.imageScale;
+        }
         box_height = box_width; // square it all. square it all.
         layer.elements = [];
         for (let c = 0; c < layer.channels; c++) {
@@ -116,7 +121,9 @@ export class CnnModelComponent implements OnInit, OnChanges {
           let box_hcenter = x + box_container_width / 2;
           let box_vtop = box_vcenter - box_height / 2;
           let box_htop = box_margin + box_hcenter - box_width / 2;
-          let element = layer.g.rect(box_htop, box_vtop, box_width, box_height);
+          let filename = `assets/cnn/${layer.id}_${c}.png`;
+          let element = layer.g.image(filename, box_htop, box_vtop, box_width, box_height);
+          // let element = layer.g.rect(box_htop, box_vtop, box_width, box_height);
           layer.elements.push(element);
         }
       } else if (layer.type == 'dense') {
