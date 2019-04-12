@@ -9,6 +9,7 @@ import { D3SandboxComponent } from '@app/viz/d3-sandbox/d3-sandbox.component';
 })
 export class VizComponent implements OnInit {
   @ViewChild('d3_sandbox') d3_sandbox: D3SandboxComponent;
+  @ViewChild('description') descriptionElement: ElementRef;
   public modelStates: any;
   constructor(private readonly notificationService: NotificationService) {}
 
@@ -173,15 +174,31 @@ export class VizComponent implements OnInit {
 
   stateNext() {
     if (this.modelStates.current_index < this.modelStates.states.length - 1) {
-      this.modelStates.current_index += 1;
-      this.modelStates.current_state = this.modelStates.states[this.modelStates.current_index];
+      this.descriptionElement.nativeElement.classList.add('fadeOutLeft');
+      setTimeout(() => {
+        this.descriptionElement.nativeElement.classList.remove('fadeOutLeft');
+        this.modelStates.current_index += 1;
+        this.modelStates.current_state = this.modelStates.states[this.modelStates.current_index];
+        this.descriptionElement.nativeElement.classList.add('fadeInRight');
+        setTimeout(() => {
+          this.descriptionElement.nativeElement.classList.remove('fadeInRight');
+        }, 300);
+      }, 200);
     }
   }
 
   statePrevious() {
     if (this.modelStates.current_index > 0) {
-      this.modelStates.current_index -= 1;
-      this.modelStates.current_state = this.modelStates.states[this.modelStates.current_index];
+      this.descriptionElement.nativeElement.classList.add('fadeOutRight');
+      setTimeout(() => {
+        this.descriptionElement.nativeElement.classList.remove('fadeOutRight');
+        this.modelStates.current_index -= 1;
+        this.modelStates.current_state = this.modelStates.states[this.modelStates.current_index];
+        this.descriptionElement.nativeElement.classList.add('fadeInLeft');
+        setTimeout(() => {
+          this.descriptionElement.nativeElement.classList.remove('fadeInLeft');
+        }, 300);
+      }, 200);
     }
   }
 }

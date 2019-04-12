@@ -37,7 +37,7 @@
           </button>
         </td>
         <td class="description text-center">
-          <div [innerHTML]="modelStates.current_state.description"></div>
+          <div class="animated" #description [innerHTML]="modelStates.current_state.description"></div>
         </td>
         <td [ngClass]="{ inactive: modelStates.current_index >= modelStates.states.length - 1 }">
           <button class="btn btn-link" (click)="stateNext()">
