@@ -59,6 +59,7 @@
     "@types/jasminewd2": "^2.0.2",
     "@types/lodash": "^4.14.108",
     "@types/node": "^8.10.13",
+    "angular-cli-ghpages": "^0.5.3",
     "codelyzer": "^4.4.4",
     "hads": "^1.7.0",
     "htmlhint": "^0.10.0",
