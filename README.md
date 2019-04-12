@@ -1,4 +1,4 @@
-# viznet
+# vizweb
 
 Neural Network visualization for educational purpose
 
