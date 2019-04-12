@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1555094109915,
+  "timestamp": 1555100809014,
   "index": "https://shashwatblack.github.io/vizweb/index.html",
   "assetGroups": [
     {
@@ -10,7 +10,7 @@
       "urls": [
         "https://shashwatblack.github.io/vizweb/favicon.png",
         "https://shashwatblack.github.io/vizweb/index.html",
-        "https://shashwatblack.github.io/vizweb/main.988d39c9bb0835daf53a.js",
+        "https://shashwatblack.github.io/vizweb/main.13b49a08b1514742f814.js",
         "https://shashwatblack.github.io/vizweb/polyfills.c897fd9ff58135e762ea.js",
         "https://shashwatblack.github.io/vizweb/runtime.26209474bfa8dc87a77c.js",
         "https://shashwatblack.github.io/vizweb/scripts.b2736c4622e07bde8625.js",
@@ -58,8 +58,8 @@
     "https://shashwatblack.github.io/vizweb/assets/vizweb_logo_alt.svg": "740199c90ec15a1c20bf7661fb8dc844c1ddba78",
     "https://shashwatblack.github.io/vizweb/assets/wiki_CNN.gif": "e1f71131e99fe60c19c0cac7c22fe2c549641435",
     "https://shashwatblack.github.io/vizweb/favicon.png": "25cebf6ac7531f5bf0540131aa072c70a07e005e",
-    "https://shashwatblack.github.io/vizweb/index.html": "17d22b7ea901b1de767abbddde52172aa2822143",
-    "https://shashwatblack.github.io/vizweb/main.988d39c9bb0835daf53a.js": "112259a215ff69a78cdfeb81b5eaf949586a49db",
+    "https://shashwatblack.github.io/vizweb/index.html": "92ca05e930b83eedcedb4ab1cfb05141fc49b5ee",
+    "https://shashwatblack.github.io/vizweb/main.13b49a08b1514742f814.js": "e4d6762a4ed4233cc53fe4fe252e0e9b3e405f1c",
     "https://shashwatblack.github.io/vizweb/polyfills.c897fd9ff58135e762ea.js": "6946e10a03311677a01490b8e91741668e64e17e",
     "https://shashwatblack.github.io/vizweb/runtime.26209474bfa8dc87a77c.js": "b62956c2192bfe5516d6374e753773901ed50ec5",
     "https://shashwatblack.github.io/vizweb/scripts.b2736c4622e07bde8625.js": "fbe48f207c42581d25811fd6ab6a52f7d8865630",
