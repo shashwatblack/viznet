@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1555120678673,
+  "timestamp": 1555197028955,
   "index": "https://shashwatblack.github.io/vizweb/index.html",
   "assetGroups": [
     {
@@ -10,11 +10,11 @@
       "urls": [
         "https://shashwatblack.github.io/vizweb/favicon.png",
         "https://shashwatblack.github.io/vizweb/index.html",
-        "https://shashwatblack.github.io/vizweb/main.ebbe079a49fb55e1a06c.js",
+        "https://shashwatblack.github.io/vizweb/main.c0a60855e619e7721920.js",
         "https://shashwatblack.github.io/vizweb/polyfills.c897fd9ff58135e762ea.js",
         "https://shashwatblack.github.io/vizweb/runtime.26209474bfa8dc87a77c.js",
         "https://shashwatblack.github.io/vizweb/scripts.b2736c4622e07bde8625.js",
-        "https://shashwatblack.github.io/vizweb/styles.b22ba6c39ec5d3e5d51b.css"
+        "https://shashwatblack.github.io/vizweb/styles.fc56d6ac4ebfe174570e.css"
       ],
       "patterns": []
     },
@@ -56,10 +56,13 @@
         "https://shashwatblack.github.io/vizweb/assets/cnn/l5_7.png",
         "https://shashwatblack.github.io/vizweb/assets/cnn/l5_8.png",
         "https://shashwatblack.github.io/vizweb/assets/cnn/l5_9.png",
+        "https://shashwatblack.github.io/vizweb/assets/deer.jpg",
         "https://shashwatblack.github.io/vizweb/assets/edge-detection.jpg",
         "https://shashwatblack.github.io/vizweb/assets/gimp_edge_img.jpg",
         "https://shashwatblack.github.io/vizweb/assets/gimp_org_img.jpg",
         "https://shashwatblack.github.io/vizweb/assets/kernel.png",
+        "https://shashwatblack.github.io/vizweb/assets/lincoln.png",
+        "https://shashwatblack.github.io/vizweb/assets/mario.png",
         "https://shashwatblack.github.io/vizweb/assets/mnist_cnn.png",
         "https://shashwatblack.github.io/vizweb/assets/viznet.svg",
         "https://shashwatblack.github.io/vizweb/assets/viznet_icon.png",
@@ -107,10 +110,13 @@
     "https://shashwatblack.github.io/vizweb/assets/cnn/l5_7.png": "bb4097386a41b0eef3dd5ca35b3c62b6134157f1",
     "https://shashwatblack.github.io/vizweb/assets/cnn/l5_8.png": "9b672485b7aeb8115a19e6e9211b3eafbbe22bf6",
     "https://shashwatblack.github.io/vizweb/assets/cnn/l5_9.png": "65b0a7c22926cdee9241637f14094a554d5e86d6",
+    "https://shashwatblack.github.io/vizweb/assets/deer.jpg": "6d8d6a92ec7d84d6e81b8afc32efbb385a653564",
     "https://shashwatblack.github.io/vizweb/assets/edge-detection.jpg": "62d353b1483894fb43b87ee0f2e87e686fe9e8e7",
     "https://shashwatblack.github.io/vizweb/assets/gimp_edge_img.jpg": "af567117f17231233944ed3e9f42590ee8425a48",
     "https://shashwatblack.github.io/vizweb/assets/gimp_org_img.jpg": "e9fe1d34e61105941137dd54a8cf3763f3d37360",
     "https://shashwatblack.github.io/vizweb/assets/kernel.png": "76b7fc5cf29b121ee63a9ae67dc2bb57d7826fd2",
+    "https://shashwatblack.github.io/vizweb/assets/lincoln.png": "61bda9b521ef77c3c38b8dd1848e16af27f26065",
+    "https://shashwatblack.github.io/vizweb/assets/mario.png": "9b3a308bddcf635631cb0d87f345359085491154",
     "https://shashwatblack.github.io/vizweb/assets/mnist_cnn.png": "ee12ad84749baad26f37aa584032bcda251f6856",
     "https://shashwatblack.github.io/vizweb/assets/viznet.svg": "edf819864fe2923f31222f04d8eb42b42ff4c963",
     "https://shashwatblack.github.io/vizweb/assets/viznet_icon.png": "25cebf6ac7531f5bf0540131aa072c70a07e005e",
@@ -120,12 +126,12 @@
     "https://shashwatblack.github.io/vizweb/assets/vizweb_logo_alt.svg": "740199c90ec15a1c20bf7661fb8dc844c1ddba78",
     "https://shashwatblack.github.io/vizweb/assets/wiki_CNN.gif": "e1f71131e99fe60c19c0cac7c22fe2c549641435",
     "https://shashwatblack.github.io/vizweb/favicon.png": "25cebf6ac7531f5bf0540131aa072c70a07e005e",
-    "https://shashwatblack.github.io/vizweb/index.html": "65ea2e01fa662d00bbd524738fa4ce54746d55b7",
-    "https://shashwatblack.github.io/vizweb/main.ebbe079a49fb55e1a06c.js": "05c08be77145d21e1f999c6761a7b7d177cb74e5",
+    "https://shashwatblack.github.io/vizweb/index.html": "1457ddfe9cb04a1f46bbb79d257793db86141e7b",
+    "https://shashwatblack.github.io/vizweb/main.c0a60855e619e7721920.js": "d3c82085615040063171a759fd09bec4bbdad829",
     "https://shashwatblack.github.io/vizweb/polyfills.c897fd9ff58135e762ea.js": "6946e10a03311677a01490b8e91741668e64e17e",
     "https://shashwatblack.github.io/vizweb/runtime.26209474bfa8dc87a77c.js": "b62956c2192bfe5516d6374e753773901ed50ec5",
     "https://shashwatblack.github.io/vizweb/scripts.b2736c4622e07bde8625.js": "fbe48f207c42581d25811fd6ab6a52f7d8865630",
-    "https://shashwatblack.github.io/vizweb/styles.b22ba6c39ec5d3e5d51b.css": "f40af7644d8ae8c89f78f251ee771ddfae4fcbe4"
+    "https://shashwatblack.github.io/vizweb/styles.fc56d6ac4ebfe174570e.css": "e926160a8776af1138afd52587381614f64f0267"
   },
   "navigationUrls": [
     {
