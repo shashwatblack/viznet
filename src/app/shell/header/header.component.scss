@@ -4,6 +4,7 @@
   margin-bottom: $spacer;
   background-color: #006699 !important;
 }
+
 .nav-link.dropdown-toggle {
   cursor: pointer;
 }
@@ -13,5 +14,30 @@
     filter: brightness(10) saturate(0);
     height: 40px;
     margin: -10px 0 -8px;
+  }
+}
+
+.nav-link {
+  font-size: 0.9rem;
+
+  .module-number-icon {
+    opacity: 0.5;
+    color: #006699;
+    background: white;
+    width: 18px;
+    height: 18px;
+    display: inline-block;
+    text-align: center;
+    border-radius: 50%;
+    font-size: 13px;
+    font-family: monospace;
+    font-weight: bold;
+    margin: 0 5px 0 10px;
+  }
+
+  &.active {
+    .module-number-icon {
+      opacity: 1;
+    }
   }
 }
