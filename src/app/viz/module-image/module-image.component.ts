@@ -64,8 +64,8 @@ export class ModuleImageComponent implements OnInit, AfterViewInit {
   }
 
   initializeFigure() {
-    this.form.numCols = 8;
-    this.form.numRows = 8;
+    this.form.numCols = 14;
+    this.form.numRows = 14;
 
     this.updateFigure();
   }
@@ -124,6 +124,10 @@ export class ModuleImageComponent implements OnInit, AfterViewInit {
     return node;
   }
 
+  dimensionsChanged() {
+    this.utils.debounce(() => this.updateFigure(), 1000)();
+  }
+
   updateFigure() {
     // if new is wider - add columns
     if (this.form.numCols > this.figure.numCols) {
@@ -165,19 +169,39 @@ export class ModuleImageComponent implements OnInit, AfterViewInit {
     },
     states: [
       {
-        title: 'Hello.',
-        message: 'Welcome to convolution.',
+        title: 'Hello there!',
+        message: `We're going to learn about what an image means to a computer.`,
+        btnText: 'Okay'
+      },
+      {
+        title: 'An image',
+        message: `An image is nothing but a bunch of pixels. Laid out in a grid.<br>
+        <div class="text-center"><img src="assets/mario.png" height="400"></div>
+        `,
         btnText: 'Next'
       },
       {
-        title: 'So what is convolution, you say?',
-        message: 'Well <b>Aaron or Scott or Gerald can explain much better than me.</b>',
+        title: 'An image',
+        message: `When you sufficiently zoom in, you can see the pixels. This is also true in low-resolution pictures.<br>
+        <div class="text-center"><img src="assets/deer.jpg" width="550"></div>
+        `,
         btnText: 'Next'
       },
       {
-        title: "So that's it!",
-        message: 'Someone will fill in these text here.',
-        btnText: "I'm ready for interactive app!"
+        title: 'An image',
+        message: `Here we have a small, low-resolution image of Lincoln.<br>
+        <div class="text-center"><img src="assets/lincohn.png" width="550"></div><br>
+        Each pixel in this image is some shade of gray between pure white and pure black. These shades can be represented by numbers between 0 and 255.
+        `,
+        btnText: 'Next'
+      },
+      {
+        title: "That's it!",
+        message: `That's how computers view images. In the next screen, you will be able to play with a grid of pixels. <br>
+        Click on the pixels to change the shade value. <br>
+        You will also be able to change the width and height of the image. 
+        `,
+        btnText: `Let's go!`
       }
     ]
   };

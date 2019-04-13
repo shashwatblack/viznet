@@ -446,7 +446,7 @@ export class ModuleConvComponent implements OnInit, AfterViewInit {
         message: `
         From the last tutorial, you remember that an image is nothing but a grid of pixels. <br>
         Imagine another <b><i>smaller</i></b> grid of pixels. We'll call this a <b><i>kernel</i></b>.<br>
-        <div class="text-center"><img src="assets/kernel.png"></div>
+        <div class="text-center"><img src="assets/kernel.png" height="300"></div>
         `,
         btnText: 'Next'
       },

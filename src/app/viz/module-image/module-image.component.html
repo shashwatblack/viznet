@@ -4,17 +4,32 @@
       <form class="form-inline">
         <div class="input-group mb-3">
           <div class="input-group-prepend">
-            <span class="input-group-text">Width</span>
+            <span class="input-group-text">Image Width</span>
           </div>
-          <input type="number" class="form-control" name="numCols" [(ngModel)]="this.form.numCols" />
+          <input
+            type="number"
+            class="form-control"
+            name="numCols"
+            [(ngModel)]="this.form.numCols"
+            (change)="dimensionsChanged()"
+            max="16"
+            min="1"
+          />
         </div>
         <div class="input-group mb-3">
           <div class="input-group-prepend">
-            <span class="input-group-text">Height</span>
+            <span class="input-group-text">Image Height</span>
           </div>
-          <input type="number" class="form-control" name="numRows" [(ngModel)]="this.form.numRows" />
+          <input
+            type="number"
+            class="form-control"
+            name="numRows"
+            [(ngModel)]="this.form.numRows"
+            (change)="dimensionsChanged()"
+            max="16"
+            min="1"
+          />
         </div>
-        <button type="submit" class="btn btn-outline-primary" (click)="updateFigure()">Update</button>
       </form>
       <button class="btn btn-outline-dark" (click)="showIntro()" style="position: absolute; right: 10px; top: 70px;">
         Show Intro
@@ -23,7 +38,7 @@
     <div class="flex w-100">
       <div class="presets-wrapper flex-column">
         <button class="btn btn-outline-info" *ngFor="let preset of presets" (click)="loadPreset(preset)">
-          Load Preset {{ preset.name }}
+          Load "{{ preset.name }}"
         </button>
       </div>
       <div class="svg-wrapper">
