@@ -1,1 +1,13 @@
 <svg #svg id="viz-svg"></svg>
+<div class="info-button">
+  <button
+    type="button"
+    class="btn animated wobble delay-5s"
+    placement="left"
+    container="body"
+    [ngClass]="{ 'no-display': !networkVisible }"
+    ngbPopover="Try hovering the mouse pointer above the nodes in the chart!"
+  >
+    <i class="fa fa-exclamation-circle animated jackInTheBox"></i>
+  </button>
+</div>

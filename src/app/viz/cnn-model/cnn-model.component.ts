@@ -15,6 +15,7 @@ export class CnnModelComponent implements OnInit, OnChanges {
   private g: any;
   private options = { width: 1200, height: 600, padding: 10 };
   public focusedLayers: any = [];
+  public networkVisible: boolean = false;
 
   constructor() {}
 
@@ -207,7 +208,9 @@ export class CnnModelComponent implements OnInit, OnChanges {
     }
 
     this.svg.removeClass('no-display');
+    this.networkVisible = true;
     if (this.state['hideNetwork']) {
+      this.networkVisible = false;
       this.svg.addClass('no-display');
     }
     for (const layer of this.layers) {
