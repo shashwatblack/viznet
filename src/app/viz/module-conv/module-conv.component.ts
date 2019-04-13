@@ -145,7 +145,7 @@ export class ModuleConvComponent implements OnInit, AfterViewInit {
       text: value
     });
 
-    this.utils.debounce(() => this.updateResultColor(), 500)();
+    this.utils.debounce(() => this.doConvolution(), 500)();
   }
 
   addNewNode(group, r, c) {
@@ -427,6 +427,36 @@ export class ModuleConvComponent implements OnInit, AfterViewInit {
             }
           }
         }
+      }
+    }
+  }
+
+  doConvolution() {
+    // iterate over every cell of results
+    for (let i = 0; i < this.figure.numRowsResult; i++) {
+      for (let j = 0; j < this.figure.numColsResult; j++) {
+        // for result matrix cell of i, j
+        // input matrix is i:j::i+3:j+3
+        // filter matrix is 0:0::3:3
+        let resultValue = 0;
+        for (let m = 0; m < 3; m++) {
+          for (let n = 0; n < 3; n++) {
+            let imageValue = this.figure.nodesImage[`${i + m},${j + n}`].value / 255;
+            let filterValue = this.figure.nodesFilter[`${m},${n}`].value / 255;
+            resultValue += imageValue * filterValue;
+          }
+        }
+        resultValue = Math.floor((resultValue * 255) / 9);
+
+        // update result node
+        let result_node = this.figure.nodesResult[`${i},${j}`];
+        result_node.value = resultValue;
+        result_node.circle.attr({
+          fill: `rgb(${resultValue},${resultValue}, ${resultValue})`
+        });
+        result_node.text.attr({
+          text: resultValue
+        });
       }
     }
   }
