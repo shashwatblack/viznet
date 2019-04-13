@@ -15,6 +15,8 @@ export class HomeComponent implements OnInit {
   constructor(private quoteService: QuoteService) {}
 
   ngOnInit() {
+    this.isLoading = false;
+    /*
     this.isLoading = true;
     this.quoteService
       .getRandomQuote({ category: 'dev' })
@@ -26,5 +28,18 @@ export class HomeComponent implements OnInit {
       .subscribe((quote: string) => {
         this.quote = quote;
       });
+      */
+  }
+
+  public introSteps = {
+    current_index: 0
+  };
+
+  toggleStep(step) {
+    if (this.introSteps.current_index == step) {
+      this.introSteps.current_index = -1;
+    } else {
+      this.introSteps.current_index = step;
+    }
   }
 }
