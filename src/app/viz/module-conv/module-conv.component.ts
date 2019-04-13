@@ -47,8 +47,8 @@ export class ModuleConvComponent implements OnInit, AfterViewInit {
     vertical: true
   };
   public slider_options_filter: Options = {
-    floor: -10,
-    ceil: 10,
+    floor: 0,
+    ceil: 255,
     vertical: true
   };
   public selectedNode = null;
@@ -58,6 +58,11 @@ export class ModuleConvComponent implements OnInit, AfterViewInit {
   private g_filter: any;
   private g_result: any;
   private g_hoverLines: any;
+  private group_offsets: any = {
+    input: [0, 0],
+    filter: [725, 100],
+    result: [1200, 50]
+  };
 
   constructor(public ngxSmartModalService: NgxSmartModalService, private readonly utils: UtilsService) {}
 
@@ -71,13 +76,13 @@ export class ModuleConvComponent implements OnInit, AfterViewInit {
     });
 
     this.g_image = this.svg.g().attr({
-      transform: 'translate(0, 0)'
+      transform: `translate(${this.group_offsets.input[0]}, ${this.group_offsets.input[1]})`
     });
     this.g_filter = this.svg.g().attr({
-      transform: 'translate(600, 0)'
+      transform: `translate(${this.group_offsets.filter[0]}, ${this.group_offsets.filter[1]})`
     });
     this.g_result = this.svg.g().attr({
-      transform: 'translate(1200, 0)'
+      transform: `translate(${this.group_offsets.result[0]}, ${this.group_offsets.result[1]})`
     });
 
     this.initializeFigure();
@@ -86,8 +91,7 @@ export class ModuleConvComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     // push task at the end of queue using timeout
     setTimeout(() => {
-      // @Scott, uncomment this to show intro on load
-      this.showIntro();
+      // this.showIntro();
     }, 0);
   }
 
@@ -135,7 +139,7 @@ export class ModuleConvComponent implements OnInit, AfterViewInit {
   sliderUpdated() {
     let value = (this.selectedNode.value = this.slider_value);
     this.selectedNode.circle.attr({
-      fill: `rgb(${255 - value},${255 - value}, ${255 - value})`
+      fill: `rgb(${value},${value}, ${value})`
     });
     this.selectedNode.text.attr({
       text: value
@@ -149,9 +153,9 @@ export class ModuleConvComponent implements OnInit, AfterViewInit {
     let x = 50 + c * 50;
     let y = 50 + r * 50;
     let radius = 20;
-    let value = 0;
+    let value = 255;
     let circle = group.circle(x, y, radius).attr({
-      fill: `rgb(${255 - value},${255 - value}, ${255 - value})`
+      fill: `rgb(${value},${value}, ${value})`
     });
     let text = group.text(x, y, value).attr({
       'text-anchor': 'middle',
@@ -183,7 +187,6 @@ export class ModuleConvComponent implements OnInit, AfterViewInit {
     return node;
   }
 
-  // basic implemtation of hoverevent
   addHoverEvent(node) {
     let gutter = 2;
     let ii = node.r; //+ kCenterY;
@@ -192,32 +195,29 @@ export class ModuleConvComponent implements OnInit, AfterViewInit {
     let node_image = this.figure.nodesImage[`${ii},${jj}`];
 
     node.circle.mouseover(() => {
-      //console.log(node.r, node.c, ii, jj, kCenterX, kCenterY, this.figure.numRowsFilter, this.figure.numColsFilter);
+      // console.log(node.r, node.c, ii, jj, kCenterX, kCenterY, this.figure.numRowsFilter, this.figure.numColsFilter);
       this.addHoverLines(
         {
-          // 30 -> 80 ->130
           x: node_image.x - node_image.radius - gutter,
           y: node_image.y - node_image.radius - gutter,
           w: node.radius * 7 + 2 * gutter,
           h: node.radius * 7 + 2 * gutter
         },
         {
-          x: 630 - gutter,
-          y: 30 - gutter,
+          x: this.group_offsets.filter[0] + 30 - gutter,
+          y: this.group_offsets.filter[1] + 30 - gutter,
           w: node.radius * 7 + 2 * gutter,
           h: node.radius * 7 + 2 * gutter
         },
         {
-          x: 1200 + node.x - node.radius - gutter,
-          y: node.y - node.radius - gutter,
+          x: this.group_offsets.result[0] + node.x - node.radius - gutter,
+          y: this.group_offsets.result[1] + node.y - node.radius - gutter,
           w: 2 * node.radius + 2 * gutter,
           h: 2 * node.radius + 2 * gutter
         }
       );
     });
   }
-
-  addHoverEventLogic(node) {}
 
   addHoverLines(imageBox, filterBox, resultBox) {
     if (this.g_hoverLines) {
@@ -244,17 +244,20 @@ export class ModuleConvComponent implements OnInit, AfterViewInit {
       fill: 'None'
     };
 
+    // boxes
     group.rect(imageBox.x, imageBox.y, imageBox.w, imageBox.h).attr(inputAttr);
     group.rect(filterBox.x, filterBox.y, filterBox.w, filterBox.h).attr(filterAttr);
     group.rect(resultBox.x, resultBox.y, resultBox.w, resultBox.h).attr(resultAttr);
 
-    group.line(imageBox.x, imageBox.y, resultBox.x, resultBox.y).attr(inputAttr);
-    group.line(imageBox.x + imageBox.w, imageBox.y, resultBox.x + resultBox.w, resultBox.y).attr(inputAttr);
-    group.line(imageBox.x, imageBox.y + imageBox.h, resultBox.x, resultBox.y + resultBox.h).attr(inputAttr);
+    // image to filter
+    group.line(imageBox.x, imageBox.y, filterBox.x, filterBox.y).attr(inputAttr);
+    group.line(imageBox.x + imageBox.w, imageBox.y, filterBox.x + filterBox.w, filterBox.y).attr(inputAttr);
+    group.line(imageBox.x, imageBox.y + imageBox.h, filterBox.x, filterBox.y + filterBox.h).attr(inputAttr);
     group
-      .line(imageBox.x + imageBox.w, imageBox.y + imageBox.h, resultBox.x + resultBox.w, resultBox.y + resultBox.h)
+      .line(imageBox.x + imageBox.w, imageBox.y + imageBox.h, filterBox.x + filterBox.w, filterBox.y + filterBox.h)
       .attr(inputAttr);
 
+    // filter to result
     group.line(filterBox.x, filterBox.y, resultBox.x, resultBox.y).attr(filterAttr);
     group.line(filterBox.x + filterBox.w, filterBox.y, resultBox.x + resultBox.w, resultBox.y).attr(filterAttr);
     group.line(filterBox.x, filterBox.y + filterBox.h, resultBox.x, resultBox.y + resultBox.h).attr(filterAttr);
@@ -456,9 +459,11 @@ export class ModuleConvComponent implements OnInit, AfterViewInit {
         We can do some cool maths on the image using this kernel. This gives us a new image.
         <div class="text-center"><img src="https://mlnotebook.github.io/img/CNN/convSobel.gif" height="500"></div>
         <div class="row conv-animation-label">
-          <div class="col-4 text-center">Image</div>
-          <div class="col-4 text-center">Kernel</div>
-          <div class="col-4 text-center">Result</div>
+          <div class="col-1 offset-3 text-center">Image</div>
+          <div class="col-1 text-center text-large">*</div>
+          <div class="col-1 text-center">Kernel</div>
+          <div class="col-1 text-center">=</div>
+          <div class="col-1 text-center">Result</div>
         </div>
         `,
         btnText: 'Next'
