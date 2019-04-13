@@ -124,6 +124,8 @@ export class CnnModelComponent implements OnInit, OnChanges {
           let filename = `assets/cnn/${layer.id}_${c}.png`;
           let element = layer.g.image(filename, box_htop, box_vtop, box_width, box_height);
           // let element = layer.g.rect(box_htop, box_vtop, box_width, box_height);
+          element.mouseover(() => this.cnnNodeMouseover(layer, element));
+          element.mouseout(() => this.cnnNodeMouseout(layer, element));
           layer.elements.push(element);
         }
       } else if (layer.type == 'dense') {
@@ -174,22 +176,24 @@ export class CnnModelComponent implements OnInit, OnChanges {
     }
 
     // now draw weights between layers
-    for (let i = 0; i < this.layers.length - 1; i++) {
+    for (let i = 1; i < this.layers.length; i++) {
+      let lastLayer = this.layers[i - 1];
       let thisLayer = this.layers[i];
-      let nextLayer = this.layers[i + 1];
-      thisLayer.g_outWeights = this.g.g().addClass('weights-box');
-      thisLayer.outWeights = [];
+      thisLayer.g_weights = {};
+      thisLayer.weights = {};
 
       for (let thisElement of thisLayer.elements) {
-        for (let nextElement of nextLayer.elements) {
-          let x1 = thisElement.node.x.baseVal.value + thisElement.node.width.baseVal.value;
-          let y1 = thisElement.node.y.baseVal.value + thisElement.node.height.baseVal.value / 2;
-          let x2 = nextElement.node.x.baseVal.value;
-          let y2 = nextElement.node.y.baseVal.value + nextElement.node.height.baseVal.value / 2;
-          let edge = thisLayer.g_outWeights.line(x1, y1, x2, y2);
-          thisLayer.outWeights.push(edge);
-          console.log(edge);
+        let group = this.g.g().addClass('weights-box');
+        let weights = [];
+        for (let lastElement of lastLayer.elements) {
+          let x1 = lastElement.node.x.baseVal.value + lastElement.node.width.baseVal.value;
+          let y1 = lastElement.node.y.baseVal.value + lastElement.node.height.baseVal.value / 2;
+          let x2 = thisElement.node.x.baseVal.value;
+          let y2 = thisElement.node.y.baseVal.value + thisElement.node.height.baseVal.value / 2;
+          weights.push(group.line(x1, y1, x2, y2));
         }
+        thisLayer.g_weights[thisElement.id] = group;
+        thisLayer.weights[thisElement.id] = weights;
       }
     }
 
@@ -217,5 +221,15 @@ export class CnnModelComponent implements OnInit, OnChanges {
         }
       }
     }
+  }
+
+  cnnNodeMouseover(layer, element) {
+    element.addClass('mouseover');
+    layer.g_weights[element.id].addClass('mouseover');
+  }
+
+  cnnNodeMouseout(layer, element) {
+    element.removeClass('mouseover');
+    layer.g_weights[element.id].removeClass('mouseover');
   }
 }

@@ -92,6 +92,10 @@
     opacity: 0.4;
     fill: #aaaaaa;
     transition: all 500ms ease-in-out;
+
+    &.mouseover {
+      opacity: 1;
+    }
   }
   &.focused {
     rect,
@@ -108,5 +112,13 @@
     stroke: #333;
     stroke-width: 2px;
     opacity: 0.15;
+    transition: all 300ms ease-in-out;
+  }
+
+  &.mouseover {
+    line {
+      stroke: #0096ff;
+      opacity: 0.8;
+    }
   }
 }
