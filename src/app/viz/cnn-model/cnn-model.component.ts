@@ -55,14 +55,14 @@ export class CnnModelComponent implements OnInit, OnChanges {
         type: 'channel',
         channels: 5,
         name: 'Convolution 1',
-        shape: '10 x 24 x 24'
+        shape: '5 x 24 x 24'
       },
       {
         id: 'l3',
         type: 'channel',
         channels: 5,
         name: 'Pooling 1',
-        shape: '10 x 12 x 12',
+        shape: '5 x 12 x 12',
         imageScale: 0.6
       },
       {
@@ -70,29 +70,33 @@ export class CnnModelComponent implements OnInit, OnChanges {
         type: 'channel',
         channels: 10,
         name: 'Convolution 2',
-        shape: '20 x 8 x 8'
+        shape: '10 x 8 x 8'
       },
       {
         id: 'l5',
         type: 'channel',
         channels: 10,
         name: 'Pooling 2',
-        shape: '20 x 4 x 4',
+        shape: '10 x 4 x 4',
         imageScale: 0.5
       },
       {
         id: 'l6',
         type: 'dense',
-        channels: 30,
+        channels: 20,
         name: 'Dense',
-        shape: '320 x 1'
+        shape: '20 x 1',
+        verticalTopMargin: 0.1,
+        values: [165, 79, 27, 231, 221, 35, 221, 9, 189, 70, 109, 50, 129, 138, 182, 233, 162, 53, 193, 162]
       },
       {
         id: 'l7',
-        type: 'output',
+        type: 'dense',
         channels: 10,
         name: 'Output',
-        shape: '10 x 1'
+        shape: '10 x 1',
+        verticalTopMargin: 0.3,
+        values: [207, 197, 188, 197, 30, 209, 186, 176, 164, 187]
       }
     ];
   }
@@ -104,10 +108,14 @@ export class CnnModelComponent implements OnInit, OnChanges {
     let layer_width = this.options.width / (2 * this.layers.length - 1);
     let max_box_height = 100;
     let box_container_width = layer_width - 2 * box_margin;
+    let vertical_top_margin = 0;
     for (const layer of this.layers) {
       layer.g = this.g.g().addClass('layer-box animated');
+      if (layer.verticalTopMargin) {
+        vertical_top_margin = layer_height * layer.verticalTopMargin;
+      }
       if (layer.type == 'channel') {
-        let box_container_height = layer_height / layer.channels;
+        let box_container_height = (layer_height - 2 * vertical_top_margin) / layer.channels;
         let box_height = box_container_height - 2 * box_margin;
         box_height = Math.min(box_height, max_box_height);
         let box_width = Math.min(box_container_width, box_height);
@@ -117,7 +125,7 @@ export class CnnModelComponent implements OnInit, OnChanges {
         box_height = box_width; // square it all. square it all.
         layer.elements = [];
         for (let c = 0; c < layer.channels; c++) {
-          let box_vcenter = ((2 * c + 1) * box_container_height) / 2;
+          let box_vcenter = vertical_top_margin + ((2 * c + 1) * box_container_height) / 2;
           let box_hcenter = x + box_container_width / 2;
           let box_vtop = box_vcenter - box_height / 2;
           let box_htop = box_margin + box_hcenter - box_width / 2;
@@ -129,32 +137,23 @@ export class CnnModelComponent implements OnInit, OnChanges {
           layer.elements.push(element);
         }
       } else if (layer.type == 'dense') {
-        let box_container_height = layer_height / layer.channels;
+        let box_container_height = (layer_height - 2 * vertical_top_margin) / layer.channels;
         let box_height = Math.max(1, box_container_height - 2);
         box_height = Math.min(box_height, max_box_height);
         let box_width = Math.min(box_container_width, box_height);
         layer.elements = [];
         for (let c = 0; c < layer.channels; c++) {
-          let box_vcenter = ((2 * c + 1) * box_container_height) / 2;
+          let box_vcenter = vertical_top_margin + ((2 * c + 1) * box_container_height) / 2;
           let box_hcenter = x + box_container_width / 2;
           let box_vtop = box_vcenter - box_height / 2;
           let box_htop = box_margin + box_hcenter - box_width / 2;
           let element = layer.g.rect(box_htop, box_vtop, box_width, box_height);
-          layer.elements.push(element);
-        }
-      } else if (layer.type == 'output') {
-        let vertical_margin = layer_height / 4;
-        let box_container_height = (layer_height - 2 * vertical_margin) / layer.channels;
-        let box_height = Math.max(1, box_container_height - 2);
-        box_height = Math.min(box_height, max_box_height);
-        let box_width = Math.min(box_container_width, box_height);
-        layer.elements = [];
-        for (let c = 0; c < layer.channels; c++) {
-          let box_vcenter = vertical_margin + ((2 * c + 1) * box_container_height) / 2;
-          let box_hcenter = x + box_container_width / 2;
-          let box_vtop = box_vcenter - box_height / 2;
-          let box_htop = box_margin + box_hcenter - box_width / 2;
-          let element = layer.g.rect(box_htop, box_vtop, box_width, box_height);
+          element.mouseover(() => this.cnnNodeMouseover(layer, element));
+          element.mouseout(() => this.cnnNodeMouseout(layer, element));
+          let v = layer.values[c];
+          element.attr({
+            fill: `rgb(${v},${v},${v})`
+          });
           layer.elements.push(element);
         }
       }
