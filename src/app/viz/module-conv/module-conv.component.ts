@@ -183,10 +183,10 @@ export class ModuleConvComponent implements OnInit, AfterViewInit {
     let x = 50 + c * 50;
     let y = 50 + r * 50;
     let radius = 20;
-    let value = 255;
+    let value = 0;
 
     if (group == this.g_filter) {
-      value = 100;
+      value = 0;
     }
 
     let circle = group.circle(x, y, radius);
