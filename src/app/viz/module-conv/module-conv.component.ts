@@ -624,7 +624,114 @@ export class ModuleConvComponent implements OnInit, AfterViewInit {
     this.ngxSmartModalService.getModal('introModal').close();
   }
 
-  // convolve() {
-  //   this.updateResultColor();
-  // }
+  public imagePresets = [
+    {
+      id: '1',
+      name: '1',
+      width: 8,
+      height: 8,
+      pixels: [
+        [0, 0, 0, 255, 255, 0, 0, 0],
+        [0, 0, 255, 255, 255, 0, 0, 0],
+        [0, 255, 255, 255, 255, 0, 0, 0],
+        [0, 0, 0, 255, 255, 0, 0, 0],
+        [0, 0, 0, 255, 255, 0, 0, 0],
+        [0, 0, 0, 255, 255, 0, 0, 0],
+        [200, 200, 200, 255, 255, 200, 200, 200],
+        [255, 255, 255, 255, 255, 255, 255, 255]
+      ]
+    },
+    {
+      id: '4',
+      name: '4',
+      width: 8,
+      height: 8,
+      pixels: [
+        [50, 255, 200, 0, 0, 50, 255, 200],
+        [50, 255, 200, 0, 0, 50, 255, 200],
+        [50, 255, 200, 0, 0, 50, 255, 200],
+        [50, 255, 255, 255, 255, 255, 255, 200],
+        [50, 255, 255, 255, 255, 255, 255, 200],
+        [0, 0, 0, 0, 0, 50, 255, 200],
+        [0, 0, 0, 0, 0, 50, 255, 200],
+        [0, 0, 0, 0, 0, 50, 255, 200]
+      ]
+    },
+    {
+      id: '7',
+      name: '7',
+      width: 8,
+      height: 8,
+      pixels: [
+        [50, 255, 200, 255, 255, 255, 255, 200],
+        [50, 255, 200, 255, 255, 255, 255, 200],
+        [50, 255, 50, 0, 0, 50, 255, 200],
+        [0, 0, 0, 0, 0, 50, 255, 200],
+        [0, 0, 0, 0, 0, 50, 255, 200],
+        [0, 0, 0, 0, 0, 50, 255, 200],
+        [0, 0, 0, 0, 0, 50, 255, 200],
+        [0, 0, 0, 0, 0, 50, 255, 200]
+      ]
+    },
+    {
+      id: '9',
+      name: '9',
+      width: 8,
+      height: 8,
+      pixels: [
+        [50, 255, 200, 255, 255, 255, 255, 200],
+        [50, 255, 200, 255, 255, 255, 255, 200],
+        [50, 255, 200, 0, 0, 50, 255, 200],
+        [50, 255, 255, 255, 255, 255, 255, 200],
+        [50, 255, 255, 255, 255, 255, 255, 200],
+        [0, 0, 0, 0, 0, 50, 255, 200],
+        [200, 200, 200, 255, 255, 200, 200, 200],
+        [255, 255, 255, 255, 255, 255, 255, 255]
+      ]
+    }
+  ];
+
+  public filterPresets = [
+    {
+      id: 'identity',
+      name: 'Identity',
+      width: 3,
+      height: 3,
+      pixels: [[0, 0, 0], [0, 100, 0], [0, 0, 0]]
+    },
+    {
+      id: 'horizontal_edge',
+      name: 'Horizontal Edge',
+      width: 3,
+      height: 3,
+      pixels: [[-10, -10, -10], [100, 100, 100], [-10, -10, -10]]
+    },
+    {
+      id: 'vertical_edge',
+      name: 'Vertical Edge',
+      width: 3,
+      height: 3,
+      pixels: [[-10, 100, -10], [-10, 100, -10], [-10, 100, -10]]
+    }
+  ];
+
+  loadImagePreset(preset) {
+    for (let r = 0; r < preset.height; r++) {
+      for (let c = 0; c < preset.width; c++) {
+        let node = this.figure.nodesImage[`${r},${c}`];
+        this.updateNodeValue(node, preset.pixels[r][c]);
+      }
+    }
+    this.doConvolution();
+  }
+
+  loadFilterPreset(preset) {
+    for (let r = 0; r < preset.height; r++) {
+      for (let c = 0; c < preset.width; c++) {
+        let node = this.figure.nodesFilter[`${r},${c}`];
+        this.updateNodeValue(node, preset.pixels[r][c]);
+      }
+    }
+    this.doConvolution();
+  }
 }

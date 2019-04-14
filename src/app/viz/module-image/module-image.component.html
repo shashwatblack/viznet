@@ -42,6 +42,7 @@
     </div>
     <div class="flex w-100">
       <div class="presets-wrapper flex-column">
+        <h5>Image Presets</h5>
         <button class="btn btn-outline-info" *ngFor="let preset of presets" (click)="loadPreset(preset)">
           Load "{{ preset.name }}"
         </button>

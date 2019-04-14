@@ -59,8 +59,25 @@
         <i class="fa fa-chevron-circle-right" style="margin-right: 2px;"></i> Go to Pooling
       </button>
     </div>
-    <div class="svg-wrapper text-center">
-      <svg #svg id="module-conv-svg"></svg>
+    <div class="flex w-100">
+      <div class="flex-column presets-wrapper">
+        <div class="flex-column">
+          <h5>Image Presets</h5>
+          <button class="btn btn-outline-info" *ngFor="let preset of imagePresets" (click)="loadImagePreset(preset)">
+            Load "{{ preset.name }}"
+          </button>
+        </div>
+        <br />
+        <div class="flex-column">
+          <h5>Kernel Presets</h5>
+          <button class="btn btn-outline-info" *ngFor="let preset of filterPresets" (click)="loadFilterPreset(preset)">
+            {{ preset.name }}
+          </button>
+        </div>
+      </div>
+      <div class="svg-wrapper text-center">
+        <svg #svg id="module-conv-svg"></svg>
+      </div>
     </div>
   </div>
 </div>
