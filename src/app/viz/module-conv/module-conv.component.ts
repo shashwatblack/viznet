@@ -61,12 +61,13 @@ export class ModuleConvComponent implements OnInit, AfterViewInit {
   private g_filter: any;
   private g_result: any;
   private g_hoverLines: any;
+  private g_labels: any;
   private dimensions: any = {
-    svgWidth: 1600,
+    svgWidth: 1400,
     svgHeight: 600,
     inputOffset: [0, 0],
-    filterOffset: [725, 100],
-    resultOffset: [1200, 50]
+    filterOffset: [625, 100],
+    resultOffset: [1000, 50]
   };
 
   constructor(public ngxSmartModalService: NgxSmartModalService, private readonly utils: UtilsService) {}
@@ -89,6 +90,7 @@ export class ModuleConvComponent implements OnInit, AfterViewInit {
     this.g_result = this.svg.g().attr({
       transform: `translate(${this.dimensions.resultOffset[0]}, ${this.dimensions.resultOffset[1]})`
     });
+    this.g_labels = this.svg.g();
 
     this.initializeFigure();
   }
@@ -96,7 +98,7 @@ export class ModuleConvComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     // push task at the end of queue using timeout
     setTimeout(() => {
-      // this.showIntro();
+      this.showIntro();
     }, 0);
   }
 
@@ -123,6 +125,8 @@ export class ModuleConvComponent implements OnInit, AfterViewInit {
     this.updateFilter();
 
     this.updateResult();
+
+    this.addLabels();
 
     this.doConvolution();
   }
@@ -418,6 +422,47 @@ export class ModuleConvComponent implements OnInit, AfterViewInit {
     this.figure.numColsResult = this.form.numColsResult;
   }
 
+  addLabels() {
+    // Under input image
+    let g_inputLabel = this.g_labels
+      .g()
+      .attr({
+        transform: `translate(${this.dimensions.inputOffset[0] + 193}, ${500})`
+      })
+      .addClass('svg-label');
+    g_inputLabel.rect(-17, -26, 100, 40);
+    g_inputLabel.text(0, 0, `Input`);
+    g_inputLabel.circle(55, -6, 11);
+    g_inputLabel.text(51, -1, 'i').addClass('i-icon');
+    g_inputLabel.click(() => this.showIntro(0, true));
+
+    // under filter
+    let g_filterLabel = this.g_labels
+      .g()
+      .attr({
+        transform: `translate(${this.dimensions.filterOffset[0] + 68}, ${500})`
+      })
+      .addClass('svg-label');
+    g_filterLabel.rect(-17, -26, 100, 40);
+    g_filterLabel.text(0, 0, `Filter`);
+    g_filterLabel.circle(55, -6, 11);
+    g_filterLabel.text(51, -1, 'i').addClass('i-icon');
+    g_filterLabel.click(() => this.showIntro(1, true));
+
+    // under result
+    let g_resultLabel = this.g_labels
+      .g()
+      .attr({
+        transform: `translate(${this.dimensions.resultOffset[0] + 138}, ${500})`
+      })
+      .addClass('svg-label');
+    g_resultLabel.rect(-17, -26, 110, 40);
+    g_resultLabel.text(0, 0, `Result`);
+    g_resultLabel.circle(65, -6, 11);
+    g_resultLabel.text(61, -1, 'i').addClass('i-icon');
+    g_resultLabel.click(() => this.showIntro(3, true));
+  }
+
   updateResultColor() {
     let kCenterX = Math.round(this.figure.numRowsFilter / 2);
     let kCenterY = Math.round(this.figure.numColsFilter / 2);
@@ -495,6 +540,7 @@ export class ModuleConvComponent implements OnInit, AfterViewInit {
       message: null,
       btnText: null
     },
+    allowClose: false,
     states: [
       {
         title: 'Hey there! So you want to learn about convolution?',
@@ -558,9 +604,10 @@ export class ModuleConvComponent implements OnInit, AfterViewInit {
     colorPickerPopup.style.display = 'none';
   }
 
-  showIntro() {
-    this.intro.current_index = 0;
-    this.intro.current_state = this.intro.states[0];
+  showIntro(index = 0, allowClose = false) {
+    this.intro.allowClose = allowClose;
+    this.intro.current_index = index;
+    this.intro.current_state = this.intro.states[index];
     this.ngxSmartModalService.getModal('introModal').open();
   }
 
@@ -569,8 +616,12 @@ export class ModuleConvComponent implements OnInit, AfterViewInit {
     if (this.intro.current_index < this.intro.states.length) {
       this.intro.current_state = this.intro.states[this.intro.current_index];
     } else {
-      this.ngxSmartModalService.getModal('introModal').close();
+      this.closeIntro();
     }
+  }
+
+  closeIntro() {
+    this.ngxSmartModalService.getModal('introModal').close();
   }
 
   // convolve() {

@@ -121,3 +121,23 @@
     }
   }
 }
+
+.svg-label {
+  cursor: pointer;
+  opacity: 0.7;
+  &:hover {
+    opacity: 1;
+  }
+  rect {
+    fill: rgba(255, 255, 255, 0);
+    stroke: #888;
+  }
+  circle {
+    fill: #444;
+  }
+  .i-icon {
+    stroke: white;
+    font-family: monospace;
+    font-size: 12px;
+  }
+}

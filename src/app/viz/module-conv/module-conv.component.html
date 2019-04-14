@@ -64,7 +64,10 @@
     <div [innerHTML]="intro.current_state.message"></div>
   </div>
   <div class="modal-footer">
-    <button class="pull-right btn btn-primary" (click)="introNext()">
+    <button class="flex-left btn btn-outline-dark" (click)="closeIntro()" *ngIf="intro.allowClose">
+      Close
+    </button>
+    <button class="btn btn-primary" (click)="introNext()">
       {{ intro.current_state.btnText || 'Next' }}
     </button>
   </div>
