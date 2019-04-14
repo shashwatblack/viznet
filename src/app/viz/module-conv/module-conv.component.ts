@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, OnInit, ViewChild } from '@angular/core';
-import { Options } from 'ng5-slider';
+import { LabelType, Options } from 'ng5-slider';
 import { NgxSmartModalService } from 'ngx-smart-modal';
 import { UtilsService } from '@app/core';
 
@@ -47,9 +47,12 @@ export class ModuleConvComponent implements OnInit, AfterViewInit {
     vertical: true
   };
   public slider_options_filter: Options = {
-    floor: 0,
-    ceil: 255,
-    vertical: true
+    floor: -100,
+    ceil: 100,
+    vertical: true,
+    translate: (value: number, label: LabelType): string => {
+      return '';
+    }
   };
   public selectedNode = null;
 
@@ -117,9 +120,9 @@ export class ModuleConvComponent implements OnInit, AfterViewInit {
     this.form.numRowsFilter = 3;
     this.updateFilter();
 
-    // this.form.numColsResult = (this.form.numColsImage + 2 * this.form.numPadding - this.form.numDilation * (this.form.numColsFilter - 1) -1)/this.form.numStride + 1;
-    // this.form.numRowsResult = (this.form.numRowsImage + 2 * this.form.numPadding - this.form.numDilation * (this.form.numRowsFilter - 1) -1)/this.form.numStride + 1;
     this.updateResult();
+
+    this.doConvolution();
   }
 
   nodeClicked(node) {
@@ -130,21 +133,35 @@ export class ModuleConvComponent implements OnInit, AfterViewInit {
     node.circle.attr({
       stroke: '#0db9f0'
     });
+    this.manualRefresh.emit();
     this.slider_value = node.value;
     this.selectedNode = node;
 
     this.showPopup(node);
   }
 
-  sliderUpdated() {
-    let value = (this.selectedNode.value = this.slider_value);
-    this.selectedNode.circle.attr({
-      fill: `rgb(${value},${value}, ${value})`
+  updateNodeValue(node, value) {
+    let textValue: any = Math.floor(value);
+    let colorValue: any = textValue;
+    if (node.nodeType == 'filter') {
+      colorValue = Math.floor(((value + 100) / 200) * 255);
+      textValue = (textValue / 100).toFixed(2);
+    } else if (node.nodeType == 'result') {
+      colorValue /= 9; // todo: implement a log scale here from -2295 to +2295
+      colorValue = colorValue >= 0 ? (colorValue <= 255 ? colorValue : 255) : 0;
+      colorValue = Math.floor(colorValue);
+    }
+    node.value = value;
+    node.circle.attr({
+      fill: `rgb(${colorValue}, ${colorValue}, ${colorValue})`
     });
-    this.selectedNode.text.attr({
-      text: value
+    node.text.attr({
+      text: textValue
     });
+  }
 
+  sliderUpdated() {
+    this.updateNodeValue(this.selectedNode, this.slider_value);
     this.utils.debounce(() => this.doConvolution(), 500)();
   }
 
@@ -154,16 +171,17 @@ export class ModuleConvComponent implements OnInit, AfterViewInit {
     let y = 50 + r * 50;
     let radius = 20;
     let value = 255;
-    let circle = group.circle(x, y, radius).attr({
-      fill: `rgb(${value},${value}, ${value})`
-    });
+
+    if (group == this.g_filter) {
+      value = 100;
+    }
+
+    let circle = group.circle(x, y, radius);
     let text = group.text(x, y, value).attr({
       'text-anchor': 'middle',
       'alignment-baseline': 'middle',
       transform: 'translate(0, 2)'
     });
-    circle.addClass('cursor-pointer');
-    circle.addClass('svg-node');
     if (group == this.g_image) {
       circle.addClass('image');
       nodeType = 'image';
@@ -174,16 +192,18 @@ export class ModuleConvComponent implements OnInit, AfterViewInit {
       circle.addClass('result');
       nodeType = 'result';
     }
+    circle.addClass('cursor-pointer');
+    circle.addClass('svg-node');
     text.addClass('svg-node-text');
     text.addClass('no-pointer');
     text.addClass('no-user-select');
-    text.attr({
-      text: value
-    });
 
-    let node = { r, c, x, y, radius, value, circle, text, nodeType };
     circle.click(this.utils.delay(() => this.nodeClicked(node)));
     text.click(this.utils.delay(() => this.nodeClicked(node)));
+
+    let node = { r, c, x, y, radius, value, circle, text, nodeType };
+    this.updateNodeValue(node, value);
+
     return node;
   }
 
@@ -441,22 +461,16 @@ export class ModuleConvComponent implements OnInit, AfterViewInit {
         let resultValue = 0;
         for (let m = 0; m < 3; m++) {
           for (let n = 0; n < 3; n++) {
-            let imageValue = this.figure.nodesImage[`${i + m},${j + n}`].value / 255;
-            let filterValue = this.figure.nodesFilter[`${m},${n}`].value / 255;
+            let imageValue = this.figure.nodesImage[`${i + m},${j + n}`].value;
+            let filterValue = this.figure.nodesFilter[`${m},${n}`].value / 100;
             resultValue += imageValue * filterValue;
           }
         }
-        resultValue = Math.floor((resultValue * 255) / 9);
+        resultValue = Math.floor(resultValue);
 
         // update result node
         let result_node = this.figure.nodesResult[`${i},${j}`];
-        result_node.value = resultValue;
-        result_node.circle.attr({
-          fill: `rgb(${resultValue},${resultValue}, ${resultValue})`
-        });
-        result_node.text.attr({
-          text: resultValue
-        });
+        this.updateNodeValue(result_node, resultValue);
       }
     }
   }
