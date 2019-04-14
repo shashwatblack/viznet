@@ -13,6 +13,7 @@ import { FormsModule } from '@angular/forms';
 import { Ng5SliderModule } from 'ng5-slider';
 import { ModuleConvComponent } from '@app/viz/module-conv/module-conv.component';
 import { NgxSmartModalModule } from 'ngx-smart-modal';
+import { ModuleDenseComponent } from '@app/viz/module-dense/module-dense.component';
 
 @NgModule({
   imports: [
@@ -30,7 +31,8 @@ import { NgxSmartModalModule } from 'ngx-smart-modal';
     InfoWindowComponent,
     CnnModelComponent,
     ModuleImageComponent,
-    ModuleConvComponent
+    ModuleConvComponent,
+    ModuleDenseComponent
   ]
 })
 export class VizModule {}

@@ -1,0 +1,62 @@
+<div class="container-fluid">
+  <div class="stepper">
+    <div class="steps">
+      <div class="step" (click)="toggleStep(0)" [ngClass]="0 !== introSteps.current_index && 'minimized'">
+        <div class="step-header">
+          <div class="header">What is Machine Learning?</div>
+          <div class="subheader"></div>
+        </div>
+        <div class="step-content">
+          <div>
+            Machine Learning is the study of algorithms which solve complex tasks without giving explicit instructions.
+            Instead of complex instructions, machine learning algorithms simply find patterns in the input data and use
+            those patterns to draw conclusions, all without any direction from a human. Given enough data, machine
+            learning algorithms can theoretically learn anything.
+          </div>
+          <div>
+            <button class="next-btn" (click)="$event.stopPropagation(); toggleStep(1)">Next</button>
+          </div>
+        </div>
+      </div>
+      <div class="step" (click)="toggleStep(1)" [ngClass]="1 !== introSteps.current_index && 'minimized'">
+        <div class="step-header">
+          <div class="header">What is Deep Learning?</div>
+          <div class="subheader"></div>
+        </div>
+        <div class="step-content">
+          <div>
+            Deep learning is one particular approach to machine learning. Deep learning algorithms model themselves
+            after the human brain. Like human brains, a neural network is made of many neurons, connected in precise
+            ways. But unlike human brains, each neuron is a simple machine which takes some input and applies a function
+            to it. The power of deep learning comes from layering hundreds of these neurons in precise ways, spotting
+            patterns in the data that simpler machine learning algorithms would fail to detect. Because of their
+            similarity to human brains, deep learning algorithms are also called neural networks.<br /><br />
+            Deep learning is the best approximation of human intelligence we have so far. A self driving car learning to
+            stay on the road, a smart home assistant learning the sound of your voice, a search engine learning what
+            results are most relevant, and countless other applications -- all of these are complex, interesting
+            applications. And all of these use deep learning.
+          </div>
+          <div>
+            <button class="next-btn" (click)="$event.stopPropagation(); toggleStep(2)">Next</button>
+          </div>
+        </div>
+      </div>
+      <div class="step" (click)="toggleStep(2)" [ngClass]="2 !== introSteps.current_index && 'minimized'">
+        <div class="step-header">
+          <div class="header">How Does Deep Learning Work?</div>
+          <div class="subheader"></div>
+        </div>
+        <div class="step-content">
+          <div>
+            It's much easier than you would think. VizWeb will guide you through the process of digit recognition using
+            deep networks, step by step. First you will be introduced to basic operations like convolution and pooling.
+            At the end you will find a tutorial for the entire process.
+          </div>
+          <div>
+            <button class="next-btn" routerLink="/module_image">Let's Go</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
