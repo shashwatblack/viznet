@@ -543,8 +543,8 @@ export class ModuleConvComponent implements OnInit, AfterViewInit {
     allowClose: false,
     states: [
       {
-        title: 'Hey there! So you want to learn about convolution?',
-        message: 'Well, you should! Convolution is an important concept in Neural Networks.',
+        title: `Hey there! Let's learn about convolution!`,
+        message: 'Convolution is an important concept in Neural Networks.',
         btnText: 'Next'
       },
       {
@@ -582,10 +582,12 @@ export class ModuleConvComponent implements OnInit, AfterViewInit {
       {
         title: "That's it!",
         message: `
-        Really simple, isn't it? <br> 
-        We have a cool tool for you to play with. Let's go!!
+        We have a cool tool for you to play with. <br>
+        You'll be able to draw your image as well as the kernel. <br>
+        We also have some predefined presets for you to try out. <br>
+        Notice how the output changes for different kernels.
         `,
-        btnText: 'Okay'
+        btnText: `Let's Go!`
       }
     ]
   };
