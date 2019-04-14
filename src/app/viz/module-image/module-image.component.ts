@@ -167,6 +167,7 @@ export class ModuleImageComponent implements OnInit, AfterViewInit {
       message: null,
       btnText: null
     },
+    allowClose: false,
     states: [
       {
         title: 'Hello there!',
@@ -206,9 +207,10 @@ export class ModuleImageComponent implements OnInit, AfterViewInit {
     ]
   };
 
-  showIntro() {
-    this.intro.current_index = 0;
-    this.intro.current_state = this.intro.states[0];
+  showIntro(index = 0, allowClose = false) {
+    this.intro.allowClose = allowClose;
+    this.intro.current_index = index;
+    this.intro.current_state = this.intro.states[index];
     this.ngxSmartModalService.getModal('introModal').open();
   }
 
@@ -217,8 +219,12 @@ export class ModuleImageComponent implements OnInit, AfterViewInit {
     if (this.intro.current_index < this.intro.states.length) {
       this.intro.current_state = this.intro.states[this.intro.current_index];
     } else {
-      this.ngxSmartModalService.getModal('introModal').close();
+      this.closeIntro();
     }
+  }
+
+  closeIntro() {
+    this.ngxSmartModalService.getModal('introModal').close();
   }
 
   showPopup(node) {

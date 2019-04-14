@@ -31,9 +31,14 @@
           />
         </div>
       </form>
-      <button class="btn btn-outline-dark" (click)="showIntro()" style="position: absolute; right: 10px; top: 70px;">
-        Show Intro
-      </button>
+      <div style="position: absolute; right: 10px; top: 70px;">
+        <button class="btn btn-outline-dark" (click)="showIntro(0, true)">
+          Show Intro Again
+        </button>
+        <button class="btn btn-outline-dark" routerLink="/module_conv">
+          <i class="fa fa-chevron-circle-right" style="margin-right: 2px;"></i> Go to Convolution
+        </button>
+      </div>
     </div>
     <div class="flex w-100">
       <div class="presets-wrapper flex-column">
@@ -55,6 +60,9 @@
     <div [innerHTML]="intro.current_state.message"></div>
   </div>
   <div class="modal-footer">
+    <button class="flex-left btn btn-outline-dark btn-translucent" (click)="closeIntro()">
+      Close
+    </button>
     <button class="pull-right btn btn-primary" (click)="introNext()">
       {{ intro.current_state.btnText || 'Next' }}
     </button>

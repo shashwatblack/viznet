@@ -51,6 +51,14 @@
       </form>
     </div>
     -->
+    <div style="position: absolute; right: 10px; top: 70px;">
+      <button class="btn btn-outline-dark" (click)="showIntro(0, true)">
+        Show Intro Again
+      </button>
+      <button class="btn btn-outline-dark" routerLink="/module_pool">
+        <i class="fa fa-chevron-circle-right" style="margin-right: 2px;"></i> Go to Pooling
+      </button>
+    </div>
     <div class="svg-wrapper text-center">
       <svg #svg id="module-conv-svg"></svg>
     </div>
@@ -64,7 +72,7 @@
     <div [innerHTML]="intro.current_state.message"></div>
   </div>
   <div class="modal-footer">
-    <button class="flex-left btn btn-outline-dark" (click)="closeIntro()" *ngIf="intro.allowClose">
+    <button class="flex-left btn btn-outline-dark btn-translucent" (click)="closeIntro()">
       Close
     </button>
     <button class="btn btn-primary" (click)="introNext()">

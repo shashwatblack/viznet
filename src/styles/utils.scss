@@ -325,6 +325,13 @@ input[type="radio"].normalized {
   }
 }
 
+.btn-translucent {
+  opacity: 0.6;
+  &:hover {
+    opacity: 1;
+  }
+}
+
 .ease-in-out {
   transition: all 1000ms ease-in-out;
 }
