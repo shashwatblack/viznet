@@ -1,8 +1,8 @@
 <div class="container-fluid">
   <div class="stepper">
     <div class="steps">
-      <div class="step" (click)="toggleStep(0)" [ngClass]="0 !== introSteps.current_index && 'minimized'">
-        <div class="step-header">
+      <div class="step" (click)="toggleStep(0)" [ngClass]="minimizedSteps.indexOf(0) > -1 && 'minimized'">
+        <div class="step-header cursor-pointer">
           <div class="header">What is Machine Learning?</div>
           <div class="subheader"></div>
         </div>
@@ -13,13 +13,10 @@
             those patterns to draw conclusions, all without any direction from a human. Given enough data, machine
             learning algorithms can theoretically learn anything.
           </div>
-          <div>
-            <button class="next-btn" (click)="$event.stopPropagation(); toggleStep(1)">Next</button>
-          </div>
         </div>
       </div>
-      <div class="step" (click)="toggleStep(1)" [ngClass]="1 !== introSteps.current_index && 'minimized'">
-        <div class="step-header">
+      <div class="step" (click)="toggleStep(1)" [ngClass]="minimizedSteps.indexOf(1) > -1 && 'minimized'">
+        <div class="step-header cursor-pointer">
           <div class="header">What is Deep Learning?</div>
           <div class="subheader"></div>
         </div>
@@ -36,13 +33,10 @@
             results are most relevant, and countless other applications -- all of these are complex, interesting
             applications. And all of these use deep learning.
           </div>
-          <div>
-            <button class="next-btn" (click)="$event.stopPropagation(); toggleStep(2)">Next</button>
-          </div>
         </div>
       </div>
-      <div class="step" (click)="toggleStep(2)" [ngClass]="2 !== introSteps.current_index && 'minimized'">
-        <div class="step-header">
+      <div class="step" (click)="toggleStep(2)" [ngClass]="minimizedSteps.indexOf(2) > -1 && 'minimized'">
+        <div class="step-header cursor-pointer">
           <div class="header">How Does Deep Learning Work?</div>
           <div class="subheader"></div>
         </div>
@@ -53,7 +47,7 @@
             At the end you will find a tutorial for the entire process.
           </div>
           <div>
-            <button class="next-btn" routerLink="/module_image">Let's Go</button>
+            <button class="next-btn" routerLink="/viz">Let's Go</button>
           </div>
         </div>
       </div>

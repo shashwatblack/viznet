@@ -11,15 +11,14 @@ export class ModuleDenseComponent implements OnInit {
 
   ngOnInit() {}
 
-  public introSteps = {
-    current_index: 0
-  };
+  public minimizedSteps: Array<any> = [];
 
   toggleStep(step) {
-    if (this.introSteps.current_index == step) {
-      this.introSteps.current_index = -1;
+    let index = this.minimizedSteps.indexOf(step);
+    if (index > -1) {
+      this.minimizedSteps.splice(index, 1);
     } else {
-      this.introSteps.current_index = step;
+      this.minimizedSteps.push(step);
     }
   }
 }
