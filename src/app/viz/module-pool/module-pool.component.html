@@ -1,0 +1,69 @@
+<div class="module-wrapper flex-column" (click)="wrapperClicked()">
+  <div class="flex-column">
+    <div style="position: absolute; right: 10px; top: 70px;">
+      <button class="btn btn-outline-dark" (click)="showIntro(0, true)">
+        Show Intro Again
+      </button>
+      <button class="btn btn-outline-dark" routerLink="/module_cnn">
+        <i class="fa fa-chevron-circle-right" style="margin-right: 2px;"></i> Go to CNN
+      </button>
+    </div>
+    <div class="flex w-100">
+      <div class="flex-column presets-wrapper">
+        <div class="flex-column">
+          <h5>Image Presets</h5>
+          <button class="btn btn-outline-info" *ngFor="let preset of imagePresets" (click)="loadImagePreset(preset)">
+            Load "{{ preset.name }}"
+          </button>
+        </div>
+        <br />
+        <div class="flex-column">
+          <h5>Kernel Presets</h5>
+          <button class="btn btn-outline-info" *ngFor="let preset of filterPresets" (click)="loadFilterPreset(preset)">
+            {{ preset.name }}
+          </button>
+        </div>
+      </div>
+      <div class="svg-wrapper text-center">
+        <svg #svg id="module-conv-svg"></svg>
+      </div>
+    </div>
+  </div>
+</div>
+<ngx-smart-modal #introModal identifier="introModal" [closable]="false" [escapable]="false" [dismissable]="false">
+  <div class="modal-header bold">
+    {{ intro.current_state.title }}
+  </div>
+  <div class="modal-body">
+    <div [innerHTML]="intro.current_state.message"></div>
+  </div>
+  <div class="modal-footer">
+    <button class="flex-left btn btn-outline-dark btn-translucent" (click)="closeIntro()">
+      Close
+    </button>
+    <button class="btn btn-primary" (click)="introNext()">
+      {{ intro.current_state.btnText || 'Next' }}
+    </button>
+  </div>
+</ngx-smart-modal>
+<div id="colorPickerPopup" #colorPickerPopup class="colorPickerPopup">
+  <div class="content flex">
+    <div>
+      <div class="slider-wrapper">
+        <ng5-slider
+          [(value)]="slider_value"
+          [options]="selectedNode && selectedNode.nodeType == 'filter' ? slider_options_filter : slider_options_image"
+          (valueChange)="sliderUpdated()"
+          [manualRefresh]="manualRefresh"
+        ></ng5-slider>
+      </div>
+    </div>
+    <div class="flex-column">
+      <input type="number" class="form-control text-right" [(ngModel)]="slider_value" (change)="sliderUpdated()" />
+      <div
+        class="colorPreview"
+        [ngStyle]="{ background: 'rgb(' + slider_value + ',' + slider_value + ',' + slider_value + ')' }"
+      ></div>
+    </div>
+  </div>
+</div>

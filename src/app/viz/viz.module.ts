@@ -14,6 +14,7 @@ import { Ng5SliderModule } from 'ng5-slider';
 import { ModuleConvComponent } from '@app/viz/module-conv/module-conv.component';
 import { NgxSmartModalModule } from 'ngx-smart-modal';
 import { ModuleDenseComponent } from '@app/viz/module-dense/module-dense.component';
+import { ModulePoolComponent } from '@app/viz/module-pool/module-pool.component';
 
 @NgModule({
   imports: [
@@ -32,6 +33,7 @@ import { ModuleDenseComponent } from '@app/viz/module-dense/module-dense.compone
     CnnModelComponent,
     ModuleImageComponent,
     ModuleConvComponent,
+    ModulePoolComponent,
     ModuleDenseComponent
   ]
 })

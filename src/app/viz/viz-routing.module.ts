@@ -7,14 +7,15 @@ import { VizComponent } from './viz.component';
 import { ModuleImageComponent } from '@app/viz/module-image/module-image.component';
 import { ModuleConvComponent } from '@app/viz/module-conv/module-conv.component';
 import { ModuleDenseComponent } from '@app/viz/module-dense/module-dense.component';
+import { ModulePoolComponent } from '@app/viz/module-pool/module-pool.component';
 
 const routes: Routes = [
   Shell.childRoutes([
     {
-      path: 'viz',
+      path: 'module_cnn',
       component: VizComponent,
       data: {
-        title: extract('Viz')
+        title: extract(`What's a CNN?`)
       }
     },
     {
@@ -29,6 +30,13 @@ const routes: Routes = [
       component: ModuleConvComponent,
       data: {
         title: extract(`What is convolution?`)
+      }
+    },
+    {
+      path: 'module_pool',
+      component: ModulePoolComponent,
+      data: {
+        title: extract(`What is pooling?`)
       }
     },
     {
