@@ -61,10 +61,12 @@ export class ModuleConvComponent implements OnInit, AfterViewInit {
   private g_filter: any;
   private g_result: any;
   private g_hoverLines: any;
-  private group_offsets: any = {
-    input: [0, 0],
-    filter: [725, 100],
-    result: [1200, 50]
+  private dimensions: any = {
+    svgWidth: 1600,
+    svgHeight: 600,
+    inputOffset: [0, 0],
+    filterOffset: [725, 100],
+    resultOffset: [1200, 50]
   };
 
   constructor(public ngxSmartModalService: NgxSmartModalService, private readonly utils: UtilsService) {}
@@ -73,19 +75,19 @@ export class ModuleConvComponent implements OnInit, AfterViewInit {
     this.svg = Snap('#module-conv-svg');
 
     this.svg.attr({
-      width: 1800,
-      height: 600,
-      viewBox: '0 0 1800 600'
+      width: this.dimensions.svgWidth,
+      height: this.dimensions.svgHeight,
+      viewBox: `0 0 ${this.dimensions.svgWidth} ${this.dimensions.svgHeight}`
     });
 
     this.g_image = this.svg.g().attr({
-      transform: `translate(${this.group_offsets.input[0]}, ${this.group_offsets.input[1]})`
+      transform: `translate(${this.dimensions.inputOffset[0]}, ${this.dimensions.inputOffset[1]})`
     });
     this.g_filter = this.svg.g().attr({
-      transform: `translate(${this.group_offsets.filter[0]}, ${this.group_offsets.filter[1]})`
+      transform: `translate(${this.dimensions.filterOffset[0]}, ${this.dimensions.filterOffset[1]})`
     });
     this.g_result = this.svg.g().attr({
-      transform: `translate(${this.group_offsets.result[0]}, ${this.group_offsets.result[1]})`
+      transform: `translate(${this.dimensions.resultOffset[0]}, ${this.dimensions.resultOffset[1]})`
     });
 
     this.initializeFigure();
@@ -140,6 +142,17 @@ export class ModuleConvComponent implements OnInit, AfterViewInit {
     this.showPopup(node);
   }
 
+  logScaled(x) {
+    if (x > 0) {
+      return Math.min(Math.floor(127.5 + (127.5 * Math.log(x)) / Math.log(255 * 9)), 255);
+    }
+    if (x < 0) {
+      x *= -1;
+      return Math.max(Math.floor(127.5 - (127.5 * Math.log(x)) / Math.log(255 * 9)), 0);
+    }
+    return 127;
+  }
+
   updateNodeValue(node, value) {
     let textValue: any = Math.floor(value);
     let colorValue: any = textValue;
@@ -147,7 +160,7 @@ export class ModuleConvComponent implements OnInit, AfterViewInit {
       colorValue = Math.floor(((value + 100) / 200) * 255);
       textValue = (textValue / 100).toFixed(2);
     } else if (node.nodeType == 'result') {
-      colorValue /= 9; // todo: implement a log scale here from -2295 to +2295
+      colorValue = this.logScaled(colorValue);
       colorValue = colorValue >= 0 ? (colorValue <= 255 ? colorValue : 255) : 0;
       colorValue = Math.floor(colorValue);
     }
@@ -224,14 +237,14 @@ export class ModuleConvComponent implements OnInit, AfterViewInit {
           h: node.radius * 7 + 2 * gutter
         },
         {
-          x: this.group_offsets.filter[0] + 30 - gutter,
-          y: this.group_offsets.filter[1] + 30 - gutter,
+          x: this.dimensions.filterOffset[0] + 30 - gutter,
+          y: this.dimensions.filterOffset[1] + 30 - gutter,
           w: node.radius * 7 + 2 * gutter,
           h: node.radius * 7 + 2 * gutter
         },
         {
-          x: this.group_offsets.result[0] + node.x - node.radius - gutter,
-          y: this.group_offsets.result[1] + node.y - node.radius - gutter,
+          x: this.dimensions.resultOffset[0] + node.x - node.radius - gutter,
+          y: this.dimensions.resultOffset[1] + node.y - node.radius - gutter,
           w: 2 * node.radius + 2 * gutter,
           h: 2 * node.radius + 2 * gutter
         }
