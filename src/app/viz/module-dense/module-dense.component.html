@@ -3,51 +3,101 @@
     <div class="steps">
       <div class="step" (click)="toggleStep(0)" [ngClass]="minimizedSteps.indexOf(0) > -1 && 'minimized'">
         <div class="step-header cursor-pointer">
-          <div class="header">What is Machine Learning?</div>
+          <div class="header">Flattening</div>
           <div class="subheader"></div>
         </div>
         <div class="step-content">
           <div>
-            Machine Learning is the study of algorithms which solve complex tasks without giving explicit instructions.
-            Instead of complex instructions, machine learning algorithms simply find patterns in the input data and use
-            those patterns to draw conclusions, all without any direction from a human. Given enough data, machine
-            learning algorithms can theoretically learn anything.
+            We've so far had a 2 dimensional matrix of numbers as our image. But for our next step, we're going to need
+            a 1 dimensional list.
+            <br />
+            The process of such a conversion is called <i>Flattening</i>.
+            <br />
+            <br />
+            <img src="assets/flatten.png" alt="" height="250" /><br />
+            <br />
+            It's a pretty straight forward process. It's just stacking the rows one above another.
           </div>
         </div>
       </div>
       <div class="step" (click)="toggleStep(1)" [ngClass]="minimizedSteps.indexOf(1) > -1 && 'minimized'">
         <div class="step-header cursor-pointer">
-          <div class="header">What is Deep Learning?</div>
+          <div class="header">Perceptron</div>
           <div class="subheader"></div>
         </div>
         <div class="step-content">
           <div>
-            Deep learning is one particular approach to machine learning. Deep learning algorithms model themselves
-            after the human brain. Like human brains, a neural network is made of many neurons, connected in precise
-            ways. But unlike human brains, each neuron is a simple machine which takes some input and applies a function
-            to it. The power of deep learning comes from layering hundreds of these neurons in precise ways, spotting
-            patterns in the data that simpler machine learning algorithms would fail to detect. Because of their
-            similarity to human brains, deep learning algorithms are also called neural networks.<br /><br />
-            Deep learning is the best approximation of human intelligence we have so far. A self driving car learning to
-            stay on the road, a smart home assistant learning the sound of your voice, a search engine learning what
-            results are most relevant, and countless other applications -- all of these are complex, interesting
-            applications. And all of these use deep learning.
+            Perceptrons are the building blocks of neural networks. <br />
+            In fact, a neural network is nothing but a multi-layered perceptron.
           </div>
         </div>
       </div>
       <div class="step" (click)="toggleStep(2)" [ngClass]="minimizedSteps.indexOf(2) > -1 && 'minimized'">
         <div class="step-header cursor-pointer">
-          <div class="header">How Does Deep Learning Work?</div>
+          <div class="header">Still, what is it?</div>
           <div class="subheader"></div>
         </div>
         <div class="step-content">
           <div>
-            It's much easier than you would think. VizWeb will guide you through the process of digit recognition using
-            deep networks, step by step. First you will be introduced to basic operations like convolution and pooling.
-            At the end you will find a tutorial for the entire process.
+            Picture the following - <br /><br />
+            <img src="assets/perceptron.png" alt="" height="250" /><br /><br />
+            You have a bunch of inputs <i>x</i> on the left. If you multiply each input by some weights <i>w</i>, and
+            sum them up, you get <i>y</i>. <br />The inputs here can be the flattened list from earlier.
+            <br />
+            Now we'll add a couple more bits to this - bias and activation.
+          </div>
+        </div>
+      </div>
+      <div class="step" (click)="toggleStep(3)" [ngClass]="minimizedSteps.indexOf(3) > -1 && 'minimized'">
+        <div class="step-header cursor-pointer">
+          <div class="header">Bias</div>
+          <div class="subheader"></div>
+        </div>
+        <div class="step-content">
+          <div>
+            <img src="assets/bias.png" alt="" height="150" /><br />
+            A bias is a constant term added to the weighted sum. <br /><br />
+            This helps sway the output of the perceptron towards some desired value. <br />
+            In other words, it makes the perceptron <i>biased</i>.
+          </div>
+        </div>
+      </div>
+      <div class="step" (click)="toggleStep(4)" [ngClass]="minimizedSteps.indexOf(4) > -1 && 'minimized'">
+        <div class="step-header cursor-pointer">
+          <div class="header">Activation</div>
+          <div class="subheader"></div>
+        </div>
+        <div class="step-content">
+          <div>
+            An activation function <i>squishes</i> the output of the previous operation. <br />
+            Neural networks cannot perform well with large values. So the outputs of perceptron are passed through an
+            activation function which brings them down to desirable range.
+            <br />
+            There are different types of activation functions. Sigmoid and ReLU are popular ones. <br /><br />
+            <img src="assets/activation_functions.png" alt="" height="100" />
+          </div>
+        </div>
+      </div>
+      <div class="step" (click)="toggleStep(3)" [ngClass]="minimizedSteps.indexOf(3) > -1 && 'minimized'">
+        <div class="step-header cursor-pointer">
+          <div class="header">To sum up...</div>
+          <div class="subheader"></div>
+        </div>
+        <div class="step-content">
+          <div>
+            Putting all these together gives us a perceptron. <br /><br />
+            <img src="assets/perceptron_full.png" alt="" height="300" />
+            <br /><br />
+            So, a perceptron consists of four parts --
+            <ol>
+              <li>Input values or One input layer</li>
+              <li>Weights and Bias</li>
+              <li>Weighted net sum</li>
+              <li>Activation Function</li>
+            </ol>
           </div>
           <div>
-            <button class="next-btn" routerLink="/viz">Let's Go</button>
+            <button class="next-btn" routerLink="/viz">Go To CNN</button>
           </div>
         </div>
       </div>
