@@ -18,14 +18,19 @@
         </div>
         <br />
         <div class="flex-column">
-          <h5>Kernel Presets</h5>
-          <button class="btn btn-outline-info" *ngFor="let preset of filterPresets" (click)="loadFilterPreset(preset)">
-            {{ preset.name }}
+          <h5>Pooling Windows</h5>
+          <button
+            class="btn"
+            *ngFor="let window of poolingWindows.options"
+            (click)="updatePoolingWindow(window)"
+            [ngClass]="poolingWindows.selected == window.id ? 'btn-info' : 'btn-outline-info'"
+          >
+            <i class="fa fa-check fa-sm" *ngIf="poolingWindows.selected == window.id"></i> {{ window.name }}
           </button>
         </div>
       </div>
       <div class="svg-wrapper text-center">
-        <svg #svg id="module-conv-svg"></svg>
+        <svg #svg id="module-pool-svg"></svg>
       </div>
     </div>
   </div>

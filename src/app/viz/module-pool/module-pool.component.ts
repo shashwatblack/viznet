@@ -63,11 +63,11 @@ export class ModulePoolComponent implements OnInit, AfterViewInit {
   private g_hoverLines: any;
   private g_labels: any;
   private dimensions: any = {
-    svgWidth: 1400,
+    svgWidth: 1300,
     svgHeight: 600,
     inputOffset: [0, 0],
-    filterOffset: [625, 100],
-    resultOffset: [1000, 50]
+    filterOffset: [650, 150],
+    resultOffset: [1000, 100]
   };
 
   constructor(public ngxSmartModalService: NgxSmartModalService, private readonly utils: UtilsService) {}
@@ -98,7 +98,7 @@ export class ModulePoolComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     // push task at the end of queue using timeout
     setTimeout(() => {
-      this.showIntro();
+      // this.showIntro();
     }, 0);
   }
 
@@ -120,15 +120,17 @@ export class ModulePoolComponent implements OnInit, AfterViewInit {
     this.form.numRowsImage = 8;
     this.updateImage();
 
-    this.form.numColsFilter = 3;
-    this.form.numRowsFilter = 3;
+    this.form.numColsFilter = 2;
+    this.form.numRowsFilter = 2;
     this.updateFilter();
 
+    this.form.numColsResult = 4;
+    this.form.numRowsResult = 4;
     this.updateResult();
 
     this.addLabels();
 
-    this.doConvolution();
+    this.doPooling();
   }
 
   nodeClicked(node) {
@@ -146,27 +148,12 @@ export class ModulePoolComponent implements OnInit, AfterViewInit {
     this.showPopup(node);
   }
 
-  logScaled(x) {
-    if (x > 0) {
-      return Math.min(Math.floor(127.5 + (127.5 * Math.log(x)) / Math.log(255 * 9)), 255);
-    }
-    if (x < 0) {
-      x *= -1;
-      return Math.max(Math.floor(127.5 - (127.5 * Math.log(x)) / Math.log(255 * 9)), 0);
-    }
-    return 127;
-  }
-
   updateNodeValue(node, value) {
     let textValue: any = Math.floor(value);
     let colorValue: any = textValue;
     if (node.nodeType == 'filter') {
-      colorValue = Math.floor(((value + 100) / 200) * 255);
-      textValue = (textValue / 100).toFixed(2);
-    } else if (node.nodeType == 'result') {
-      colorValue = this.logScaled(colorValue);
-      colorValue = colorValue >= 0 ? (colorValue <= 255 ? colorValue : 255) : 0;
-      colorValue = Math.floor(colorValue);
+      colorValue = 255;
+      textValue = '';
     }
     node.value = value;
     node.circle.attr({
@@ -179,7 +166,7 @@ export class ModulePoolComponent implements OnInit, AfterViewInit {
 
   sliderUpdated() {
     this.updateNodeValue(this.selectedNode, this.slider_value);
-    this.utils.debounce(() => this.doConvolution(), 500)();
+    this.utils.debounce(() => this.doPooling(), 500)();
   }
 
   addNewNode(group, r, c) {
@@ -226,25 +213,21 @@ export class ModulePoolComponent implements OnInit, AfterViewInit {
 
   addHoverEvent(node) {
     let gutter = 2;
-    let ii = node.r; //+ kCenterY;
-    let jj = node.c; //+ kCenterX;
-
-    let node_image = this.figure.nodesImage[`${ii},${jj}`];
+    let node_image = this.figure.nodesImage[`${node.r * 2},${node.c * 2}`];
 
     node.circle.mouseover(() => {
-      // console.log(node.r, node.c, ii, jj, kCenterX, kCenterY, this.figure.numRowsFilter, this.figure.numColsFilter);
       this.addHoverLines(
         {
           x: node_image.x - node_image.radius - gutter,
           y: node_image.y - node_image.radius - gutter,
-          w: node.radius * 7 + 2 * gutter,
-          h: node.radius * 7 + 2 * gutter
+          w: node.radius * 4.5 + 2 * gutter,
+          h: node.radius * 4.5 + 2 * gutter
         },
         {
           x: this.dimensions.filterOffset[0] + 30 - gutter,
           y: this.dimensions.filterOffset[1] + 30 - gutter,
-          w: node.radius * 7 + 2 * gutter,
-          h: node.radius * 7 + 2 * gutter
+          w: node.radius * 4.5 + 2 * gutter,
+          h: node.radius * 4.5 + 2 * gutter
         },
         {
           x: this.dimensions.resultOffset[0] + node.x - node.radius - gutter,
@@ -343,7 +326,10 @@ export class ModulePoolComponent implements OnInit, AfterViewInit {
     if (this.form.numColsFilter > this.figure.numColsFilter) {
       for (let r = 0; r < this.figure.numRowsFilter; r++) {
         for (let c = this.figure.numColsFilter; c < this.form.numColsFilter; c++) {
-          this.figure.nodesFilter[`${r},${c}`] = this.addNewNode(this.g_filter, r, c);
+          let node = this.addNewNode(this.g_filter, r, c);
+          this.figure.nodesFilter[`${r},${c}`] = node;
+          node.circle.unclick();
+          node.text.unclick();
         }
       }
     }
@@ -351,7 +337,10 @@ export class ModulePoolComponent implements OnInit, AfterViewInit {
     if (this.form.numRowsFilter > this.figure.numRowsFilter) {
       for (let r = this.figure.numRowsFilter; r < this.form.numRowsFilter; r++) {
         for (let c = 0; c < this.form.numColsFilter; c++) {
-          this.figure.nodesFilter[`${r},${c}`] = this.addNewNode(this.g_filter, r, c);
+          let node = this.addNewNode(this.g_filter, r, c);
+          this.figure.nodesFilter[`${r},${c}`] = node;
+          node.circle.unclick();
+          node.text.unclick();
         }
       }
     }
@@ -371,14 +360,6 @@ export class ModulePoolComponent implements OnInit, AfterViewInit {
   }
 
   updateResult() {
-    this.form.numColsResult =
-      (this.form.numColsImage + 2 * this.form.numPadding - this.form.numDilation * (this.form.numColsFilter - 1) - 1) /
-        this.form.numStride +
-      1;
-    this.form.numRowsResult =
-      (this.form.numRowsImage + 2 * this.form.numPadding - this.form.numDilation * (this.form.numRowsFilter - 1) - 1) /
-        this.form.numStride +
-      1;
     if (this.form.numColsResult < 0 || this.form.numRowsResult < 0) {
       this.form.numColsResult = 0;
       this.form.numRowsResult = 0;
@@ -440,20 +421,20 @@ export class ModulePoolComponent implements OnInit, AfterViewInit {
     let g_filterLabel = this.g_labels
       .g()
       .attr({
-        transform: `translate(${this.dimensions.filterOffset[0] + 68}, ${500})`
+        transform: `translate(${this.dimensions.filterOffset[0] + 35}, ${500})`
       })
       .addClass('svg-label');
-    g_filterLabel.rect(-17, -26, 100, 40);
-    g_filterLabel.text(0, 0, `Filter`);
-    g_filterLabel.circle(55, -6, 11);
-    g_filterLabel.text(51, -1, 'i').addClass('i-icon');
+    g_filterLabel.rect(-17, -26, 120, 40);
+    g_filterLabel.text(0, 0, `Window`);
+    g_filterLabel.circle(75, -6, 11);
+    g_filterLabel.text(71, -1, 'i').addClass('i-icon');
     g_filterLabel.click(() => this.showIntro(1, true));
 
     // under result
     let g_resultLabel = this.g_labels
       .g()
       .attr({
-        transform: `translate(${this.dimensions.resultOffset[0] + 138}, ${500})`
+        transform: `translate(${this.dimensions.resultOffset[0] + 88}, ${500})`
       })
       .addClass('svg-label');
     g_resultLabel.rect(-17, -26, 110, 40);
@@ -463,66 +444,28 @@ export class ModulePoolComponent implements OnInit, AfterViewInit {
     g_resultLabel.click(() => this.showIntro(3, true));
   }
 
-  updateResultColor() {
-    let kCenterX = Math.round(this.figure.numRowsFilter / 2);
-    let kCenterY = Math.round(this.figure.numColsFilter / 2);
-    // console.log(kCenterY, kCenterX);
-    for (let i = 0; i < this.figure.numRowsResult; i++) {
-      for (let j = 0; j < this.figure.numColsResult; j++) {
-        let node_result = this.figure.nodesResult[`${i},${j}`];
-        node_result.value = 0; // reset
-        for (let m = 0; m < this.figure.numRowsFilter; m++) {
-          let mm = this.figure.numRowsFilter - 1 - m; // invert filter
-
-          for (let n = 0; n < this.figure.numColsFilter; n++) {
-            let nn = this.figure.numColsFilter - 1 - n; // invert filter
-            let ii = i + (kCenterY - mm);
-            let jj = j + (kCenterX - nn);
-
-            if (ii >= 0 && ii < this.figure.numRowsImage && jj >= 0 && jj < this.figure.numColsImage) {
-              let node_image = this.figure.nodesImage[`${ii},${jj}`];
-              let node_filter = this.figure.nodesFilter[`${mm},${nn}`];
-              // console.log(node_result, node_image, node_filter)
-              node_result.value += node_image.value * node_filter.value;
-              //node_result.value += value;
-              // safety net , preventing negative value
-              if (node_result.value > 256) {
-                node_result.value = 256;
-                //value = 256;
-              }
-              //
-              let value = node_result.value;
-              node_result.circle.attr({
-                fill: `rgb(${256 - value},${256 - value}, ${256 - value})`
-              });
-              node_result.text.attr({
-                text: value
-              });
-              this.figure.nodesResult[`${i}, ${j}`] = node_result;
-
-              // console.log(`IN: i:${i},j:${j},ii:${ii},jj:${jj},n:${n},nn:${nn},m:${m},mm:${mm}`);
-              // console.log(value, node_image.value, node_filter.value);
-            }
-          }
-        }
-      }
-    }
-  }
-
-  doConvolution() {
+  doPooling() {
     // iterate over every cell of results
     for (let i = 0; i < this.figure.numRowsResult; i++) {
       for (let j = 0; j < this.figure.numColsResult; j++) {
         // for result matrix cell of i, j
-        // input matrix is i:j::i+3:j+3
-        // filter matrix is 0:0::3:3
+        // input matrix is i*2:j*2::i+2:j+2
         let resultValue = 0;
-        for (let m = 0; m < 3; m++) {
-          for (let n = 0; n < 3; n++) {
-            let imageValue = this.figure.nodesImage[`${i + m},${j + n}`].value;
-            let filterValue = this.figure.nodesFilter[`${m},${n}`].value / 100;
-            resultValue += imageValue * filterValue;
+        if (this.poolingWindows.selected == 'max') {
+          for (let m = 0; m < 2; m++) {
+            for (let n = 0; n < 2; n++) {
+              let imageValue = this.figure.nodesImage[`${i * 2 + m},${j * 2 + n}`].value;
+              resultValue = Math.max(resultValue, imageValue);
+            }
           }
+        } else if (this.poolingWindows.selected == 'average') {
+          for (let m = 0; m < 2; m++) {
+            for (let n = 0; n < 2; n++) {
+              let imageValue = this.figure.nodesImage[`${i * 2 + m},${j * 2 + n}`].value;
+              resultValue += imageValue;
+            }
+          }
+          resultValue /= 4;
         }
         resultValue = Math.floor(resultValue);
 
@@ -693,29 +636,19 @@ export class ModulePoolComponent implements OnInit, AfterViewInit {
     }
   ];
 
-  public filterPresets = [
-    {
-      id: 'identity',
-      name: 'Identity',
-      width: 3,
-      height: 3,
-      pixels: [[0, 0, 0], [0, 100, 0], [0, 0, 0]]
-    },
-    {
-      id: 'horizontal_edge',
-      name: 'Horizontal Edge',
-      width: 3,
-      height: 3,
-      pixels: [[-10, -10, -10], [100, 100, 100], [-10, -10, -10]]
-    },
-    {
-      id: 'vertical_edge',
-      name: 'Vertical Edge',
-      width: 3,
-      height: 3,
-      pixels: [[-10, 100, -10], [-10, 100, -10], [-10, 100, -10]]
-    }
-  ];
+  public poolingWindows = {
+    selected: 'max',
+    options: [
+      {
+        id: 'max',
+        name: 'Max Pooling'
+      },
+      {
+        id: 'average',
+        name: 'Average Pooling'
+      }
+    ]
+  };
 
   loadImagePreset(preset) {
     for (let r = 0; r < preset.height; r++) {
@@ -724,16 +657,11 @@ export class ModulePoolComponent implements OnInit, AfterViewInit {
         this.updateNodeValue(node, preset.pixels[r][c]);
       }
     }
-    this.doConvolution();
+    this.doPooling();
   }
 
-  loadFilterPreset(preset) {
-    for (let r = 0; r < preset.height; r++) {
-      for (let c = 0; c < preset.width; c++) {
-        let node = this.figure.nodesFilter[`${r},${c}`];
-        this.updateNodeValue(node, preset.pixels[r][c]);
-      }
-    }
-    this.doConvolution();
+  updatePoolingWindow(window) {
+    this.poolingWindows.selected = window.id;
+    this.doPooling();
   }
 }
