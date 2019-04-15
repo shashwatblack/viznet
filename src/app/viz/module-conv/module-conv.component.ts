@@ -440,13 +440,13 @@ export class ModuleConvComponent implements OnInit, AfterViewInit {
     let g_filterLabel = this.g_labels
       .g()
       .attr({
-        transform: `translate(${this.dimensions.filterOffset[0] + 68}, ${500})`
+        transform: `translate(${this.dimensions.filterOffset[0] + 65}, ${500})`
       })
       .addClass('svg-label');
     g_filterLabel.rect(-17, -26, 100, 40);
     g_filterLabel.text(0, 0, `Kernel`);
-    g_filterLabel.circle(55, -6, 11);
-    g_filterLabel.text(51, -1, 'i').addClass('i-icon');
+    g_filterLabel.circle(65, -6, 11);
+    g_filterLabel.text(61, -1, 'i').addClass('i-icon');
     g_filterLabel.click(() => this.showIntro(1, true));
 
     // under result
