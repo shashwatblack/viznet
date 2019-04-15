@@ -98,7 +98,7 @@ export class ModulePoolComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     // push task at the end of queue using timeout
     setTimeout(() => {
-      // this.showIntro();
+      this.showIntro();
     }, 0);
   }
 
