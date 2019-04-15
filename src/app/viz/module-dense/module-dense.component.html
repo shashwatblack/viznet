@@ -78,7 +78,7 @@
           </div>
         </div>
       </div>
-      <div class="step" (click)="toggleStep(3)" [ngClass]="minimizedSteps.indexOf(3) > -1 && 'minimized'">
+      <div class="step" (click)="toggleStep(5)" [ngClass]="minimizedSteps.indexOf(5) > -1 && 'minimized'">
         <div class="step-header cursor-pointer">
           <div class="header">To sum up...</div>
           <div class="subheader"></div>
@@ -95,6 +95,18 @@
               <li>Weighted net sum</li>
               <li>Activation Function</li>
             </ol>
+          </div>
+        </div>
+      </div>
+      <div class="step" (click)="toggleStep(6)" [ngClass]="minimizedSteps.indexOf(6) > -1 && 'minimized'">
+        <div class="step-header cursor-pointer">
+          <div class="header">To sum up...</div>
+          <div class="subheader"></div>
+        </div>
+        <div class="step-content">
+          <div>
+            A neural network is just a combination of these perceptrons. <br /><br />
+            <img src="assets/neural-network.png" alt="" height="300" />
           </div>
           <div>
             <button class="next-btn" routerLink="/module_cnn">Go To CNN</button>

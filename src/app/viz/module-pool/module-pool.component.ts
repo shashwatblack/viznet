@@ -486,49 +486,44 @@ export class ModulePoolComponent implements OnInit, AfterViewInit {
     allowClose: false,
     states: [
       {
-        title: `Hey there! Let's learn about convolution!`,
-        message: 'Convolution is an important concept in Neural Networks.',
-        btnText: 'Next'
-      },
-      {
-        title: "Let's start with kernel.",
+        title: `Now it's time to learn about pooling!`,
         message: `
-        From the last tutorial, you remember that an image is nothing but a grid of pixels. <br>
-        Imagine another <b><i>smaller</i></b> grid of pixels. We'll call this a <b><i>kernel</i></b>.<br>
-        <div class="text-center"><img src="assets/kernel.png" height="300"></div>
+        Convolution operation is usually followed by pooling. <br>
+        Pooling progressively reduces the size of the input image, and therefore also reduces the computation required in further steps. <br>
+        There are different types of pooling - we'll see max pooling and average pooling.
         `,
         btnText: 'Next'
       },
       {
-        title: 'Using a kernel?',
+        title: 'Max Pooling',
         message: `
-        We can do some cool maths on the image using this kernel. This gives us a new image.
-        <div class="text-center"><img src="https://mlnotebook.github.io/img/CNN/convSobel.gif" height="500"></div>
-        <div class="row conv-animation-label">
-          <div class="col-1 offset-3 text-center">Image</div>
-          <div class="col-1 text-center text-large">*</div>
-          <div class="col-1 text-center">Kernel</div>
-          <div class="col-1 text-center">=</div>
-          <div class="col-1 text-center">Result</div>
-        </div>
+        Consider a pooling window of size 2x2. In the animation below, the green rectangle represents this window. <br>
+        Now, this pooling window scans the input, and just picks the maximum element it sees. <br>
+        Then it places the max element as the corresponding output. <br>
+        <div class="text-center"><img src="assets/max-pooling.gif" height="300"></div>
+        <br>
+        Essentially, this halves the image dimensions at the end. The final image has one-fourth the number of pixels in original.
         `,
         btnText: 'Next'
       },
       {
-        title: "What's it for?",
+        title: 'Average Pooling',
         message: `
-        Convolution is a useful tool in computer vision. It can do awesome things like detect edges in images.
-        <div class="text-center"><img src="assets/edge-detection.jpg" width="500"></div>
+        Similar to the previous case, average pooling takes the average of all the elements under the window as opposed to just the maximum element. <br>
+        Max pooling saves strong contrasting features, while average pooling results in softer, blurred image.
+        While this method does preserve details better, it loses distinguishing edges and textures. <br>
+        Due to this reason, most CNNs prefer max pooling. 
+        <div class="text-center"><img src="assets/max-avg-pooling.png" height="300"></div>
         `,
         btnText: 'Next'
       },
       {
         title: "That's it!",
         message: `
-        We have a cool tool for you to play with. <br>
-        You'll be able to draw your image as well as the kernel. <br>
+        We have another tool for you to play with. <br>
+        You'll be able to draw your image and test out max and average pooling. <br>
         We also have some predefined presets for you to try out. <br>
-        Notice how the output changes for different kernels.
+        Make sure you notice the output being softer in average pooling than in max pooling.
         `,
         btnText: `Let's Go!`
       }
