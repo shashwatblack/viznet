@@ -1,14 +1,9 @@
 <div class="container-fluid">
-  <!--
-  <div class="jumbotron text-center">
-    <h1>
-      <img class="logo" src="assets/viznet_icon.svg" alt="viznet logo" />
-      <span translate>Hello world !</span>
-    </h1>
-    <app-loader [isLoading]="isLoading"></app-loader>
-    <q [hidden]="isLoading">{{ quote }}</q>
+  <div style="position: absolute; right: 10px; top: 10px;">
+    <button class="btn btn-light" routerLink="/module_image">
+      <i class="fa fa-chevron-circle-right" style="margin-right: 2px;"></i> Go to Image
+    </button>
   </div>
-  -->
   <div class="stepper">
     <div class="steps">
       <div class="step" (click)="toggleStep(0)" [ngClass]="0 !== introSteps.current_index && 'minimized'">
