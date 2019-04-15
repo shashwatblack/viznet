@@ -6,6 +6,20 @@
   </div>
   <div class="stepper">
     <div class="steps">
+      <div class="step">
+        <div class="step-header">
+          <div class="header">Welcome to <b>VizWeb</b> - An introduction to Neural Networks.</div>
+          <div class="subheader" style="margin-top: 10px;">
+            Artificial intelligence is growing exponentially. With recent news of self-driving cars clocking up millions
+            of miles, and Google's AlphaGo beating the world champion at Go, one can clearly see how fast this field is
+            advancing. It is important to understand how these technologies work.
+            <br />
+            Deep Learning / Neural Network sits at the heart of Artificial intelligence, and is especially suited to
+            solve these extremely complex problems.
+          </div>
+        </div>
+        <div class="step-content no-padding"></div>
+      </div>
       <div class="step" (click)="toggleStep(0)" [ngClass]="0 !== introSteps.current_index && 'minimized'">
         <div class="step-header">
           <div class="header">What is Machine Learning?</div>
@@ -53,10 +67,14 @@
         </div>
         <div class="step-content">
           <div>
-            It's much easier than you would think. VizWeb will guide you through the entire process step by step. <br />
-            First you will be introduced to basic concepts like convolution, pooling, and perceptron. <br />
-            After that, you will learn how a computer is able to recognize hand written digits using a type of neural
-            networks called Convolutional Neural Networks (CNN).
+            It's much simpler than you would think. VizWeb will guide you through the entire process step by step.
+            <br />
+            <br />
+            <img src="assets/cnn.png" alt="" height="300" /> <br /><br />
+            Understanding this graph is our final objective. <br />
+            We will start by getting you introduced to basic concepts like convolution, pooling, and perceptron. <br />
+            After that, we will explore the graph in detail and you will finally learn how a computer is able to
+            recognize hand written digits using a type of neural networks called Convolutional Neural Networks (CNN).
           </div>
           <div>
             <button class="next-btn" routerLink="/module_image">Let's Go</button>
