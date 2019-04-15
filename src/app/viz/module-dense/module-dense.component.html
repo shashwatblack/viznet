@@ -53,6 +53,17 @@
           </div>
         </div>
       </div>
+      <div class="step" (click)="toggleStep('demo')" [ngClass]="minimizedSteps.indexOf('demo') > -1 && 'minimized'">
+        <div class="step-header cursor-pointer">
+          <div class="header">Demo</div>
+          <div class="subheader"></div>
+        </div>
+        <div class="step-content">
+          <div>
+            <app-perceptron-demo></app-perceptron-demo>
+          </div>
+        </div>
+      </div>
       <div class="step" (click)="toggleStep(3)" [ngClass]="minimizedSteps.indexOf(3) > -1 && 'minimized'">
         <div class="step-header cursor-pointer">
           <div class="header">Bias</div>
@@ -60,7 +71,7 @@
         </div>
         <div class="step-content">
           <div>
-            <img src="assets/bias.png" alt="" height="150" /><br />
+            <img src="assets/bias.png" alt="" height="150" /><br /><br />
             A bias is a constant term added to the weighted sum. <br /><br />
             This helps sway the output of the perceptron towards some desired value. <br />
             In other words, it makes the perceptron <i>biased</i>.
@@ -95,8 +106,7 @@
             <br /><br />
             So, a perceptron consists of four parts --
             <ol>
-              <li>Input values or One input layer< message: `/li></li>
-
+              <li>Input values or an input layer</li>
               <li>Weights and Bias</li>
               <li>Weighted net sum</li>
               <li>Activation Function</li>

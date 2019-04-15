@@ -16,6 +16,7 @@ import { NgxSmartModalModule } from 'ngx-smart-modal';
 import { ModuleDenseComponent } from '@app/viz/module-dense/module-dense.component';
 import { ModulePoolComponent } from '@app/viz/module-pool/module-pool.component';
 import { ModuleResourcesComponent } from '@app/viz/module-resources/module-resources.component';
+import { PerceptronDemoComponent } from '@app/viz/perceptron-demo/perceptron-demo.component';
 
 @NgModule({
   imports: [
@@ -36,7 +37,8 @@ import { ModuleResourcesComponent } from '@app/viz/module-resources/module-resou
     ModuleConvComponent,
     ModulePoolComponent,
     ModuleDenseComponent,
-    ModuleResourcesComponent
+    ModuleResourcesComponent,
+    PerceptronDemoComponent
   ]
 })
 export class VizModule {}

@@ -1,5 +1,4 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { UtilsService } from '@app/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-module-dense',
