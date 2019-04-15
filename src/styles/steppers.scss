@@ -55,7 +55,7 @@
     background-color: rgb(198, 198, 198);
     border-radius: 15px;
     left: calc(50px / 2);
-    transform: translateX(-45%);
+    transform: translateX(-45%) translateY(4px);
     z-index: 2;
   }
 
