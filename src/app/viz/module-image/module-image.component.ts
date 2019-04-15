@@ -192,7 +192,7 @@ export class ModuleImageComponent implements OnInit, AfterViewInit {
         title: 'An image',
         message: `Here we have a small, low-resolution image of Lincoln.<br>
         <div class="text-center"><img src="assets/lincoln.png" width="550"></div><br>
-        Each pixel in this image is some shade of gray between pure white and pure black. These shades can be represented by numbers between 0 and 255.
+        Each pixel in this image is some shade of gray between pure white and pure black. These shades can be represented by numbers between 0 to 255.
         `,
         btnText: 'Next'
       },

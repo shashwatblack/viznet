@@ -444,7 +444,7 @@ export class ModuleConvComponent implements OnInit, AfterViewInit {
       })
       .addClass('svg-label');
     g_filterLabel.rect(-17, -26, 100, 40);
-    g_filterLabel.text(0, 0, `Filter`);
+    g_filterLabel.text(0, 0, `Kernel`);
     g_filterLabel.circle(55, -6, 11);
     g_filterLabel.text(51, -1, 'i').addClass('i-icon');
     g_filterLabel.click(() => this.showIntro(1, true));
