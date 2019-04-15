@@ -1,3 +1,42 @@
-<div class="wrapper">
-  <h1>quick fox</h1>
+<div class="wrapper" (click)="$event.stopPropagation()">
+  <svg width="600" height="280" viewBox="0 0 600 280">
+    <line x1="130" y1="70" x2="450" y2="150"></line>
+    <line x1="130" y1="230" x2="450" y2="150"></line>
+  </svg>
+
+  <div class="label" style="top: 10px; left: 68px">Inputs</div>
+  <div class="label" style="top: 10px; left: 250px">Weights</div>
+  <div class="label" style="top: 10px; left: 475px">Output</div>
+
+  <input
+    class="form-control"
+    type="number"
+    style="left: 50px; top: 50px;"
+    [(ngModel)]="form.input1"
+    (change)="calculate()"
+  />
+  <input
+    class="form-control"
+    type="number"
+    style="left: 50px; top: 211px;"
+    [(ngModel)]="form.input2"
+    (change)="calculate()"
+  />
+
+  <input
+    class="form-control"
+    type="number"
+    style="left: 240px; top: 85px;"
+    [(ngModel)]="form.weight1"
+    (change)="calculate()"
+  />
+  <input
+    class="form-control"
+    type="number"
+    style="left: 240px; top: 175px;"
+    [(ngModel)]="form.weight2"
+    (change)="calculate()"
+  />
+
+  <input class="form-control" type="number" disabled style="left: 460px; top: 130px;" [ngModel]="form.output" />
 </div>

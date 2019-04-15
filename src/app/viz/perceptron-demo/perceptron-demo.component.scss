@@ -1,5 +1,22 @@
 .wrapper {
   position: relative;
   width: 600px;
-  height: 400px;
+  height: 280px;
+}
+
+.label,
+input {
+  position: absolute;
+}
+
+input {
+  width: 80px;
+}
+
+svg {
+  position: absolute;
+  line {
+    stroke: #333;
+    stroke-width: 2px;
+  }
 }
