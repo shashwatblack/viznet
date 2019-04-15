@@ -18,12 +18,13 @@ form {
 }
 
 .presets-wrapper {
-  flex: 0 0 150px;
+  flex: 0 0 170px;
   padding-top: 20px;
   button {
     margin-bottom: 10px;
     height: 40px;
-    width: 140px;
+    width: 150px;
+    white-space: nowrap;
   }
 }
 
