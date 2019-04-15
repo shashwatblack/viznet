@@ -457,7 +457,7 @@ export class ModuleConvComponent implements OnInit, AfterViewInit {
       })
       .addClass('svg-label');
     g_resultLabel.rect(-17, -26, 110, 40);
-    g_resultLabel.text(0, 0, `Result`);
+    g_resultLabel.text(0, 0, `Output`);
     g_resultLabel.circle(65, -6, 11);
     g_resultLabel.text(61, -1, 'i').addClass('i-icon');
     g_resultLabel.click(() => this.showIntro(3, true));
@@ -566,7 +566,7 @@ export class ModuleConvComponent implements OnInit, AfterViewInit {
           <div class="col-1 text-center text-large">*</div>
           <div class="col-1 text-center">Kernel</div>
           <div class="col-1 text-center">=</div>
-          <div class="col-1 text-center">Result</div>
+          <div class="col-1 text-center">Output</div>
         </div>
         `,
         btnText: 'Next'
