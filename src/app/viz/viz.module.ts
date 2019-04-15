@@ -15,6 +15,7 @@ import { ModuleConvComponent } from '@app/viz/module-conv/module-conv.component'
 import { NgxSmartModalModule } from 'ngx-smart-modal';
 import { ModuleDenseComponent } from '@app/viz/module-dense/module-dense.component';
 import { ModulePoolComponent } from '@app/viz/module-pool/module-pool.component';
+import { ModuleResourcesComponent } from '@app/viz/module-resources/module-resources.component';
 
 @NgModule({
   imports: [
@@ -34,7 +35,8 @@ import { ModulePoolComponent } from '@app/viz/module-pool/module-pool.component'
     ModuleImageComponent,
     ModuleConvComponent,
     ModulePoolComponent,
-    ModuleDenseComponent
+    ModuleDenseComponent,
+    ModuleResourcesComponent
   ]
 })
 export class VizModule {}

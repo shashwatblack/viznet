@@ -8,6 +8,7 @@ import { ModuleImageComponent } from '@app/viz/module-image/module-image.compone
 import { ModuleConvComponent } from '@app/viz/module-conv/module-conv.component';
 import { ModuleDenseComponent } from '@app/viz/module-dense/module-dense.component';
 import { ModulePoolComponent } from '@app/viz/module-pool/module-pool.component';
+import { ModuleResourcesComponent } from '@app/viz/module-resources/module-resources.component';
 
 const routes: Routes = [
   Shell.childRoutes([
@@ -22,28 +23,35 @@ const routes: Routes = [
       path: 'module_image',
       component: ModuleImageComponent,
       data: {
-        title: extract(`What's an image?`)
+        title: extract(`What is an Image?`)
       }
     },
     {
       path: 'module_conv',
       component: ModuleConvComponent,
       data: {
-        title: extract(`What is convolution?`)
+        title: extract(`What is Convolution?`)
       }
     },
     {
       path: 'module_pool',
       component: ModulePoolComponent,
       data: {
-        title: extract(`What is pooling?`)
+        title: extract(`What is Pooling?`)
       }
     },
     {
       path: 'module_dense',
       component: ModuleDenseComponent,
       data: {
-        title: extract(`What is a perceptron?`)
+        title: extract(`What is a Perceptron?`)
+      }
+    },
+    {
+      path: 'module_resources',
+      component: ModuleResourcesComponent,
+      data: {
+        title: extract(`Additional Resources!`)
       }
     }
   ])

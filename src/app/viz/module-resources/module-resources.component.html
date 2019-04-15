@@ -1,0 +1,53 @@
+<div class="container-fluid">
+  <div class="stepper">
+    <div class="steps">
+      <div class="step" (click)="toggleStep(0)" [ngClass]="minimizedSteps.indexOf(0) > -1 && 'minimized'">
+        <div class="step-header cursor-pointer">
+          <div class="header">3 blue 1 brown</div>
+          <div class="subheader"></div>
+        </div>
+        <div class="step-content">
+          <div>
+            <iframe
+              width="500"
+              height="300"
+              src="https://www.youtube.com/embed/aircAruvnKk"
+              frameborder="0"
+              allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+            ></iframe>
+          </div>
+        </div>
+      </div>
+      <div class="step" (click)="toggleStep(1)" [ngClass]="minimizedSteps.indexOf(1) > -1 && 'minimized'">
+        <div class="step-header cursor-pointer">
+          <div class="header">Andrew NG Machine Learning</div>
+          <div class="subheader"></div>
+        </div>
+        <div class="step-content">
+          <div>
+            <iframe
+              width="500"
+              height="300"
+              src="https://www.youtube.com/embed/videoseries?list=PLLssT5z_DsK-h9vYZkQkYNWcItqhlRJLN"
+              frameborder="0"
+              allow="autoplay; encrypted-media"
+              allowfullscreen
+            ></iframe>
+          </div>
+        </div>
+      </div>
+      <div class="step" (click)="toggleStep(2)" [ngClass]="minimizedSteps.indexOf(2) > -1 && 'minimized'">
+        <div class="step-header cursor-pointer">
+          <div class="header">Stanford CS231N Convolutional Neural Networks for Visual Recognition</div>
+          <div class="subheader"></div>
+        </div>
+        <div class="step-content">
+          <div>
+            <iframe width="100%" height="400" src="https://cs231n.github.io/" frameborder="0"></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
