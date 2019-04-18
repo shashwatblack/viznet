@@ -64,7 +64,8 @@ export class CnnModelComponent implements OnInit, OnChanges {
         channels: 5,
         name: 'Pooling 1',
         shape: '5 x 12 x 12',
-        imageScale: 0.6
+        imageScale: 0.6,
+        oneOnOneWeights: true
       },
       {
         id: 'l4',
@@ -79,7 +80,8 @@ export class CnnModelComponent implements OnInit, OnChanges {
         channels: 10,
         name: 'Pooling 2',
         shape: '10 x 4 x 4',
-        imageScale: 0.5
+        imageScale: 0.5,
+        oneOnOneWeights: true
       },
       {
         id: 'l6',
@@ -182,10 +184,15 @@ export class CnnModelComponent implements OnInit, OnChanges {
       thisLayer.g_weights = {};
       thisLayer.weights = {};
 
-      for (let thisElement of thisLayer.elements) {
+      for (let index = 0; index < thisLayer.elements.length; index++) {
+        let thisElement = thisLayer.elements[index];
         let group = this.g.g().addClass('weights-box');
         let weights = [];
-        for (let lastElement of lastLayer.elements) {
+        let lastLayerElements = lastLayer.elements;
+        if (thisLayer.oneOnOneWeights) {
+          lastLayerElements = [lastLayer.elements[index]];
+        }
+        for (let lastElement of lastLayerElements) {
           let x1 = lastElement.node.x.baseVal.value + lastElement.node.width.baseVal.value;
           let y1 = lastElement.node.y.baseVal.value + lastElement.node.height.baseVal.value / 2;
           let x2 = thisElement.node.x.baseVal.value;
