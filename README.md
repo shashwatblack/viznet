@@ -2,7 +2,7 @@
 
 Neural Network visualization for educational purpose
 
-Live here - [vizweb.ml](http://vizweb.ml)
+Live here - [shashwatblack.github.io/vizweb/](https://shashwatblack.github.io/vizweb/)
 
 # how to run
 
